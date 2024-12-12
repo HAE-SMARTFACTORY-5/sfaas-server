@@ -1,11 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <!--
     패키지 구조 전달을 위한 Mapper.xml 입니다.
     해당 Mapper.xml는 사용하지 마시고, 새로운 Mapper.xml를 생성하여 이용하시길 바랍니다.
 -->
-
-<?xml version="1.0" encoding="UTF-8"?>
-
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.hae5.sfaas.basic.mapper.BasicMapper">
 
