@@ -17,6 +17,10 @@ jasypt:
   encryptor:
     password: ${JASYPT_ENCRYPTOR_PASSWORD}
 
+swagger:
+  user: ENC(smBNImhh+n0k87ufJdIgdIHTOoZlpg4p)
+  password: ENC(5mpiCndUeOH7y0f0OBfglH0f6LNR7xIr)
+
 ---
 spring:
   config:
