@@ -8,7 +8,7 @@ import org.springframework.test.context.jdbc.Sql;
 @ActiveProfiles("test")
 @Sql({"classpath:initTable.sql"})
 @SpringBootTest
-class SfaasApplicationTests {
+public class SfaasApplicationTests {
 
 	@Test
 	void contextLoads() {

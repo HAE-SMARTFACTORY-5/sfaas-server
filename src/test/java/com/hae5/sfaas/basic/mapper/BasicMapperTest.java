@@ -5,18 +5,17 @@ package com.hae5.sfaas.basic.mapper;
  * 해당 Test 코드는 사용하지 마시고, 새로운 Test 코드를 생성하여 이용하시길 바랍니다.
  */
 
+import com.hae5.sfaas.SfaasApplicationTests;
 import com.hae5.sfaas.basic.model.Basic;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
-@SpringBootTest
-public class BasicMapperTest {
+public class BasicMapperTest extends SfaasApplicationTests {
 
     @Autowired
     private BasicMapper basicMapper;
