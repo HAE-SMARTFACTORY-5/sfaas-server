@@ -1,12 +1,45 @@
 spring:
   application:
     name: sfaas
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/sfaas
-    username: root
-    password: 1234
+  profiles:
+    active: local
+  config:
+    import: optional:classpath:.env[.properties]
 
 mybatis:
   mapper-locations: classpath:mybatis/mappers/**/*.xml
   config-locations: classpath:mybatis/config/mybatis-config.xml
+
+jasypt:
+  encryptor:
+    password: ${JASYPT_ENCRYPTOR_PASSWORD}
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ENC(u25fsCU8PjRkqy6UqpZmz9xqx95uEm/L87AJAddOB/wdtAvzX/ec5hWKhbH+ogfV)
+    username: ENC(4lzKKT56ktLNpwJfWbrhVw==)
+    password: ENC(0M43m1B+TGzO6Q0g2NJnEg==)
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+---
+spring:
+  config:
+    activate:
+      on-profile: test
