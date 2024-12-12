@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: sfaas
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/sfaas
+    username: root
+    password: 1234
+
+mybatis:
+  mapper-locations: classpath:mybatis/mappers/**/*.xml
+  config-locations: classpath:mybatis/config/mybatis-config.xml
