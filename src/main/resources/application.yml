@@ -27,11 +27,11 @@ spring:
     activate:
       on-profile: local
 
-#  datasource:
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: ENC(u25fsCU8PjRkqy6UqpZmz9xqx95uEm/L87AJAddOB/wdtAvzX/ec5hWKhbH+ogfV)
-#    username: ENC(4lzKKT56ktLNpwJfWbrhVw==)
-#    password: ENC(0M43m1B+TGzO6Q0g2NJnEg==)
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ENC(u25fsCU8PjRkqy6UqpZmz9xqx95uEm/L87AJAddOB/wdtAvzX/ec5hWKhbH+ogfV)
+    username: ENC(4lzKKT56ktLNpwJfWbrhVw==)
+    password: ENC(0M43m1B+TGzO6Q0g2NJnEg==)
 
 ---
 spring:
