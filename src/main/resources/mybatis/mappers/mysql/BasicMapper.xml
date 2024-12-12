@@ -8,6 +8,15 @@
 -->
 
 <mapper namespace="com.hae5.sfaas.basic.mapper.BasicMapper">
+    <insert id="save" useGeneratedKeys="true" keyProperty="basicId">
+        INSERT INTO basic (name)
+        VALUES (#{name});
+    </insert>
+
+    <delete id="deleteAll">
+        DELETE b
+        FROM basic as b;
+    </delete>
 
 
     <select id="findById" resultType="com.hae5.sfaas.basic.model.Basic">
@@ -16,4 +25,10 @@
         WHERE b.basic_id = #{basicId}
         LIMIT 1;
     </select>
+
+    <select id="findAll" resultType="com.hae5.sfaas.basic.model.Basic">
+        SELECT b.*
+        FROM basic as b;
+    </select>
+
 </mapper>
