@@ -5,6 +5,7 @@ import com.hae5.sfaas.auth.dto.request.LoginRequest;
 import com.hae5.sfaas.auth.dto.request.RegisterRequest;
 import com.hae5.sfaas.auth.dto.response.LoginResponse;
 import com.hae5.sfaas.auth.dto.response.RegisterResponse;
+import com.hae5.sfaas.common.exception.SfaasException;
 import com.hae5.sfaas.user.enums.UserRole;
 import com.hae5.sfaas.user.mapper.UserMapper;
 import com.hae5.sfaas.user.model.User;
@@ -15,7 +16,10 @@ import org.mockito.Mock;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;
 
 class AuthServiceTest extends SfaasApplicationTests {
@@ -67,6 +71,22 @@ class AuthServiceTest extends SfaasApplicationTests {
 
         // then
         assertThat(actualResponse.getUserId()).isEqualTo(mockUser.getUserId());
+    }
+
+    @DisplayName("사원번호 중복관련 에러")
+    @Test
+    void register_DUPLICATE_EMPLOYEEID_Test() {
+        // given
+        RegisterRequest registerRequest = new RegisterRequest(1L, "name", "employeeId",
+                "password", 1L, "position", UserRole.MEMBER);
+        User mockUser = User.create(registerRequest, "encodedPassword");
+
+        when(userMapper.findByEmployeeId(registerRequest.employeeId())).thenReturn(Optional.ofNullable(mockUser));
+
+        // when & then
+        assertThatThrownBy(() -> authService.register(registerRequest))
+                .isInstanceOf(SfaasException.class)
+                .hasMessageContaining("사원번호 중복");
     }
 }
 

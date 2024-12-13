@@ -24,7 +24,8 @@ public enum ExceptionCode {
 
     /* User 에러 (1000~) */
     USER_NOT_FOUNT_ERROR("1000", HttpStatus.BAD_REQUEST, "존재하지 않는 사용자"),
-    USER_PASSWORD_NOT_MATCH_ERROR("1001", HttpStatus.BAD_REQUEST, "비밀번호 불일치");
+    DUPLICATE_EMPLOYEE_ID_ERROR("1001", HttpStatus.BAD_REQUEST, "사원번호 중복"),
+    USER_PASSWORD_NOT_MATCH_ERROR("1002", HttpStatus.BAD_REQUEST, "비밀번호 불일치");
 
     private final String code;
     private final HttpStatus httpStatus;
