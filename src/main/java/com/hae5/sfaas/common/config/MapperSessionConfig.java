@@ -1,5 +1,6 @@
 package com.hae5.sfaas.common.config;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
@@ -13,7 +14,7 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import javax.sql.DataSource;
 
 @Configuration
-@MapperScan(basePackages = "com.hae5.sfaas.*")
+@MapperScan(basePackages = "com.hae5.sfaas.*", annotationClass = Mapper.class)
 public class MapperSessionConfig {
 
     @Value("${mybatis.config-locations}")
