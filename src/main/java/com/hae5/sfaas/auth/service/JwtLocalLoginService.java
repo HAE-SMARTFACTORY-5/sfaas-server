@@ -32,7 +32,7 @@ public class JwtLocalLoginService implements LocalLoginService {
     }
 
     private void checkPasswordMatch(String userPassword, String requestPassword) {
-        if (passwordEncoder.matches(requestPassword, userPassword)) {
+        if (!passwordEncoder.matches(requestPassword, userPassword)) {
             throw SfaasException.create(USER_PASSWORD_NOT_MATCH_ERROR);
         }
     }

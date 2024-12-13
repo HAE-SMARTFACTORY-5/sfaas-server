@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @ToString
-@Builder(access = AccessLevel.PRIVATE)
+@Builder
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class User {

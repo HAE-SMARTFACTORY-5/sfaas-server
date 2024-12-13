@@ -42,8 +42,8 @@ public class JwtProvider {
         return Keys.hmacShaKeyFor(SECRET_KEY.getBytes(StandardCharsets.UTF_8));
     }
 
-    public String createAccessToken(Long memberId, String role) {
-        Claims claims = Jwts.claims().setSubject(memberId.toString());
+    public String createAccessToken(Long userId, String role) {
+        Claims claims = Jwts.claims().setSubject(userId.toString());
         Date now = new Date();
 
         return Jwts.builder()

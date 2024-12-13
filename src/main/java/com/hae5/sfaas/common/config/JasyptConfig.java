@@ -20,7 +20,6 @@ public class JasyptConfig {
 
     @Bean(name = "jasyptStringEncryptor")
     public StringEncryptor stringEncryptor(){
-        System.out.println("dd: " + ENCRYPT_PASSWORD);
         PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();
         SimpleStringPBEConfig config = new SimpleStringPBEConfig();
         config.setPassword(ENCRYPT_PASSWORD);
