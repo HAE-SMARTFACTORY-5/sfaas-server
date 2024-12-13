@@ -1,8 +1,11 @@
 package com.hae5.sfaas.fault.controller;
 
+import com.hae5.sfaas.common.jwt.AccessTokenInfo;
+import com.hae5.sfaas.common.jwt.JwtProvider;
 import com.hae5.sfaas.fault.dto.response.FaultResponse;
 import com.hae5.sfaas.fault.model.Fault;
 import com.hae5.sfaas.fault.service.FaultService;
+import com.hae5.sfaas.user.enums.UserRole;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,6 +22,7 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -36,21 +40,28 @@ class FaultControllerTest {
     @MockitoBean
     private FaultService faultService;
 
+    @MockitoBean
+    private JwtProvider jwtProvider;
+
     @Test
     @DisplayName("getFault API 호출 시 200 OK와 데이터 리스트를 반환")
     void getFault_ReturnsList() throws Exception {
         // given
         Fault f1 = Fault.create("a1", "l1", "p1", "t1", LocalDateTime.now());
         Fault f2 = Fault.create("a2", "l2", "p2", "t2", LocalDateTime.now());
+        AccessTokenInfo accessTokenInfo = AccessTokenInfo.of("1", UserRole.MEMBER.name());
 
         FaultResponse fault1 = FaultResponse.from(f1);
         FaultResponse fault2 = FaultResponse.from(f2);
         List<FaultResponse> faults = Arrays.asList(fault1, fault2);
 
         when(faultService.getFault()).thenReturn(faults);
+        when(jwtProvider.resolveToken(any(String.class))).thenReturn(accessTokenInfo);
 
         // when & then
-        mockMvc.perform(get("/api/v1/fault"))
+        mockMvc.perform(get("/api/v1/fault")
+                        .header("Authorization", "Baerer das")
+                )
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.success").value(true))
                 .andExpect(jsonPath("$.status").value(200))
@@ -64,10 +75,14 @@ class FaultControllerTest {
     @DisplayName("getFault API 호출 시 빈 리스트를 반환할 수 있다")
     void getFault_ReturnsEmptyList() throws Exception {
         // given
+        AccessTokenInfo accessTokenInfo = AccessTokenInfo.of("1", UserRole.MEMBER.name());
         given(faultService.getFault()).willReturn(List.of());
+        when(jwtProvider.resolveToken(any(String.class))).thenReturn(accessTokenInfo);
 
         // when & then
-        mockMvc.perform(get("/api/v1/fault"))
+        mockMvc.perform(get("/api/v1/fault")
+                        .header("Authorization", "Baerer das")
+                )
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.success").value(true))
                 .andExpect(jsonPath("$.status").value(200))

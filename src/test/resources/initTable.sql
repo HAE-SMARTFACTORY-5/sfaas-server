@@ -3,9 +3,6 @@ CREATE TABLE IF NOT EXISTS BASIC (
                  name VARCHAR(255) NOT NULL
 );
 
-CREATE index IF NOT EXISTS dept_id
-    on user (dept_id);
-
 CREATE TABLE IF NOT EXISTS department
 (
     dept_id   bigint auto_increment
