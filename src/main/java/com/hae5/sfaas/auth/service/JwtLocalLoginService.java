@@ -26,7 +26,7 @@ public class JwtLocalLoginService implements LocalLoginService {
     public LoginResponse login(LoginRequest request) {
         User user = userMapper.findByEmployeeId(request.employeeId())
                         .orElseThrow(() -> SfaasException.create(USER_NOT_FOUNT_ERROR));
-        checkPasswordMatch(request.password(), user.getPassword());
+        checkPasswordMatch(user.getPassword(), request.password());
         String accessToken = jwtProvider.createAccessToken(user.getUserId(), user.getRole().toString());
         return LoginResponse.from(accessToken, user.getRole());
     }
