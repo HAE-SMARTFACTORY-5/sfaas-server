@@ -25,6 +25,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfigurationSource;
 
+import static com.hae5.sfaas.user.enums.UserRole.ADMIN;
+
 
 @Configuration
 @EnableWebSecurity
@@ -47,6 +49,10 @@ public class SpringSecurityConfig {
         "/api/v1/auth/login", "/api/v1/auth/register"
     };
 
+    private static final String[] ADMIN_URL = {
+
+    };
+
     private static final String[] SWAGGER_URL = {"/swagger-ui/**", "/v3/api-docs/**"};
 
     @Bean
@@ -60,6 +66,7 @@ public class SpringSecurityConfig {
                 .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers(PERMIT_URL).permitAll()
+                        .requestMatchers(ADMIN_URL).hasRole(ADMIN.toString())
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling((config) -> config.authenticationEntryPoint(customAuthenticationEntryPoint))
