@@ -9,7 +9,6 @@ import com.hae5.sfaas.user.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import static com.hae5.sfaas.common.exception.ExceptionCode.USER_NOT_FOUNT_ERROR;
 import static com.hae5.sfaas.common.exception.ExceptionCode.USER_PASSWORD_NOT_MATCH_ERROR;
@@ -24,7 +23,6 @@ public class JwtLocalLoginService implements LocalLoginService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    @Transactional(readOnly = true)
     public LoginResponse login(LoginRequest request) {
         User user = userMapper.findByEmployeeId(request.employeeId())
                         .orElseThrow(() -> SfaasException.create(USER_NOT_FOUNT_ERROR));

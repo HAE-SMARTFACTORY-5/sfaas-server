@@ -4,8 +4,8 @@
 
 <mapper namespace="com.hae5.sfaas.user.mapper.UserMapper">
     <insert id="save" useGeneratedKeys="true" keyProperty="userId">
-        INSERT INTO USER (email, password)
-        VALUES (#{email}, #{password});
+        INSERT INTO USER (employee_id, password, role)
+        VALUES (#{employeeId}, #{password}, #{role});
     </insert>
 
     <delete id="deleteAll">

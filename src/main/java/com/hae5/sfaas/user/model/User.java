@@ -1,5 +1,6 @@
 package com.hae5.sfaas.user.model;
 
+import com.hae5.sfaas.auth.dto.request.RegisterRequest;
 import lombok.*;
 
 @Getter
@@ -18,6 +19,14 @@ public class User {
                 .employeeId(employeeId)
                 .password(password)
                 .role(role)
+                .build();
+    }
+
+    public static User create(RegisterRequest request, String encodedPassword) {
+        return User.builder()
+                .employeeId(request.employeeId())
+                .password(encodedPassword)
+                .role(request.userRoleId().toString())
                 .build();
     }
 

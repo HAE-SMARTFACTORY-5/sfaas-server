@@ -44,7 +44,7 @@ public class SpringSecurityConfig {
     private final ExceptionHandlerFilter exceptionHandlerFilter;
 
     private static final String[] PERMIT_URL = {
-        "/api/v1/auth/login", "/api/v1/auth/test"
+        "/api/v1/auth/login", "/api/v1/auth/register"
     };
 
     private static final String[] SWAGGER_URL = {"/swagger-ui/**", "/v3/api-docs/**"};
