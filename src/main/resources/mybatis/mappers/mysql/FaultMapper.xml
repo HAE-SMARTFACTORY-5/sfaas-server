@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hae5.sfaas.fault.mapper.FaultMapper">
+
+    <select id="findAll" resultType="com.hae5.sfaas.fault.model.Fault">
+        SELECT f.*
+        FROM unexpected_faults as f
+        ORDER BY alarm_time
+        LIMIT 5
+    </select>
+
+    <select id="findById" parameterType="String" resultType="com.hae5.sfaas.fault.model.Fault">
+        SELECT *
+        FROM unexpected_faults
+        WHERE alarm_id = #{alarmId}
+    </select>
+
+</mapper>

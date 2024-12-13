@@ -37,7 +37,7 @@ public class SpringSecurityConfig {
     private final CorsConfigurationSource corsConfigurationSource;
 
     private static final String[] PERMIT_URL = {
-
+        "/api/v1/**",
     };
 
     private static final String[] SWAGGER_URL = {"/swagger-ui/**", "/v3/api-docs/**"};
