@@ -34,22 +34,19 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ENC(u25fsCU8PjRkqy6UqpZmz9xqx95uEm/L87AJAddOB/wdtAvzX/ec5hWKhbH+ogfV)
-    username: ENC(4lzKKT56ktLNpwJfWbrhVw==)
-    password: ENC(0M43m1B+TGzO6Q0g2NJnEg==)
-
+    url: ${LOCAL_DB_URL}
+    username: ${LOCAL_DB_USERNAME}
+    password: ${LOCAL_DB_PASSWORD}
 ---
 spring:
   config:
     activate:
       on-profile: dev
-
 ---
 spring:
   config:
     activate:
       on-profile: prod
-
 ---
 spring:
   config:

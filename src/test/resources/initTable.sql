@@ -3,6 +3,14 @@ CREATE TABLE IF NOT EXISTS BASIC (
                  name VARCHAR(255) NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS unexpected_faults (
+    alarm_id VARCHAR(10) PRIMARY KEY,
+    line VARCHAR(10),
+    process VARCHAR(10),
+    alarm_type VARCHAR(10),
+    alarm_time DATETIME
+);
+
 CREATE TABLE IF NOT EXISTS user
 (
     user_id     int auto_increment
