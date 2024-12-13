@@ -1,4 +1,4 @@
-package com.hae5.sfaas.common.config;
+package com.hae5.sfaas.common.config.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
