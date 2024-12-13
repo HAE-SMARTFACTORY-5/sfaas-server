@@ -19,6 +19,6 @@ public class FaultService {
     public List<FaultResponse> getFault() {
         return faultMapper.findAll().stream()
                 .map(FaultResponse::from)
-                .collect(Collectors.toList());
+                .toList();
     }
 }
