@@ -3,22 +3,6 @@ CREATE TABLE IF NOT EXISTS BASIC (
                  name VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS user
-(
-    user_id     int auto_increment
-        primary key,
-    factory_id  bigint                              null,
-    name        varchar(50)                         null,
-    employee_id varchar(100)                        not null,
-    password    varchar(200)                        not null,
-    dept_id     varchar(20)                         null,
-    position    varchar(50)                         null,
-    role        varchar(20)                         null,
-    created_at  timestamp default CURRENT_TIMESTAMP null,
-    constraint employee_id
-        unique (employee_id)
-);
-
 CREATE index IF NOT EXISTS dept_id
     on user (dept_id);
 
