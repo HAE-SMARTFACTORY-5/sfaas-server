@@ -1,5 +1,9 @@
-package com.hae5.sfaas.common.config;
+package com.hae5.sfaas.common.config.security;
 
+import com.hae5.sfaas.common.config.security.filter.CustomAuthenticationEntryPoint;
+import com.hae5.sfaas.common.config.security.filter.ExceptionHandlerFilter;
+import com.hae5.sfaas.common.config.security.filter.JwtAuthenticationFilter;
+import com.hae5.sfaas.common.jwt.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -35,9 +39,12 @@ public class SpringSecurityConfig {
     private String SWAGGER_PASSWORD;
 
     private final CorsConfigurationSource corsConfigurationSource;
+    private final JwtProvider jwtProvider;
+    private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
+    private final ExceptionHandlerFilter exceptionHandlerFilter;
 
     private static final String[] PERMIT_URL = {
-
+        "/api/v1/auth/login", "/api/v1/auth/test"
     };
 
     private static final String[] SWAGGER_URL = {"/swagger-ui/**", "/v3/api-docs/**"};
@@ -52,10 +59,13 @@ public class SpringSecurityConfig {
                 .formLogin(AbstractHttpConfigurer::disable)
                 .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers(PERMIT_URL).permitAll()
                         .anyRequest().authenticated()
-                );
+                )
+                .exceptionHandling((config) -> config.authenticationEntryPoint(customAuthenticationEntryPoint))
+                .addFilterBefore(new JwtAuthenticationFilter(jwtProvider),
+                        UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(exceptionHandlerFilter, JwtAuthenticationFilter.class);
 
         return http.build();
     }

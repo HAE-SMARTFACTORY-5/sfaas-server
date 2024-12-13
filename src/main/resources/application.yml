@@ -21,6 +21,11 @@ swagger:
   user: ENC(smBNImhh+n0k87ufJdIgdIHTOoZlpg4p)
   password: ENC(5mpiCndUeOH7y0f0OBfglH0f6LNR7xIr)
 
+jwt:
+  secret: dqmwlkdqwlknljqwnekqhruieqhoiuhouihoqtwhoinboibqwoedoijlfqwbnsdlfbbvsdvQENBfjdlsFJ~N13QWJn2QWCKQWLNLKQWKKCQAq/qwQKDQWMLKA
+  token:
+    access-expiration-time: 1800
+
 ---
 spring:
   config:
