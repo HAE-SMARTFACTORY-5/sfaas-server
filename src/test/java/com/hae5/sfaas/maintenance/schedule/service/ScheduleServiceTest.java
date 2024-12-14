@@ -32,20 +32,8 @@ class ScheduleServiceIntegrationTest extends SfaasApplicationTests {
     @DisplayName("전체 Schedule 목록을 조회한다")
     void getScheduleTest() {
         // given
-        Schedule schedule1 = Schedule.builder()
-                .line("line1")
-                .process("process1")
-                .machine("machine1")
-                .contents("contents1")
-                .remarks("remarks1")
-                .build();
-        Schedule schedule2 = Schedule.builder()
-                .line("line2")
-                .process("process2")
-                .machine("machine2")
-                .contents("contents2")
-                .remarks("remarks2")
-                .build();
+        Schedule schedule1 = Schedule.create(1,"line1", "process1", "machine1", "contents1", "remarks1");
+        Schedule schedule2 = Schedule.create(2,"line2", "process2", "machine2", "contents2", "remarks2");
         scheduleMapper.save(schedule1);
         scheduleMapper.save(schedule2);
 
