@@ -52,7 +52,7 @@ public class SpringSecurityConfig {
     };
 
     private static final String[] ADMIN_URL = {
-        "/api/v1/user/{userId}"
+        "/api/v1/user/{userId}", "/api/v1/user/role/{userId}"
     };
 
     private static final String[] SWAGGER_URL = {"/swagger-ui/**", "/v3/api-docs/**"};

@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hae5.sfaas.SfaasApplicationTests;
 import com.hae5.sfaas.common.jwt.AccessTokenInfo;
 import com.hae5.sfaas.common.jwt.JwtProvider;
+import com.hae5.sfaas.user.dto.request.UserRoleEditRequest;
+import com.hae5.sfaas.user.dto.response.UserRoleEditResponse;
 import com.hae5.sfaas.user.enums.UserRole;
 import com.hae5.sfaas.user.model.User;
 import com.hae5.sfaas.user.service.UserService;
@@ -16,9 +18,9 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -77,6 +79,67 @@ public class UserControllerTest extends SfaasApplicationTests {
         mockMvc.perform(delete("/api/v1/user/{userId}", user.getUserId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization", "Baerer accessToken"))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.success").value(false))
+                .andExpect(jsonPath("$.errorCode").value("0008"))
+                .andExpect(jsonPath("$.message").value("접근 권한 없음"));
+    }
+
+    @DisplayName("사용자 권한 변경")
+    @Test
+    public void updateUserTest() throws Exception {
+        //given
+        User user = User.builder()
+                .userId(1L)
+                .employeeId("test")
+                .password("pwd")
+                .role(UserRole.ADMIN)
+                .build();
+
+        UserRole expectRole = UserRole.ADMIN;
+
+        AccessTokenInfo accessTokenInfo = AccessTokenInfo.of(user.getUserId().toString(), user.getRole().name());
+        UserRoleEditRequest request = new UserRoleEditRequest(expectRole);
+        UserRoleEditResponse response = UserRoleEditResponse.of(user.getUserId(), expectRole);
+
+        when(jwtProvider.resolveToken(any(String.class))).thenReturn(accessTokenInfo);
+        when(userService.updateUserRole(any(Long.class), any(UserRoleEditRequest.class))).thenReturn(response);
+
+        //when & then
+        mockMvc.perform(patch("/api/v1/user/role/{userId}", user.getUserId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", "Baerer accessToken")
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.userId").value(user.getUserId()))
+                .andExpect(jsonPath("$.data.role").value(expectRole.name()));
+    }
+
+    @DisplayName("사용자 권한 변경 시, 관리자가 아닐 경우")
+    @Test
+    public void updateUserTest_Not_Admin_Test() throws Exception {
+        //given
+        User user = User.builder()
+                .userId(1L)
+                .employeeId("test")
+                .password("pwd")
+                .role(UserRole.MEMBER)
+                .build();
+
+        UserRole expectRole = UserRole.ADMIN;
+
+        AccessTokenInfo accessTokenInfo = AccessTokenInfo.of(user.getUserId().toString(), user.getRole().name());
+        UserRoleEditRequest request = new UserRoleEditRequest(expectRole);
+        UserRoleEditResponse response = UserRoleEditResponse.of(user.getUserId(), expectRole);
+
+        when(jwtProvider.resolveToken(any(String.class))).thenReturn(accessTokenInfo);
+        when(userService.updateUserRole(any(Long.class), any(UserRoleEditRequest.class))).thenReturn(response);
+
+        //when & then
+        mockMvc.perform(patch("/api/v1/user/role/{userId}", user.getUserId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", "Baerer accessToken")
+                        .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.success").value(false))
                 .andExpect(jsonPath("$.errorCode").value("0008"))
