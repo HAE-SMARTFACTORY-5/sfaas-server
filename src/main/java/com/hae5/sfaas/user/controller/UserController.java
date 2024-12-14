@@ -22,7 +22,7 @@ public class UserController {
 
     @PatchMapping("/role/{userId}")
     public ResponseEntity<UserRoleEditResponse> editUserRole(@PathVariable Long userId, @RequestBody UserRoleEditRequest request) {
-        UserRoleEditResponse response = userService.editUserRole(userId, request);
+        UserRoleEditResponse response = userService.updateUserRole(userId, request);
         return ResponseEntity.ok().body(response);
     }
 }

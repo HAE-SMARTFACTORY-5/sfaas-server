@@ -113,4 +113,21 @@ public class UserMapperTest extends SfaasApplicationTests {
         assertThat(userMapper.findAll().size()).isEqualTo(0);
     }
 
+    @DisplayName("사용자 권한 변경")
+    @Test
+    public void updateRoleTest() {
+        //given
+        UserRole expectRole = UserRole.ADMIN;
+        User newUser = User.create("employeeId", "password", UserRole.MEMBER);
+        userMapper.save(newUser);
+
+        //when
+        userMapper.updateRole(newUser.getUserId(), expectRole);
+
+        //then
+        User user = userMapper.findById(newUser.getUserId()).orElse(null);
+        assertThat(user).isNotNull();
+        assertThat(user.getRole()).isEqualTo(expectRole);
+    }
+
 }
