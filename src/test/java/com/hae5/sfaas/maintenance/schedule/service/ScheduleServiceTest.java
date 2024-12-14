@@ -32,8 +32,20 @@ class ScheduleServiceIntegrationTest extends SfaasApplicationTests {
     @DisplayName("전체 Schedule 목록을 조회한다")
     void getScheduleTest() {
         // given
-        Schedule schedule1 = Schedule.create(1, "line1", "process1", "machine1", "contents1", "remarks1");
-        Schedule schedule2 = Schedule.create(2, "line2", "process2", "machine2", "contents2", "remarks2");
+        Schedule schedule1 = Schedule.builder()
+                .line("line1")
+                .process("process1")
+                .machine("machine1")
+                .contents("contents1")
+                .remarks("remarks1")
+                .build();
+        Schedule schedule2 = Schedule.builder()
+                .line("line2")
+                .process("process2")
+                .machine("machine2")
+                .contents("contents2")
+                .remarks("remarks2")
+                .build();
         scheduleMapper.save(schedule1);
         scheduleMapper.save(schedule2);
 
@@ -50,23 +62,23 @@ class ScheduleServiceIntegrationTest extends SfaasApplicationTests {
 
     @Test
     @DisplayName("Schedule ID로 조회 테스트")
-    void getScheduleByIdTest() {
+    void getScheduleByIdIntegrationTest() {
         // given
         Schedule schedule = Schedule.create(1, "line1", "process1", "machine1", "contents1", "remarks1");
         scheduleMapper.save(schedule);
 
         // when
-        ScheduleResponse response = scheduleService.getScheduleById(schedule.getId());
+        ScheduleResponse response = scheduleService.getScheduleById(1);
 
         // then
         assertThat(response).isNotNull();
-        assertThat(response.getId()).isEqualTo(schedule.getId());
+        assertThat(response.getId()).isEqualTo(1);
         assertThat(response.getLine()).isEqualTo("line1");
     }
 
     @Test
     @DisplayName("존재하지 않는 Schedule ID 조회시 예외 발생 테스트")
-    void getScheduleByIdNotFoundTest() {
+    void getScheduleByIdNotFoundIntegrationTest() {
         // when & then
         assertThatThrownBy(() -> scheduleService.getScheduleById(999))
                 .isInstanceOf(SfaasException.class)
