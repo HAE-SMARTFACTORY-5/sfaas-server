@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hae5.sfaas.monthly.failure.mapper.MonthlyFailureMapper">
+    <insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="com.hae5.sfaas.monthly.failure.model.MonthlyFailure">
+        INSERT INTO failure_rate (id, process, failure_month, failure_rate_plan, failure_rate_actual, mtbf, mttr, operation_time, fault_num, downtime)
+        VALUES (#{id}, #{process}, #{failureMonth}, #{failureRatePlan}, #{failureRateActual},
+        #{mtbf}, #{mttr}, #{operationTime}, #{faultNum}, #{downtime});
+    </insert>
+
+    <delete id="deleteAll">
+        DELETE FROM failure_rate;
+    </delete>
+
+    <select id="findAll" resultType="com.hae5.sfaas.monthly.failure.model.MonthlyFailure">
+        SELECT 
+            id,
+            process,
+            failure_month as failureMonth,
+            failure_rate_plan as failureRatePlan,
+            failure_rate_actual as failureRateActual,
+            mtbf,
+            mttr,
+            operation_time as operationTime,
+            fault_num as faultNum,
+            downtime
+        FROM failure_rate
+        ORDER BY process, failure_month
+    </select>
+
+    <select id="findByProcess" resultType="com.hae5.sfaas.monthly.failure.model.MonthlyFailure">
+        SELECT 
+            id,
+            process,
+            failure_month as failureMonth,
+            failure_rate_plan as failureRatePlan,
+            failure_rate_actual as failureRateActual,
+            mtbf,
+            mttr,
+            operation_time as operationTime,
+            fault_num as faultNum,
+            downtime
+        FROM failure_rate
+        WHERE process = #{process}
+        ORDER BY failure_month
+    </select>
+</mapper>
