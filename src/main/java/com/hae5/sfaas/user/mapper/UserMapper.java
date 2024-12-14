@@ -13,4 +13,5 @@ public interface UserMapper {
     List<User> findAll();
     Optional<User> findById(Long userId);
     Optional<User> findByEmployeeId(String employeeId);
+    void deleteById(Long userId);
 }
