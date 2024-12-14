@@ -1,5 +1,6 @@
 package com.hae5.sfaas.user.mapper;
 
+import com.hae5.sfaas.user.enums.UserRole;
 import com.hae5.sfaas.user.model.User;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -14,4 +15,5 @@ public interface UserMapper {
     Optional<User> findById(Long userId);
     Optional<User> findByEmployeeId(String employeeId);
     void deleteById(Long userId);
+    void updateRole(Long userId, UserRole role);
 }

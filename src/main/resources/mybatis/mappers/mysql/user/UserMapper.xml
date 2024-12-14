@@ -8,6 +8,12 @@
         VALUES (#{factoryId}, #{name}, #{employeeId}, #{password}, #{departmentId}, #{position}, #{role});
     </insert>
 
+    <update id="updateRole">
+        UPDATE user as u
+        SET u.role = #{role}
+        WHERE u.user_id = #{userId};
+    </update>
+
     <delete id="deleteAll">
         DELETE FROM USER;
     </delete>
