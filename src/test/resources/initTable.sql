@@ -19,6 +19,19 @@ CREATE TABLE IF NOT EXISTS unexpected_faults (
     alarm_time DATETIME
 );
 
+CREATE TABLE IF NOT EXISTS failure_rate (
+    id VARCHAR(20) PRIMARY KEY,
+    process VARCHAR(10),
+    failure_month INT,
+    failure_rate_plan DECIMAL(8, 4),
+    failure_rate_actual DECIMAL(8, 4),
+    mtbf DECIMAL(10, 4),
+    mttr DECIMAL(10, 4),
+    operation_time DECIMAL(10, 4),
+    fault_num INT,
+    downtime DECIMAL(10, 4)
+);
+
 CREATE TABLE IF NOT EXISTS user
 (
     user_id     int auto_increment
