@@ -21,6 +21,7 @@ public enum ExceptionCode {
     TOKEN_EXPIRED_ERROR("0005", HttpStatus.BAD_REQUEST, "만료된 토큰"),
     TOKEN_INVALIDATE_ERROR("0006", HttpStatus.BAD_REQUEST, "잘못된 토큰"),
     TOKEN_NOT_CONTAIN_ERROR("0007", HttpStatus.BAD_REQUEST, "토큰이 없음"),
+    NO_AUTHORITY_USER_ERROR("0008", HttpStatus.FORBIDDEN, "접근 권한 없음"),
 
     /* User 에러 (1000~) */
     USER_NOT_FOUNT_ERROR("1000", HttpStatus.BAD_REQUEST, "존재하지 않는 사용자"),
