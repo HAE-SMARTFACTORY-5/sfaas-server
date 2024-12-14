@@ -4,7 +4,7 @@
 
 <mapper namespace="mybatis.mappers.mysql.user.UserResultMap">
 
-    <resultMap id="BoardSimpleResponse" type="com.hae5.sfaas.user.dto.response.UserResponse">
+    <resultMap id="UserResponse" type="com.hae5.sfaas.user.dto.response.UserResponse">
         <id property="userId" column="user_id"/>
         <result property="factoryName" column="factory_name"/>
         <result property="name" column="name"/>
