@@ -57,3 +57,13 @@ CREATE TABLE IF NOT EXISTS department
         primary key,
     dept_name varchar(255) not null
 );
+
+
+CREATE TABLE IF NOT EXISTS maintenance_schedule (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    line VARCHAR(10),
+    process VARCHAR(10),
+    machine VARCHAR(50) NOT NULL,
+    contents VARCHAR(100) NOT NULL,
+    remarks VARCHAR(50)
+);

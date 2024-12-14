@@ -60,8 +60,7 @@ class FaultControllerTest {
 
         // when & then
         mockMvc.perform(get("/api/v1/fault")
-                        .header("Authorization", "Baerer das")
-                )
+                .header("Authorization", "Baerer das"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.success").value(true))
                 .andExpect(jsonPath("$.status").value(200))
@@ -81,8 +80,7 @@ class FaultControllerTest {
 
         // when & then
         mockMvc.perform(get("/api/v1/fault")
-                        .header("Authorization", "Baerer das")
-                )
+                .header("Authorization", "Baerer das"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.success").value(true))
                 .andExpect(jsonPath("$.status").value(200))

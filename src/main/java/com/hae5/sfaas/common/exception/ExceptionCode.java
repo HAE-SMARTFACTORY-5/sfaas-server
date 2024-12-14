@@ -10,6 +10,7 @@ public enum ExceptionCode {
 
     /* 예시 Basic (-0000) */
     BASIC_NOT_FOUND_ERROR("-0000", HttpStatus.BAD_REQUEST, "존재하지 않는 Basic"),
+    SCHDUEL_NOT_FOUND_ERROR("-0000", HttpStatus.BAD_REQUEST, "존재하지 않는 Maintenance Schedule"),
 
     /* 시스템 에러 (0000~) */
     INTERNAL_SERVER_ERROR("0000", HttpStatus.INTERNAL_SERVER_ERROR, "알 수 없는 서버에러"),
