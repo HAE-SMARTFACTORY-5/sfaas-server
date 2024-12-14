@@ -12,6 +12,11 @@
         DELETE FROM USER;
     </delete>
 
+    <delete id="deleteById">
+        DELETE FROM user as u
+        WHERE u.user_id = #{userId};
+    </delete>
+
 
     <select id="findById" resultType="com.hae5.sfaas.user.model.User">
         SELECT u.*

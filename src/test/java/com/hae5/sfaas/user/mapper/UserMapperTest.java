@@ -98,4 +98,19 @@ public class UserMapperTest extends SfaasApplicationTests {
         assertThat(User.getUserId()).isEqualTo(newUser.getUserId());
     }
 
+    @DisplayName("사용자 Id로 사용자 삭제")
+    @Test
+    public void deleteByIdTest() {
+        //given
+        String employeeId = "employeeId";
+        User newUser = User.create(employeeId, "password", UserRole.MEMBER);
+        userMapper.save(newUser);
+
+        //when
+        userMapper.deleteById(newUser.getUserId());
+
+        //then
+        assertThat(userMapper.findAll().size()).isEqualTo(0);
+    }
+
 }

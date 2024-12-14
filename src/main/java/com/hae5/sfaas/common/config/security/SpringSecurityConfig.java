@@ -1,5 +1,6 @@
 package com.hae5.sfaas.common.config.security;
 
+import com.hae5.sfaas.common.config.security.filter.CustomAccessDeniedHandler;
 import com.hae5.sfaas.common.config.security.filter.CustomAuthenticationEntryPoint;
 import com.hae5.sfaas.common.config.security.filter.ExceptionHandlerFilter;
 import com.hae5.sfaas.common.config.security.filter.JwtAuthenticationFilter;
@@ -44,13 +45,14 @@ public class SpringSecurityConfig {
     private final JwtProvider jwtProvider;
     private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
     private final ExceptionHandlerFilter exceptionHandlerFilter;
+    private final CustomAccessDeniedHandler customAccessDeniedHandler;
 
     private static final String[] PERMIT_URL = {
         "/api/v1/auth/login", "/api/v1/auth/register"
     };
 
     private static final String[] ADMIN_URL = {
-
+        "/api/v1/user/{userId}"
     };
 
     private static final String[] SWAGGER_URL = {"/swagger-ui/**", "/v3/api-docs/**"};
@@ -66,10 +68,11 @@ public class SpringSecurityConfig {
                 .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers(PERMIT_URL).permitAll()
-                        .requestMatchers(ADMIN_URL).hasRole(ADMIN.toString())
+                        .requestMatchers(ADMIN_URL).hasAuthority(ADMIN.name())
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling((config) -> config.authenticationEntryPoint(customAuthenticationEntryPoint))
+                .exceptionHandling((config) -> config.accessDeniedHandler(customAccessDeniedHandler))
                 .addFilterBefore(new JwtAuthenticationFilter(jwtProvider),
                         UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(exceptionHandlerFilter, JwtAuthenticationFilter.class);

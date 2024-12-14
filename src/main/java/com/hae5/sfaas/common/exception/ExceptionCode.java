@@ -21,11 +21,13 @@ public enum ExceptionCode {
     TOKEN_EXPIRED_ERROR("0005", HttpStatus.BAD_REQUEST, "만료된 토큰"),
     TOKEN_INVALIDATE_ERROR("0006", HttpStatus.BAD_REQUEST, "잘못된 토큰"),
     TOKEN_NOT_CONTAIN_ERROR("0007", HttpStatus.BAD_REQUEST, "토큰이 없음"),
+    NO_AUTHORITY_USER_ERROR("0008", HttpStatus.FORBIDDEN, "접근 권한 없음"),
 
     /* User 에러 (1000~) */
     USER_NOT_FOUNT_ERROR("1000", HttpStatus.BAD_REQUEST, "존재하지 않는 사용자"),
     DUPLICATE_EMPLOYEE_ID_ERROR("1001", HttpStatus.BAD_REQUEST, "사원번호 중복"),
-    USER_PASSWORD_NOT_MATCH_ERROR("1002", HttpStatus.BAD_REQUEST, "비밀번호 불일치");
+    USER_PASSWORD_NOT_MATCH_ERROR("1002", HttpStatus.BAD_REQUEST, "비밀번호 불일치"),
+    ADMIN_CAN_NOT_DELETE_ERROR("1003", HttpStatus.BAD_REQUEST, "관리자 삭제 불가");
 
     private final String code;
     private final HttpStatus httpStatus;
