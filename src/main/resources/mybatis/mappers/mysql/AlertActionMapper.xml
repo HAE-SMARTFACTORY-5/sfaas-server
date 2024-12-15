@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hae5.sfaas.alerts.mapper.AlertActionMapper">
+
+    <insert id="save" parameterType="com.hae5.sfaas.alerts.model.AlertAction" useGeneratedKeys="true" keyProperty="alarmId">
+        INSERT INTO unexpected_faults_user_input
+        VALUES (#{maintenanceId}, #{equipmentId}, #{plannedDate}, #{executionDate}, #{inspectResult},
+        #{estimatedTime}, #{status}, #{createdAt});
+    </insert>
+
+    <delete id="deleteAll">
+        DELETE FROM unexpected_faults_user_input;
+    </delete>
+
+
+    <select id="findById" resultType="com.hae5.sfaas.alerts.model.AlertAction">
+        SELECT u.*
+        FROM unexpected_faults_user_input as u
+        WHERE u.id = #{alarm_id}
+        LIMIT 1;
+    </select>
+
+    <select id="findAll" resultType="com.hae5.sfaas.alerts.model.AlertAction">
+        SELECT u.*
+        FROM unexpected_faults_user_input as u;
+    </select>
+
+</mapper>

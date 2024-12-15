@@ -1,6 +1,6 @@
-package com.hae5.sfaas.fault.mapper;
+package com.hae5.sfaas.alerts.mapper;
 
-import com.hae5.sfaas.fault.model.Fault;
+import com.hae5.sfaas.alerts.model.Alerts;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,15 +12,15 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-class FaultMapperTest {
+class AlertsMapperTest {
 
     @Autowired
-    private FaultMapper faultMapper;
+    private AlertsMapper alertsMapper;
 
     @Test
     @DisplayName("DB 연결 테스트")
     void dbConnectionTest() {
-        List<Fault> result = faultMapper.findAll();
+        List<Alerts> result = alertsMapper.findAll();
         assertThat(result).isNotNull();
     }
 
