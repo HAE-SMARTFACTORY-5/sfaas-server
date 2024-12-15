@@ -1,11 +1,9 @@
 package com.hae5.sfaas.quality.service;
 
-import com.hae5.sfaas.common.config.security.UserDetailsImpl;
 import com.hae5.sfaas.common.exception.ExceptionCode;
 import com.hae5.sfaas.common.exception.SfaasException;
 import com.hae5.sfaas.quality.dto.response.QualityDefectsResponse;
 import com.hae5.sfaas.quality.mapper.QualityDefectsMapper;
-import com.hae5.sfaas.quality.model.QualityDefects;
 import com.hae5.sfaas.user.mapper.UserMapper;
 import com.hae5.sfaas.user.model.User;
 import lombok.RequiredArgsConstructor;
@@ -22,8 +20,8 @@ public class QualityDefectsService {
     private final UserMapper userMapper;
 
     @Transactional(readOnly = true)
-    public List<QualityDefectsResponse> getOurQualityDefects(UserDetailsImpl userDetails) {
-        User user = userMapper.findById(userDetails.getUserId())
+    public List<QualityDefectsResponse> getOurQualityDefects(Long userId) {
+        User user = userMapper.findById(userId)
                 .orElseThrow(() -> SfaasException.create(ExceptionCode.USER_NOT_FOUNT_ERROR));
         return qualityDefectsMapper.getOurQualityDefects(user.getFactoryId()).stream()
                 .map(QualityDefectsResponse::from)

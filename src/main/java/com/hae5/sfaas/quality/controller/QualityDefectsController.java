@@ -21,7 +21,7 @@ public class QualityDefectsController {
 
     @GetMapping("/our")
     public ResponseEntity<List<QualityDefectsResponse>> getOurQualityDefects(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-        List<QualityDefectsResponse> response = qualityDefectsService.getOurQualityDefects(userDetails);
+        List<QualityDefectsResponse> response = qualityDefectsService.getOurQualityDefects(userDetails.getUserId());
         return ResponseEntity.ok().body(response);
     }
 }
