@@ -4,7 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hae5.sfaas.SfaasApplicationTests;
 import com.hae5.sfaas.common.jwt.AccessTokenInfo;
 import com.hae5.sfaas.common.jwt.JwtProvider;
+import com.hae5.sfaas.common.response.PaginationResponse;
 import com.hae5.sfaas.user.dto.request.UserRoleEditRequest;
+import com.hae5.sfaas.user.dto.response.UserResponse;
 import com.hae5.sfaas.user.dto.response.UserRoleEditResponse;
 import com.hae5.sfaas.user.enums.UserRole;
 import com.hae5.sfaas.user.model.User;
@@ -13,14 +15,20 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -44,7 +52,7 @@ public class UserControllerTest extends SfaasApplicationTests {
         //given
         User user = User.builder()
                 .userId(1L)
-                .employeeId("test")
+                .employId("test")
                 .password("pwd")
                 .role(UserRole.ADMIN)
                 .build();
@@ -66,7 +74,7 @@ public class UserControllerTest extends SfaasApplicationTests {
         //given
         User user = User.builder()
                 .userId(1L)
-                .employeeId("test")
+                .employId("test")
                 .password("pwd")
                 .role(UserRole.MEMBER)
                 .build();
@@ -91,7 +99,7 @@ public class UserControllerTest extends SfaasApplicationTests {
         //given
         User user = User.builder()
                 .userId(1L)
-                .employeeId("test")
+                .employId("test")
                 .password("pwd")
                 .role(UserRole.ADMIN)
                 .build();
@@ -121,7 +129,7 @@ public class UserControllerTest extends SfaasApplicationTests {
         //given
         User user = User.builder()
                 .userId(1L)
-                .employeeId("test")
+                .employId("test")
                 .password("pwd")
                 .role(UserRole.MEMBER)
                 .build();
@@ -140,6 +148,79 @@ public class UserControllerTest extends SfaasApplicationTests {
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization", "Baerer accessToken")
                         .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.success").value(false))
+                .andExpect(jsonPath("$.errorCode").value("0008"))
+                .andExpect(jsonPath("$.message").value("접근 권한 없음"));
+    }
+
+    @DisplayName("사용자 검색")
+    @Test
+    public void searchUser_Test() throws Exception {
+        //given
+        User user = User.builder()
+                .userId(1L)
+                .employId("test")
+                .password("pwd")
+                .role(UserRole.ADMIN)
+                .build();
+
+        AccessTokenInfo accessTokenInfo = AccessTokenInfo.of(user.getUserId().toString(), user.getRole().name());
+        List<UserResponse> result = new ArrayList<>();
+        result.add(new UserResponse(1L, "factory", "name", "eployee", "department", "position", "ADMIN"));
+        PageRequest pageable = PageRequest.of(0, 1);
+        Page<UserResponse> page = new PageImpl<>(result, pageable, 1);
+        PaginationResponse<UserResponse> response = PaginationResponse.create(page, result);
+
+        when(jwtProvider.resolveToken(any(String.class))).thenReturn(accessTokenInfo);
+        when(userService.searchUser(any(String.class), any(String.class), any(Pageable.class))).thenReturn(response);
+
+        //when & then
+        mockMvc.perform(get("/api/v1/user/search")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", "Baerer accessToken")
+                        .param("keyword", "keyword")
+                        .param("type", "type")
+                        .param("size", "1")
+                        .param("page", "0"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.success").value(true))
+                .andExpect(jsonPath("$.data.hasPrevious").value(false))
+                .andExpect(jsonPath("$.data.hasNext").value(false))
+                .andExpect(jsonPath("$.data.totalRecordCount").value(1))
+                .andExpect(jsonPath("$.data.totalPageCount").value(1))
+                .andExpect(jsonPath("$.data.nowPage").value(0));
+    }
+
+    @DisplayName("사용자 검색 시 권한 확인")
+    @Test
+    public void searchUser_Role_Error_Test() throws Exception {
+        //given
+        User user = User.builder()
+                .userId(1L)
+                .employId("test")
+                .password("pwd")
+                .role(UserRole.MEMBER)
+                .build();
+
+        AccessTokenInfo accessTokenInfo = AccessTokenInfo.of(user.getUserId().toString(), user.getRole().name());
+        List<UserResponse> result = new ArrayList<>();
+        result.add(new UserResponse(1L, "factory", "name", "eployee", "department", "position", "ADMIN"));
+        PageRequest pageable = PageRequest.of(0, 1);
+        Page<UserResponse> page = new PageImpl<>(result, pageable, 1);
+        PaginationResponse<UserResponse> response = PaginationResponse.create(page, result);
+
+        when(jwtProvider.resolveToken(any(String.class))).thenReturn(accessTokenInfo);
+        when(userService.searchUser(any(String.class), any(String.class), any(Pageable.class))).thenReturn(response);
+
+        //when & then
+        mockMvc.perform(get("/api/v1/user/search")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", "Baerer accessToken")
+                        .param("keyword", "keyword")
+                        .param("type", "type")
+                        .param("size", "1")
+                        .param("page", "0"))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.success").value(false))
                 .andExpect(jsonPath("$.errorCode").value("0008"))

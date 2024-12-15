@@ -44,7 +44,7 @@ public class JwtLocalLoginServiceTest extends SfaasApplicationTests {
         String employeeId = "employeeId";
         String accessToke = "accessToken";
         User newUser = User.builder().userId(1L)
-                .employeeId(employeeId)
+                .employId(employeeId)
                 .password("password")
                 .role(UserRole.MEMBER)
                 .build();
@@ -83,7 +83,7 @@ public class JwtLocalLoginServiceTest extends SfaasApplicationTests {
         // given
         String employeeId = "employeeId";
         User newUser = User.builder().userId(1L)
-                .employeeId(employeeId)
+                .employId(employeeId)
                 .password("password")
                 .role(UserRole.MEMBER)
                 .build();
