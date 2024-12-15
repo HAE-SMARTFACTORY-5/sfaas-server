@@ -92,3 +92,33 @@ create table IF NOT EXISTS quality_defects
 
 create index IF NOT EXISTS factory_id
     on quality_defects (factory_id);
+
+create table IF NOT EXISTS process
+(
+    process_id   varchar(20) not null
+    primary key,
+    process_name varchar(20) not null,
+    description  text        null
+    );
+
+create table IF NOT EXISTS production_performance
+(
+    performance_id   int                                 not null
+        primary key,
+    line_id          varchar(50)                         null,
+    date             date                                not null,
+    planned_quantity int                                 not null,
+    actual_quantity  int                                 not null,
+    created_at       timestamp default CURRENT_TIMESTAMP null,
+    shift            varchar(20)                         null,
+    operating_rate   decimal(10, 2)                      null,
+    process_id       varchar(50)                         null,
+    constraint fk_production_process
+        foreign key (process_id) references process (process_id)
+);
+
+create index IF NOT EXISTS line_id
+    on production_performance (line_id);
+
+
+

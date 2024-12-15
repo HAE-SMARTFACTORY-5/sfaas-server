@@ -1,6 +1,6 @@
 package com.hae5.sfaas.production.controller;
 
-import com.hae5.sfaas.production.dto.response.ProcessPerformance;
+import com.hae5.sfaas.production.dto.response.ProductionPerformanceResponse;
 import com.hae5.sfaas.production.service.ProductionPerformanceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +18,8 @@ public class ProductionPerformanceController {
     private final ProductionPerformanceService productionPerformanceService;
 
     @GetMapping("/today")
-    public ResponseEntity<List<ProcessPerformance>> getTodayPerformance() {
-        List<ProcessPerformance> response = productionPerformanceService.getTodayPerformance();
+    public ResponseEntity<List<ProductionPerformanceResponse>> getTodayPerformance() {
+        List<ProductionPerformanceResponse> response = productionPerformanceService.getTodayPerformance();
         return ResponseEntity.ok().body(response);
     }
 }
