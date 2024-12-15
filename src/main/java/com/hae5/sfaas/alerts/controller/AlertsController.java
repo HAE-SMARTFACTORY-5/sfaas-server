@@ -1,7 +1,7 @@
-package com.hae5.sfaas.fault.controller;
+package com.hae5.sfaas.alerts.controller;
 
-import com.hae5.sfaas.fault.dto.response.FaultResponse;
-import com.hae5.sfaas.fault.service.FaultService;
+import com.hae5.sfaas.alerts.dto.response.AlertsResponse;
+import com.hae5.sfaas.alerts.service.AlertsService;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
@@ -14,13 +14,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/fault")
 @RequiredArgsConstructor
-public class FaultController {
+public class AlertsController {
 
-    private final FaultService faultService;
+    private final AlertsService alertsService;
 
     @GetMapping
-    public ResponseEntity<List<FaultResponse>> getFault() {
-        List<FaultResponse> response = faultService.getFault();
+    public ResponseEntity<List<AlertsResponse>> getFault() {
+        List<AlertsResponse> response = alertsService.getFault();
         return ResponseEntity.ok().body(response);
     }
 

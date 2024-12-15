@@ -1,4 +1,4 @@
-package com.hae5.sfaas.fault.model;
+package com.hae5.sfaas.alerts.model;
 
 import lombok.*;
 
@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class Fault {
+public class Alerts {
     private String alarmId;
     private String line;
     private String process;
@@ -16,9 +16,9 @@ public class Fault {
     private LocalDateTime alarmTime;
 
     // 테스트 코드 작성에 용이하도록 작성
-    public static Fault create(String alarmId, String line, String process, String alarmType,
-            LocalDateTime alarmTime) {
-        return Fault.builder()
+    public static Alerts create(String alarmId, String line, String process, String alarmType,
+                                LocalDateTime alarmTime) {
+        return Alerts.builder()
                 .alarmId(alarmId)
                 .line(line)
                 .process(process)
