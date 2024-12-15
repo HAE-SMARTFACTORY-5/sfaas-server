@@ -75,3 +75,21 @@ CREATE TABLE IF NOT EXISTS maintenance_schedule (
     contents VARCHAR(100) NOT NULL,
     remarks VARCHAR(50)
 );
+
+create table IF NOT EXISTS quality_defects
+(
+    date               date         not null,
+    model              varchar(255) not null,
+    defect_type        varchar(255) not null,
+    resolved           boolean   not null,
+    defective_quantity int          not null,
+    shift              char(10)     not null,
+    cause              varchar(255) null,
+    action             varchar(255) null,
+    factory_id         int          not null,
+    resolved_date      date         null
+);
+
+create index IF NOT EXISTS factory_id
+    on quality_defects (factory_id);
+
