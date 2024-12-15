@@ -1,20 +1,19 @@
-package com.hae5.sfaas.fault.controller;
+package com.hae5.sfaas.alerts.controller;
 
 import com.hae5.sfaas.common.jwt.AccessTokenInfo;
 import com.hae5.sfaas.common.jwt.JwtProvider;
-import com.hae5.sfaas.fault.dto.response.FaultResponse;
-import com.hae5.sfaas.fault.model.Fault;
-import com.hae5.sfaas.fault.service.FaultService;
+import com.hae5.sfaas.alerts.dto.response.AlertsResponse;
+import com.hae5.sfaas.alerts.model.Alerts;
+import com.hae5.sfaas.alerts.service.AlertsService;
 import com.hae5.sfaas.user.enums.UserRole;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -32,35 +31,42 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ExtendWith(MockitoExtension.class)
-class FaultControllerTest {
+class AlertsControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockitoBean
-    private FaultService faultService;
+    private AlertsService alertsService;
 
     @MockitoBean
     private JwtProvider jwtProvider;
+
+    private AccessTokenInfo accessTokenInfo;
+
+    @BeforeEach
+    void setUp() {
+        accessTokenInfo = AccessTokenInfo.of("1", UserRole.MEMBER.name());
+        when(jwtProvider.resolveToken(any(String.class))).thenReturn(accessTokenInfo);
+    }
 
     @Test
     @DisplayName("getFault API 호출 시 200 OK와 데이터 리스트를 반환")
     void getFault_ReturnsList() throws Exception {
         // given
-        Fault f1 = Fault.create("a1", "l1", "p1", "t1", LocalDateTime.now());
-        Fault f2 = Fault.create("a2", "l2", "p2", "t2", LocalDateTime.now());
-        AccessTokenInfo accessTokenInfo = AccessTokenInfo.of("1", UserRole.MEMBER.name());
+        Alerts f1 = Alerts.create("a1", "l1", "p1", "t1", LocalDateTime.now());
+        Alerts f2 = Alerts.create("a2", "l2", "p2", "t2", LocalDateTime.now());
 
-        FaultResponse fault1 = FaultResponse.from(f1);
-        FaultResponse fault2 = FaultResponse.from(f2);
-        List<FaultResponse> faults = Arrays.asList(fault1, fault2);
+        AlertsResponse fault1 = AlertsResponse.from(f1);
+        AlertsResponse fault2 = AlertsResponse.from(f2);
+        List<AlertsResponse> faults = Arrays.asList(fault1, fault2);
 
-        when(faultService.getFault()).thenReturn(faults);
+        when(alertsService.getFault()).thenReturn(faults);
         when(jwtProvider.resolveToken(any(String.class))).thenReturn(accessTokenInfo);
 
         // when & then
         mockMvc.perform(get("/api/v1/fault")
-                .header("Authorization", "Baerer das"))
+                .header("Authorization", "Baerer test-token"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.success").value(true))
                 .andExpect(jsonPath("$.status").value(200))
@@ -75,12 +81,12 @@ class FaultControllerTest {
     void getFault_ReturnsEmptyList() throws Exception {
         // given
         AccessTokenInfo accessTokenInfo = AccessTokenInfo.of("1", UserRole.MEMBER.name());
-        given(faultService.getFault()).willReturn(List.of());
+        given(alertsService.getFault()).willReturn(List.of());
         when(jwtProvider.resolveToken(any(String.class))).thenReturn(accessTokenInfo);
 
         // when & then
         mockMvc.perform(get("/api/v1/fault")
-                .header("Authorization", "Baerer das"))
+                .header("Authorization", "Baerer test-token"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.success").value(true))
                 .andExpect(jsonPath("$.status").value(200))
