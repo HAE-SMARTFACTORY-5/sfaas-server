@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mybatis.mappers.mysql.quality.QualityDefectsResultMap">
+
+    <resultMap id="OtherQualityDefectsResponse" type="com.hae5.sfaas.quality.dto.response.OtherQualityDefectsResponse">
+<!--        <id property="occurrenceDate" column="date"/>-->
+        <result property="occurrenceDate" column="date"/>
+        <result property="factoryName" column="factory_name"/>
+        <result property="model" column="model"/>
+        <result property="cause" column="cause"/>
+        <result property="resolveStatus" column="resolved"/>
+    </resultMap>
+
+</mapper>
