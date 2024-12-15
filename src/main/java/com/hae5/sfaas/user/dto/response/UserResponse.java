@@ -1,10 +1,10 @@
 package com.hae5.sfaas.user.dto.response;
 
-import com.hae5.sfaas.user.enums.UserRole;
 import lombok.*;
 
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class UserResponse {
 
     private Long userId;

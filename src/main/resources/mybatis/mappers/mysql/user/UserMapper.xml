@@ -5,7 +5,7 @@
 <mapper namespace="com.hae5.sfaas.user.mapper.UserMapper">
     <insert id="save" useGeneratedKeys="true" keyProperty="userId">
         INSERT INTO USER (factory_id, name, employ_id, password, dept_id, position, role)
-        VALUES (#{factoryId}, #{name}, #{employeeId}, #{password}, #{departmentId}, #{position}, #{role});
+        VALUES (#{factoryId}, #{name}, #{employId}, #{password}, #{departmentId}, #{position}, #{role});
     </insert>
 
     <update id="updateRole">
