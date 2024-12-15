@@ -15,7 +15,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class ScheduleServiceIntegrationTest extends SfaasApplicationTests {
+class ScheduleServiceTest extends SfaasApplicationTests {
 
     @Autowired
     private ScheduleService scheduleService;
