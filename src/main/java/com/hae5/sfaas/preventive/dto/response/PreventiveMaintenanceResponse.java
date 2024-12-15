@@ -14,7 +14,7 @@ public class PreventiveMaintenanceResponse {
     private String equipmentId; // db 생성 완료 후 설비 Id로 설비명으로 대체하기
     private LocalDateTime plannedDate;
     private LocalDateTime executionDate;
-    private String result;
+    private String InspectResult;
     private Integer estimatedTime;
     private String status;
 
@@ -24,7 +24,7 @@ public class PreventiveMaintenanceResponse {
                 .equipmentId(preventiveMaintenance.getEquipmentId())
                 .plannedDate(preventiveMaintenance.getPlannedDate())
                 .executionDate(preventiveMaintenance.getExecutionDate())
-                .result(preventiveMaintenance.getResult())
+                .InspectResult(preventiveMaintenance.getInspectResult())
                 .estimatedTime(preventiveMaintenance.getEstimatedTime())
                 .status(preventiveMaintenance.getStatus())
                 .build();

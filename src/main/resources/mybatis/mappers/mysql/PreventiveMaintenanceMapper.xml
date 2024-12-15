@@ -4,10 +4,10 @@
 
 <mapper namespace="com.hae5.sfaas.preventive.mapper.PreventiveMaintenanceMapper">
 
-    <insert id="save" parameterType="com.hae5.sfaas.preventive.model.PreventiveMaintenance" useGeneratedKeys="true" keyProperty="id">
+    <insert id="save" parameterType="com.hae5.sfaas.preventive.model.PreventiveMaintenance" useGeneratedKeys="true" keyProperty="maintenanceId">
         INSERT INTO preventive_maintenance
-        VALUES (#{maintenanceId}, #{equipmentId}, #{plannedDate}, #{executionDate}, #{result},
-                #{estimatedTime}, #{status}, #{createdAt})
+        VALUES (#{maintenanceId}, #{equipmentId}, #{plannedDate}, #{executionDate}, #{inspectResult},
+        #{estimatedTime}, #{status}, #{createdAt})
     </insert>
 
     <delete id="deleteAll">
@@ -24,7 +24,8 @@
 
     <select id="findAll" resultType="com.hae5.sfaas.preventive.model.PreventiveMaintenance">
         SELECT p.*
-        FROM preventive_maintenance as p;
+        FROM preventive_maintenance as p
+        WHERE p.inspect_result != '정상'
     </select>
 
 </mapper>

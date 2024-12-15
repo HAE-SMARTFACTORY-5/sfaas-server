@@ -75,3 +75,14 @@ CREATE TABLE IF NOT EXISTS maintenance_schedule (
     contents VARCHAR(100) NOT NULL,
     remarks VARCHAR(50)
 );
+
+CREATE TABLE IF NOT EXISTS preventive_maintenance (
+    maintenance_id INT PRIMARY KEY, -- 정비 작업 고유 ID
+    equipment_id VARCHAR(20) NOT NULL,            -- 장비 ID
+    planned_date DATETIME NOT NULL,               -- 예정된 정비 일자 및 시간
+    execution_date DATETIME,                      -- 정비 완료된 일자 및 시간
+    inspect_result VARCHAR(10),                  -- 정비 결과 (정상, 비정상)
+    estimated_time INT NOT NULL,                  -- 예상 소요 시간 (시간 단위)
+    status VARCHAR(10) NOT NULL,                 -- 정비 상태 (예정, 진행중, 완료)
+    created_at DATETIME NOT NULL                  -- 데이터 생성일
+);

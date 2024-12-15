@@ -14,20 +14,20 @@ public class PreventiveMaintenance {
     private String equipmentId;
     private LocalDateTime plannedDate;
     private LocalDateTime executionDate;
-    private String result;
+    private String InspectResult;
     private Integer estimatedTime;
     private String status;
     private LocalDateTime createdAt;
 
     public static PreventiveMaintenance create(Integer maintenanceId, String equipmentId, LocalDateTime plannedDate,
-                                               LocalDateTime executionDate, String result, Integer estimatedTime,
+                                               LocalDateTime executionDate, String InspectResult, Integer estimatedTime,
                                                String status, LocalDateTime createdAt){
         return PreventiveMaintenance.builder()
                 .maintenanceId(maintenanceId)
                 .equipmentId(equipmentId)
                 .plannedDate(plannedDate)
                 .executionDate(executionDate)
-                .result(result)
+                .InspectResult(InspectResult)
                 .estimatedTime(estimatedTime)
                 .status(status)
                 .createdAt(createdAt)
