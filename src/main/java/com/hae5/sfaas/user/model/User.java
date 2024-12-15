@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Builder
+@ToString
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class User {
@@ -15,7 +16,7 @@ public class User {
     private Long userId;
     private Long factoryId;
     private String name;
-    private String employeeId;
+    private String employId;
     private String password;
     private Long departmentId;
     private String position;
@@ -24,7 +25,7 @@ public class User {
 
     public static User create(String employeeId, String password, UserRole role) {
         return User.builder()
-                .employeeId(employeeId)
+                .employId(employeeId)
                 .password(password)
                 .role(role)
                 .build();
@@ -34,7 +35,7 @@ public class User {
         return User.builder()
                 .factoryId(request.factoryId())
                 .name(request.name())
-                .employeeId(request.employeeId())
+                .employId(request.employeeId())
                 .password(encodedPassword)
                 .departmentId(request.departmentId())
                 .position(request.position())

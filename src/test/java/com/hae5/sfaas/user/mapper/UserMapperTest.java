@@ -1,6 +1,7 @@
 package com.hae5.sfaas.user.mapper;
 
 import com.hae5.sfaas.SfaasApplicationTests;
+import com.hae5.sfaas.user.dto.response.UserResponse;
 import com.hae5.sfaas.user.enums.UserRole;
 import com.hae5.sfaas.user.model.User;
 import org.junit.jupiter.api.AfterEach;
@@ -27,7 +28,12 @@ public class UserMapperTest extends SfaasApplicationTests {
     @Test
     public void saveTest() {
         //given
-        User user = User.create("employeeId", "password", UserRole.MEMBER);
+        User user = User.builder()
+                .name("5조")
+                .employId("employeeId")
+                .password("password")
+                .role(UserRole.MEMBER)
+                .build();
 
         //when
         userMapper.save(user);
@@ -40,7 +46,12 @@ public class UserMapperTest extends SfaasApplicationTests {
     @Test
     public void deleteAllTest() {
         //given
-        User user = User.create("employeeId", "password", UserRole.MEMBER);
+        User user = User.builder()
+                .name("5조")
+                .employId("employeeId1")
+                .password("password")
+                .role(UserRole.MEMBER)
+                .build();
         userMapper.save(user);
 
         //when
@@ -54,8 +65,18 @@ public class UserMapperTest extends SfaasApplicationTests {
     @Test
     public void findAllTest() {
         //given
-        User user1 = User.create("employeeId1", "password", UserRole.MEMBER);
-        User user2 = User.create("employeeId2", "password", UserRole.MEMBER);
+        User user1 = User.builder()
+                .name("5조")
+                .employId("employeeId1")
+                .password("password")
+                .role(UserRole.MEMBER)
+                .build();
+        User user2 = User.builder()
+                .name("5조")
+                .employId("employeeId2")
+                .password("password")
+                .role(UserRole.MEMBER)
+                .build();
         userMapper.save(user1);
         userMapper.save(user2);
 
@@ -71,15 +92,22 @@ public class UserMapperTest extends SfaasApplicationTests {
     public void findByIdTest() {
         //given
         String employeeId = "employeeId";
-        User newUser = User.create(employeeId, "password", UserRole.MEMBER);
+        User newUser = User.builder()
+                .name("5조")
+                .employId("employeeId")
+                .password("password")
+                .role(UserRole.MEMBER)
+                .build();
+
         userMapper.save(newUser);
 
         //when
-        User User = userMapper.findById(newUser.getUserId()).orElse(null);
+        User user = userMapper.findById(newUser.getUserId()).orElse(null);
 
         //then
-        assertThat(User).isNotNull();
-        assertThat(User.getEmployeeId()).isEqualTo(employeeId);
+        assertThat(user).isNotNull();
+        System.out.println(user.toString());
+        assertThat(user.getEmployId()).isEqualTo(employeeId);
     }
 
     @DisplayName("EmployeeId로 조회")
@@ -87,15 +115,20 @@ public class UserMapperTest extends SfaasApplicationTests {
     public void findByEmployeeIdTest() {
         //given
         String employeeId = "employeeId";
-        User newUser = User.create(employeeId, "password", UserRole.MEMBER);
+        User newUser = User.builder()
+                .name("5조")
+                .employId(employeeId)
+                .password("password")
+                .role(UserRole.MEMBER)
+                .build();
         userMapper.save(newUser);
 
         //when
-        User User = userMapper.findByEmployeeId(employeeId).orElse(null);
+        User user = userMapper.findByEmployeeId(employeeId).orElse(null);
 
         //then
-        assertThat(User).isNotNull();
-        assertThat(User.getUserId()).isEqualTo(newUser.getUserId());
+        assertThat(user).isNotNull();
+        assertThat(user.getUserId()).isEqualTo(newUser.getUserId());
     }
 
     @DisplayName("사용자 Id로 사용자 삭제")
@@ -103,7 +136,12 @@ public class UserMapperTest extends SfaasApplicationTests {
     public void deleteByIdTest() {
         //given
         String employeeId = "employeeId";
-        User newUser = User.create(employeeId, "password", UserRole.MEMBER);
+        User newUser = User.builder()
+                .name("5조")
+                .employId(employeeId)
+                .password("password")
+                .role(UserRole.MEMBER)
+                .build();
         userMapper.save(newUser);
 
         //when
@@ -118,7 +156,12 @@ public class UserMapperTest extends SfaasApplicationTests {
     public void updateRoleTest() {
         //given
         UserRole expectRole = UserRole.ADMIN;
-        User newUser = User.create("employeeId", "password", UserRole.MEMBER);
+        User newUser = User.builder()
+                .name("5조")
+                .employId("employeeId")
+                .password("password")
+                .role(UserRole.MEMBER)
+                .build();
         userMapper.save(newUser);
 
         //when
@@ -129,5 +172,61 @@ public class UserMapperTest extends SfaasApplicationTests {
         assertThat(user).isNotNull();
         assertThat(user.getRole()).isEqualTo(expectRole);
     }
+
+    @DisplayName("사용자 검색")
+    @Test
+    public void findByKeywordTest() {
+        //given
+        User user1 = User.builder()
+                .name("아산")
+                .employId("employeeId1")
+                .password("password")
+                .role(UserRole.MEMBER)
+                .build();
+
+        User user2 = User.builder()
+                .name("아리")
+                .employId("employeeId2")
+                .password("password")
+                .role(UserRole.MEMBER)
+                .build();
+
+        userMapper.save(user1);
+        userMapper.save(user2);
+
+        //when
+        List<UserResponse> users = userMapper.findByKeyword("아산", null, 5, 0L);
+
+        //then
+        assertThat(users.size()).isEqualTo(1);
+    }
+
+    @DisplayName("검색한 사용자 수 조회")
+    @Test
+    public void countByKeywordTest() {
+        //given
+        User user1 = User.builder()
+                .name("아산")
+                .employId("employeeId1")
+                .password("password")
+                .role(UserRole.MEMBER)
+                .build();
+
+        User user2 = User.builder()
+                .name("아리")
+                .employId("employeeId2")
+                .password("password")
+                .role(UserRole.MEMBER)
+                .build();
+
+        userMapper.save(user1);
+        userMapper.save(user2);
+
+        long searchCount = userMapper.countByKeyword("아산", null);
+
+        //then
+        assertThat(searchCount).isEqualTo(1);
+    }
+
 
 }
