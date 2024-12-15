@@ -22,9 +22,9 @@ public class ProductionPerformanceServiceTest extends SfaasApplicationTests {
     @InjectMocks
     private ProductionPerformanceService productionPerformanceService;
 
-    @DisplayName("사용자 삭제")
+    @DisplayName("오늘 생신 실적을 조회")
     @Test
-    public void deleteUserTest () {
+    public void getTodayPerformanceTest () {
         //given
         List<ProductionPerformanceResponse> response = new ArrayList<>();
 
@@ -38,6 +38,24 @@ public class ProductionPerformanceServiceTest extends SfaasApplicationTests {
         //then
         assertThat(todayPerformance.size()).isEqualTo(1);
         assertThat(todayPerformance.get(0).getProcessName()).isEqualTo("프레스");
+    }
+
+    @DisplayName("이번달 생산 실적을 조회")
+    @Test
+    public void getMonthPerformanceTest () {
+        //given
+        List<ProductionPerformanceResponse> response = new ArrayList<>();
+
+        response.add(new ProductionPerformanceResponse("프레스", 10, 9));
+
+        when(productionPerformanceMapper.getMonthPerformance()).thenReturn(response);
+
+        //when
+        List<ProductionPerformanceResponse> monthPerformance = productionPerformanceService.getMonthPerformance();
+
+        //then
+        assertThat(monthPerformance.size()).isEqualTo(1);
+        assertThat(monthPerformance.get(0).getProcessName()).isEqualTo("프레스");
     }
 
 }
