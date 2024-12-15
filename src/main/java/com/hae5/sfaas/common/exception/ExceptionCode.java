@@ -30,8 +30,10 @@ public enum ExceptionCode {
     ADMIN_CAN_NOT_DELETE_ERROR("1003", HttpStatus.BAD_REQUEST, "관리자 삭제 불가"),
 
     /* Major Schedule 에러 (2000~)  */
-    SCHDUEL_NOT_FOUND_ERROR("2000", HttpStatus.BAD_REQUEST, "존재하지 않는 Maintenance Schedule");
+    SCHDUEL_NOT_FOUND_ERROR("2000", HttpStatus.BAD_REQUEST, "존재하지 않는 Maintenance Schedule"),
 
+    /* Alarm 에러 (3000~) */
+    ALARM_NOT_FOUND_ERROR("3000", HttpStatus.BAD_REQUEST, "존재하지 않는 Alarm Id");
 
     private final String code;
     private final HttpStatus httpStatus;
