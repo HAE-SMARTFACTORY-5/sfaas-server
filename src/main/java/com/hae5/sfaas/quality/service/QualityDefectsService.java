@@ -1,5 +1,6 @@
 package com.hae5.sfaas.quality.service;
 
+import com.hae5.sfaas.common.config.security.UserDetailsImpl;
 import com.hae5.sfaas.common.exception.ExceptionCode;
 import com.hae5.sfaas.common.exception.SfaasException;
 import com.hae5.sfaas.quality.dto.response.OtherQualityDefectsResponse;
