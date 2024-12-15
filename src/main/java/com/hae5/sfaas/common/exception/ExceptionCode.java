@@ -27,7 +27,11 @@ public enum ExceptionCode {
     USER_NOT_FOUNT_ERROR("1000", HttpStatus.BAD_REQUEST, "존재하지 않는 사용자"),
     DUPLICATE_EMPLOYEE_ID_ERROR("1001", HttpStatus.BAD_REQUEST, "사원번호 중복"),
     USER_PASSWORD_NOT_MATCH_ERROR("1002", HttpStatus.BAD_REQUEST, "비밀번호 불일치"),
-    ADMIN_CAN_NOT_DELETE_ERROR("1003", HttpStatus.BAD_REQUEST, "관리자 삭제 불가");
+    ADMIN_CAN_NOT_DELETE_ERROR("1003", HttpStatus.BAD_REQUEST, "관리자 삭제 불가"),
+
+    /* Major Schedule 에러 (2000~)  */
+    SCHDUEL_NOT_FOUND_ERROR("2000", HttpStatus.BAD_REQUEST, "존재하지 않는 Maintenance Schedule");
+
 
     private final String code;
     private final HttpStatus httpStatus;

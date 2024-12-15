@@ -32,20 +32,22 @@ CREATE TABLE IF NOT EXISTS failure_rate (
     downtime DECIMAL(10, 4)
 );
 
-CREATE TABLE IF NOT EXISTS user
+create table IF NOT EXISTS user
 (
-    user_id     int auto_increment
+    user_id    int auto_increment
         primary key,
-    factory_id  bigint                              null,
-    name        varchar(50)                         null,
-    employee_id varchar(100)                        not null,
-    password    varchar(200)                        not null,
-    dept_id     varchar(20)                         null,
-    position    varchar(50)                         null,
-    role        varchar(20)                         null,
-    created_at  timestamp default CURRENT_TIMESTAMP null,
-    constraint employee_id
-        unique (employee_id)
+    name       varchar(50)                         not null,
+    employ_id  varchar(50)                         not null,
+    password   varchar(200)                        not null,
+    dept_id    varchar(20)                         null,
+    position   varchar(50)                         null,
+    role       varchar(20)                         null,
+    created_at timestamp default CURRENT_TIMESTAMP null,
+    factory_id int                                 null,
+    constraint email
+        unique (employ_id),
+    constraint employ_id
+        unique (employ_id)
 );
 
 CREATE index IF NOT EXISTS dept_id
@@ -56,4 +58,20 @@ CREATE TABLE IF NOT EXISTS department
     dept_id   bigint auto_increment
         primary key,
     dept_name varchar(255) not null
+);
+
+create table IF NOT EXISTS factory
+(
+    factory_id   int         not null
+        primary key,
+    factory_name varchar(20) not null
+);
+
+CREATE TABLE IF NOT EXISTS maintenance_schedule (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    line VARCHAR(10),
+    process VARCHAR(10),
+    machine VARCHAR(50) NOT NULL,
+    contents VARCHAR(100) NOT NULL,
+    remarks VARCHAR(50)
 );
