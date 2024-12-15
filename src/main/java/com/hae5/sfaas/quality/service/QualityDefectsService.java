@@ -1,6 +1,5 @@
 package com.hae5.sfaas.quality.service;
 
-import com.hae5.sfaas.common.config.security.UserDetailsImpl;
 import com.hae5.sfaas.common.exception.ExceptionCode;
 import com.hae5.sfaas.common.exception.SfaasException;
 import com.hae5.sfaas.quality.dto.response.OtherQualityDefectsResponse;
@@ -22,8 +21,8 @@ public class QualityDefectsService {
     private final UserMapper userMapper;
 
     @Transactional(readOnly = true)
-    public List<OurQualityDefectsResponse> getOurQualityDefects(UserDetailsImpl userDetails) {
-        User user = userMapper.findById(userDetails.getUserId())
+    public List<OurQualityDefectsResponse> getOurQualityDefects(Long userId) {
+        User user = userMapper.findById(userId)
                 .orElseThrow(() -> SfaasException.create(ExceptionCode.USER_NOT_FOUNT_ERROR));
         return qualityDefectsMapper.getOurQualityDefects(user.getFactoryId()).stream()
                 .map(OurQualityDefectsResponse::from)
@@ -31,8 +30,8 @@ public class QualityDefectsService {
     }
 
     @Transactional(readOnly = true)
-    public List<OtherQualityDefectsResponse> getOtherQualityDefects(UserDetailsImpl userDetails) {
-        User user = userMapper.findById(userDetails.getUserId())
+    public List<OtherQualityDefectsResponse> getOtherQualityDefects(Long userId) {
+        User user = userMapper.findById(userId)
                 .orElseThrow(() -> SfaasException.create(ExceptionCode.USER_NOT_FOUNT_ERROR));
         return qualityDefectsMapper.getOtherQualityDefects(user.getFactoryId());
     }

@@ -22,13 +22,13 @@ public class QualityDefectsController {
 
     @GetMapping("/our")
     public ResponseEntity<List<OurQualityDefectsResponse>> getOurQualityDefects(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-        List<OurQualityDefectsResponse> response = qualityDefectsService.getOurQualityDefects(userDetails);
+        List<OurQualityDefectsResponse> response = qualityDefectsService.getOurQualityDefects(userDetails.getUserId());
         return ResponseEntity.ok().body(response);
     }
 
     @GetMapping("/other")
     public ResponseEntity<List<OtherQualityDefectsResponse>> getOtherQualityDefects(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-        List<OtherQualityDefectsResponse> response = qualityDefectsService.getOtherQualityDefects(userDetails);
+        List<OtherQualityDefectsResponse> response = qualityDefectsService.getOtherQualityDefects(userDetails.getUserId());
         return ResponseEntity.ok().body(response);
     }
 }
