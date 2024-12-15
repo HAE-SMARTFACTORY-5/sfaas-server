@@ -5,7 +5,7 @@ import lombok.*;
 import java.time.LocalDate;
 
 @Getter
-@Builder(access = AccessLevel.PRIVATE)
+@Builder
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class QualityDefects {

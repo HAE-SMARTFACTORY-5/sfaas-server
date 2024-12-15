@@ -7,5 +7,8 @@ import java.util.List;
 
 @Mapper
 public interface QualityDefectsMapper {
+    void save(QualityDefects qualityDefects);
+    void deleteAll();
+    List<QualityDefects> findAll();
     List<QualityDefects> getOurQualityDefects(Long factoryId);
 }
