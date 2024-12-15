@@ -60,16 +60,6 @@ CREATE TABLE IF NOT EXISTS department
     dept_name varchar(255) not null
 );
 
-
-CREATE TABLE IF NOT EXISTS maintenance_schedule (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    line VARCHAR(10),
-    process VARCHAR(10),
-    machine VARCHAR(50) NOT NULL,
-    contents VARCHAR(100) NOT NULL,
-    remarks VARCHAR(50)
-);
-
 create table IF NOT EXISTS factory
 (
     factory_id   int         not null
@@ -102,21 +92,3 @@ create table IF NOT EXISTS quality_defects
 
 create index IF NOT EXISTS factory_id
     on quality_defects (factory_id);
-
-
-
-CREATE TABLE IF NOT EXISTS maintenance_schedule (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    line VARCHAR(10),
-    process VARCHAR(10),
-    machine VARCHAR(50) NOT NULL,
-    contents VARCHAR(100) NOT NULL,
-    remarks VARCHAR(50)
-);
-create table IF NOT EXISTS quality_defects
-(
-    factory_id   int         not null
-        primary key,
-    factory_name varchar(20) not null
-);
-
