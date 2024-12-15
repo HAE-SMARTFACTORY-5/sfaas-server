@@ -18,4 +18,9 @@ public class ProductionPerformanceService {
     public List<ProductionPerformanceResponse> getTodayPerformance() {
         return productionPerformanceMapper.getTodayPerformance();
     }
+
+    @Transactional(readOnly = true)
+    public List<ProductionPerformanceResponse> getMonthPerformance() {
+        return productionPerformanceMapper.getMonthPerformance();
+    }
 }
