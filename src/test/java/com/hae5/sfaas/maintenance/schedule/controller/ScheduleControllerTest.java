@@ -105,7 +105,7 @@ class ScheduleControllerTest extends SfaasApplicationTests {
                 .header("Authorization", "Bearer test-token"))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.success").value(false))
-                .andExpect(jsonPath("$.errorCode").value("-0000"))
+                .andExpect(jsonPath("$.errorCode").value("2000"))
                 .andExpect(jsonPath("$.message").value("존재하지 않는 Maintenance Schedule"));
     }
 
