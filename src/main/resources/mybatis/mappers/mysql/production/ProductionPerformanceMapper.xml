@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hae5.sfaas.production.mapper.ProductionPerformanceMapper">
+
+
+    <select id="getTodayPerformance" resultType="com.hae5.sfaas.production.dto.response.ProcessPerformance">
+        SELECT pp.planned_quantity, pp.actual_quantity, p.process_name
+        FROM production_performance as pp
+            LEFT JOIN process as p ON p.process_id = pp.process_id
+        WHERE pp.date = CURRENT_DATE()
+        ORDER BY pp.process_id;
+    </select>
+</mapper>
