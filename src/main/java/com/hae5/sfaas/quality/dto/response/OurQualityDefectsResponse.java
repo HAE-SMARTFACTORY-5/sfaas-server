@@ -9,15 +9,15 @@ import java.time.LocalDate;
 @Builder(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class QualityDefectsResponse {
+public class OurQualityDefectsResponse {
 
     private LocalDate occurrenceDate;
     private String model;
     private String cause;
     private Boolean resolveStatus;
 
-    public static QualityDefectsResponse from(QualityDefects qualityDefects) {
-        return QualityDefectsResponse.builder()
+    public static OurQualityDefectsResponse from(QualityDefects qualityDefects) {
+        return OurQualityDefectsResponse.builder()
                 .occurrenceDate(qualityDefects.getDate())
                 .model(qualityDefects.getModel())
                 .cause(qualityDefects.getCause())

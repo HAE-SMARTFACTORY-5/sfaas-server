@@ -92,4 +92,3 @@ create table IF NOT EXISTS quality_defects
 
 create index IF NOT EXISTS factory_id
     on quality_defects (factory_id);
-

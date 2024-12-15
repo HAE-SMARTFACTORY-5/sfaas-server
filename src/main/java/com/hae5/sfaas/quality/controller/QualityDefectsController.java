@@ -1,7 +1,8 @@
 package com.hae5.sfaas.quality.controller;
 
 import com.hae5.sfaas.common.config.security.UserDetailsImpl;
-import com.hae5.sfaas.quality.dto.response.QualityDefectsResponse;
+import com.hae5.sfaas.quality.dto.response.OtherQualityDefectsResponse;
+import com.hae5.sfaas.quality.dto.response.OurQualityDefectsResponse;
 import com.hae5.sfaas.quality.service.QualityDefectsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +21,14 @@ public class QualityDefectsController {
     private final QualityDefectsService qualityDefectsService;
 
     @GetMapping("/our")
-    public ResponseEntity<List<QualityDefectsResponse>> getOurQualityDefects(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-        List<QualityDefectsResponse> response = qualityDefectsService.getOurQualityDefects(userDetails.getUserId());
+    public ResponseEntity<List<OurQualityDefectsResponse>> getOurQualityDefects(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        List<OurQualityDefectsResponse> response = qualityDefectsService.getOurQualityDefects(userDetails.getUserId());
+        return ResponseEntity.ok().body(response);
+    }
+
+    @GetMapping("/other")
+    public ResponseEntity<List<OtherQualityDefectsResponse>> getOtherQualityDefects(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        List<OtherQualityDefectsResponse> response = qualityDefectsService.getOtherQualityDefects(userDetails.getUserId());
         return ResponseEntity.ok().body(response);
     }
 }

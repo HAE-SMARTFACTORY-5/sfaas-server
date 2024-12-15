@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hae5.sfaas.SfaasApplicationTests;
 import com.hae5.sfaas.common.jwt.AccessTokenInfo;
 import com.hae5.sfaas.common.jwt.JwtProvider;
-import com.hae5.sfaas.quality.dto.response.QualityDefectsResponse;
+import com.hae5.sfaas.quality.dto.response.OurQualityDefectsResponse;
 import com.hae5.sfaas.quality.model.QualityDefects;
 import com.hae5.sfaas.quality.service.QualityDefectsService;
 import com.hae5.sfaas.user.enums.UserRole;
@@ -67,13 +67,50 @@ public class QualityDefectsControllerTest extends SfaasApplicationTests {
         List<QualityDefects> qualityDefectsList = new ArrayList<>();
         qualityDefectsList.add(qualityDefects);
 
-        List<QualityDefectsResponse> response = qualityDefectsList.stream().map(QualityDefectsResponse::from).toList();
+        List<OurQualityDefectsResponse> response = qualityDefectsList.stream().map(OurQualityDefectsResponse::from).toList();
 
         when(jwtProvider.resolveToken(any(String.class))).thenReturn(accessTokenInfo);
         when(qualityDefectsService.getOurQualityDefects(eq(1L))).thenReturn(response);
 
         //when & then
         mockMvc.perform(get("/api/v1/quality-defects/our")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", "Baerer accessToken"))
+                .andExpect(status().isOk());
+    }
+
+    @DisplayName("다른 공장 불량 품질 내역 조회")
+    @Test
+    public void getOtherQualityDefectsTest() throws Exception {
+        //given
+        User user = User.builder()
+                .userId(1L)
+                .employId("test")
+                .password("pwd")
+                .role(UserRole.MEMBER)
+                .build();
+
+        AccessTokenInfo accessTokenInfo = AccessTokenInfo.of(user.getUserId().toString(), user.getRole().name());
+        QualityDefects qualityDefects = QualityDefects.builder()
+                .date(LocalDate.now())
+                .model("model")
+                .defectType("defectType")
+                .resolved(false)
+                .defectiveQuantity(10)
+                .shift("shift")
+                .factoryId(2L)
+                .build();
+
+        List<QualityDefects> qualityDefectsList = new ArrayList<>();
+        qualityDefectsList.add(qualityDefects);
+
+        List<OurQualityDefectsResponse> response = qualityDefectsList.stream().map(OurQualityDefectsResponse::from).toList();
+
+        when(jwtProvider.resolveToken(any(String.class))).thenReturn(accessTokenInfo);
+        when(qualityDefectsService.getOurQualityDefects(eq(1L))).thenReturn(response);
+
+        //when & then
+        mockMvc.perform(get("/api/v1/quality-defects/other")
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization", "Baerer accessToken"))
                 .andExpect(status().isOk());

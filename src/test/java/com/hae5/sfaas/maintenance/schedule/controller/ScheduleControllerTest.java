@@ -46,7 +46,7 @@ class ScheduleControllerTest extends SfaasApplicationTests {
     }
 
     @Test
-    @DisplayName("전체 Schedule 목록 조회 테스트")
+    @DisplayName("전체 Schedule 목록을 조회한다")
     void getSchedule() throws Exception {
         // given
         Schedule schedule1 = Schedule.create(1,"line1", "process1", "machine1", "contents1", "remarks1");
@@ -69,7 +69,7 @@ class ScheduleControllerTest extends SfaasApplicationTests {
     }
 
     @Test
-    @DisplayName("빈 Schedule 목록 조회 테스트")
+    @DisplayName("빈 Schedule 목록을 조회한다")
     void getEmptySchedule() throws Exception {
         mockMvc.perform(get("/api/v1/maintenance/schedule")
                 .header("Authorization", "Bearer test-token"))
@@ -81,7 +81,7 @@ class ScheduleControllerTest extends SfaasApplicationTests {
     }
 
     @Test
-    @DisplayName("ID로 특정 Schedule 조회 테스트")
+    @DisplayName("ID로 특정 Schedule을 조회한다")
     void getScheduleById() throws Exception {
         // given
         Schedule schedule = Schedule.create(1,"line1", "process1", "machine1", "contents1", "remarks1");
@@ -99,7 +99,7 @@ class ScheduleControllerTest extends SfaasApplicationTests {
     }
 
     @Test
-    @DisplayName("존재하지 않는 Schedule ID 조회시 400 응답")
+    @DisplayName("존재하지 않는 Schedule ID 조회시 400 응답을 반환한다")
     void getScheduleById_NotFound() throws Exception {
         mockMvc.perform(get("/api/v1/maintenance/schedule/{id}", 999)
                 .header("Authorization", "Bearer test-token"))

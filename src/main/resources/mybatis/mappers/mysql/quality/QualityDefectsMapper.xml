@@ -19,10 +19,16 @@
     </select>
 
     <select id="getOurQualityDefects" resultType="com.hae5.sfaas.quality.model.QualityDefects">
+        SELECT qd.*
+        FROM quality_defects as qd
+        WHERE qd.factory_id = #{factoryId} AND qd.date = CURRENT_DATE();
+    </select>
+    <select id="getOtherQualityDefects"
+            resultMap="mybatis.mappers.mysql.quality.QualityDefectsResultMap.OtherQualityDefectsResponse" resultType="HashMap">
         SELECT qd.*, f.factory_name
         FROM quality_defects as qd
-        LEFT JOIN factory as f ON f.factory_id = qd.factory_id
-        WHERE qd.factory_id = #{factoryId} AND qd.date = CURRENT_DATE();
+                 LEFT JOIN factory as f ON f.factory_id = qd.factory_id
+        WHERE qd.factory_id != #{factoryId} AND qd.date = CURRENT_DATE();
     </select>
 
 </mapper>
