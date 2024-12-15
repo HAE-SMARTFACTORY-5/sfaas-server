@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hae5.sfaas.quality.mapper.QualityDefectsMapper">
+
+    <insert id="save">
+        INSERT INTO quality_defects (date, model, defect_type, resolved, defective_quantity, shift, cause, action, factory_id, resolved_date)
+        VALUES (#{date}, #{model}, #{defectType}, #{resolved}, #{defectiveQuantity}, #{shift}, #{cause}, #{action}, #{factoryId}, #{resolvedDate});
+    </insert>
+
+    <delete id="deleteAll">
+        DELETE FROM quality_defects;
+    </delete>
+
+    <select id="findAll" resultType="com.hae5.sfaas.quality.model.QualityDefects">
+        SELECT qd.*
+        FROM quality_defects as qd;
+    </select>
+
+    <select id="getOurQualityDefects" resultType="com.hae5.sfaas.quality.model.QualityDefects">
+        SELECT qd.*, f.factory_name
+        FROM quality_defects as qd
+        LEFT JOIN factory as f ON f.factory_id = qd.factory_id
+        WHERE qd.factory_id = #{factoryId} AND qd.date = CURRENT_DATE();
+    </select>
+
+</mapper>
