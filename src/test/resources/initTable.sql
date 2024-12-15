@@ -67,6 +67,15 @@ create table IF NOT EXISTS factory
     factory_name varchar(20) not null
 );
 
+CREATE TABLE IF NOT EXISTS maintenance_schedule (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    line VARCHAR(10),
+    process VARCHAR(10),
+    machine VARCHAR(50) NOT NULL,
+    contents VARCHAR(100) NOT NULL,
+    remarks VARCHAR(50)
+);
+
 create table IF NOT EXISTS quality_defects
 (
     date               date         not null,
