@@ -5,16 +5,46 @@
 <mapper namespace="com.hae5.sfaas.alerts.mapper.AlertsMapper">
 
     <select id="findAll" resultType="com.hae5.sfaas.alerts.model.Alerts">
-        SELECT f.*
-        FROM unexpected_faults as f
+        SELECT 
+            alarm_id as alarmId,
+            line_id as line,
+            process_id as process,
+            alarm_type as alarmType,
+            alarm_time as alarmTime
+        FROM unexpected_faults
         ORDER BY alarm_time
         LIMIT 5
     </select>
 
     <select id="findById" parameterType="String" resultType="com.hae5.sfaas.alerts.model.Alerts">
-        SELECT *
+        SELECT 
+            alarm_id as alarmId,
+            line_id as line,
+            process_id as process,
+            alarm_type as alarmType,
+            alarm_time as alarmTime
         FROM unexpected_faults
         WHERE alarm_id = #{alarmId}
     </select>
+
+    <insert id="save" parameterType="com.hae5.sfaas.alerts.model.Alerts">
+        INSERT INTO unexpected_faults (
+            alarm_id,
+            line_id,
+            process_id,
+            alarm_type,
+            alarm_time
+        ) VALUES (
+            #{alarmId},
+            #{line},
+            #{process},
+            #{alarmType},
+            #{alarmTime}
+        )
+    </insert>
+
+    <delete id="deleteAll">
+        DELETE FROM unexpected_faults
+    </delete>
 
 </mapper>
