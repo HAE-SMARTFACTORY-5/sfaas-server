@@ -17,10 +17,7 @@ public class QuarterUtil {
         QUARTER_MONTHS.put(4, List.of("oct", "nov", "decem"));
     }
 
-    public static int getNowQuarter() {
-        // 현재 날짜 가져오기
-        LocalDate currentDate = LocalDate.now();
-
+    public static int getNowQuarter(LocalDate currentDate) {
         // 현재 월 가져오기
         int currentMonth = currentDate.getMonthValue();
 

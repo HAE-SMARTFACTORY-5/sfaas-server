@@ -75,7 +75,8 @@ public class LineOperationRateService {
     }
 
     private List<String> getNowQuarterMonths() {
-        int nowQuarter = QuarterUtil.getNowQuarter();
+        LocalDate now = LocalDate.now();
+        int nowQuarter = QuarterUtil.getNowQuarter(now);
         return QuarterUtil.getQuarterMonths(nowQuarter);
     }
 

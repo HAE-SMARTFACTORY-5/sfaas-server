@@ -20,6 +20,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -63,7 +64,7 @@ public class LineOperationRateControllerTest extends SfaasApplicationTests {
 
         List<MonthlyLineOperationRateResponse> result = new ArrayList<>();
         result.add(new MonthlyLineOperationRateResponse("jan"));
-        List<String> quarterMonths = QuarterUtil.getQuarterMonths(QuarterUtil.getNowQuarter());
+        List<String> quarterMonths = QuarterUtil.getQuarterMonths(QuarterUtil.getNowQuarter(LocalDate.now()));
         HashMap<String, List<MonthlyLineOperationRateResponse>> hashMap = new LinkedHashMap<>();
         hashMap.put("CT", result);
 
