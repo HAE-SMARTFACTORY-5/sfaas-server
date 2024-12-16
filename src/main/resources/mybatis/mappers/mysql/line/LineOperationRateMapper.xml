@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hae5.sfaas.line.mapper.LineOperationRateMapper">
+    <insert id="save">
+        INSERT INTO line_operation_rate (id, factory_id, year, jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, decem,
+                                         total, created_at, process_id, line_id, category)
+        VALUES (#{lineOperationRateId}, #{factoryId}, #{year}, #{jan}, #{feb}, #{mar}, #{apr}, #{may}, #{jun}, #{jul},
+                #{aug}, #{sep}, #{oct}, #{nov}, #{decem}, #{total}, #{createdAt}, #{processId}, #{lineId}, #{category});
+
+    </insert>
+
+    <delete id="deleteAll">
+        DELETE FROM line_operation_rate;
+    </delete>
+
+    <select id="getNowYearLineOperationRate" resultType="com.hae5.sfaas.line.model.LineOperationRate">
+        SELECT lor.*
+        FROM line_operation_rate as lor
+        WHERE lor.factory_id = #{factoryId} AND lor.year = #{year} AND lor.category in ('사업계획', '종합가동률', '차이', '가동시간', 'UPH');
+    </select>
+
+    <select id="findAll" resultType="com.hae5.sfaas.line.model.LineOperationRate">
+        SELECT lor.*
+        FROM line_operation_rate as lor;
+    </select>
+</mapper>
