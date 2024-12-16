@@ -13,6 +13,7 @@ import com.hae5.sfaas.alerts.model.Alerts;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class AlertsResponse {
+    private String alarmId;
     private String line;
     private String process;
     private String alarmType;
@@ -20,6 +21,7 @@ public class AlertsResponse {
 
     public static AlertsResponse from(Alerts alerts) {
         return AlertsResponse.builder()
+                .alarmId(alerts.getAlarmId())
                 .line(alerts.getLine())
                 .process(alerts.getProcess())
                 .alarmType(alerts.getAlarmType())

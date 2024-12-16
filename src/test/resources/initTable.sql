@@ -10,15 +10,6 @@ CREATE TABLE IF NOT EXISTS department
     dept_name varchar(255) not null
 );
 
-
-CREATE TABLE IF NOT EXISTS unexpected_faults (
-    alarm_id VARCHAR(10) PRIMARY KEY,
-    line VARCHAR(10),
-    process VARCHAR(10),
-    alarm_type VARCHAR(10),
-    alarm_time DATETIME
-);
-
 CREATE TABLE IF NOT EXISTS failure_rate (
     id VARCHAR(20) PRIMARY KEY,
     process VARCHAR(10),
@@ -131,6 +122,41 @@ create table IF NOT EXISTS production_performance
 
 create index IF NOT EXISTS line_id
     on production_performance (line_id);
+
+
+CREATE TABLE IF NOT EXISTS unexpected_faults (
+    alarm_id VARCHAR(10) PRIMARY KEY,
+    line_id VARCHAR(10),
+    process_id VARCHAR(10),
+    alarm_type VARCHAR(10),
+    alarm_time DATETIME
+);
+
+CREATE TABLE IF NOT EXISTS unexpected_faults_user_input (
+    alarm_id varchar(9) NOT NULL,
+    fault_detail varchar(50) NOT NULL,
+    action_start_time datetime NOT NULL,
+    action_completion_time datetime DEFAULT NULL,
+    downtime int DEFAULT NULL,
+    completion_status varchar(20) NOT NULL,
+    PRIMARY KEY (alarm_id),
+    CONSTRAINT unexpected_faults_user_input_ibfk_1 
+    FOREIGN KEY (alarm_id) REFERENCES unexpected_faults(alarm_id)
+);
+
+CREATE TABLE IF NOT EXISTS alert_action_details (
+    alert_action_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    alarm_id varchar(9),
+    fault_type varchar(9),
+    action_detail VARCHAR(255),
+    maintenance_staff VARCHAR(100),
+    action_time TIMESTAMP,
+    action_sequence INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (alarm_id) REFERENCES unexpected_faults(alarm_id),
+    CONSTRAINT check_max_sequence CHECK (action_sequence <= 10)
+);
+
 
 create table IF NOT EXISTS line_operation_rate
 (

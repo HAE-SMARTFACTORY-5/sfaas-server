@@ -10,5 +10,9 @@ import java.util.Optional;
 public interface AlertsMapper {
     List<Alerts> findAll();
 
-    Optional<Alerts> findById(Long faultId);
+    Optional<Alerts> findById(String alarmId);
+
+    void save(Alerts alerts);
+
+    void deleteAll();
 }
