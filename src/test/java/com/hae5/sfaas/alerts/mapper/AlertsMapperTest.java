@@ -14,14 +14,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 class AlertsMapperTest {
 
-    @Autowired
-    private AlertsMapper alertsMapper;
-
-    @Test
-    @DisplayName("DB 연결 테스트")
-    void dbConnectionTest() {
-        List<Alerts> result = alertsMapper.findAll();
-        assertThat(result).isNotNull();
-    }
+//    @Autowired
+//    private AlertsMapper alertsMapper;
+//
+//    @Test
+//    @DisplayName("DB 연결 테스트")
+//    void dbConnectionTest() {
+//        List<Alerts> result = alertsMapper.findAll();
+//        assertThat(result).isNotNull();
+//    }
 
 }

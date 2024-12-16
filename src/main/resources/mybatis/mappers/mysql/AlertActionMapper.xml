@@ -4,27 +4,95 @@
 
 <mapper namespace="com.hae5.sfaas.alerts.mapper.AlertActionMapper">
 
-    <insert id="save" parameterType="com.hae5.sfaas.alerts.model.AlertAction" useGeneratedKeys="true" keyProperty="alarmId">
-        INSERT INTO unexpected_faults_user_input
-        VALUES (#{maintenanceId}, #{equipmentId}, #{plannedDate}, #{executionDate}, #{inspectResult},
-        #{estimatedTime}, #{status}, #{createdAt});
+     <!--  MYSQL  -->
+<!--    <insert id="save">-->
+<!--        INSERT INTO unexpected_faults_user_input (-->
+<!--            alarm_id,-->
+<!--            fault_detail,-->
+<!--            action_start_time,-->
+<!--            action_completion_time,-->
+<!--            downtime,-->
+<!--            completion_status-->
+<!--        ) VALUES (-->
+<!--            #{alarmId},-->
+<!--            #{faultDetail},-->
+<!--            #{actionStartTime},-->
+<!--            #{actionCompletionTime},-->
+<!--            #{downtime},-->
+<!--            #{completionStatus}-->
+<!--        )-->
+<!--        ON DUPLICATE KEY UPDATE-->
+<!--            fault_detail = VALUES(fault_detail),-->
+<!--            action_start_time = VALUES(action_start_time),-->
+<!--            action_completion_time = VALUES(action_completion_time),-->
+<!--            downtime = VALUES(downtime),-->
+<!--            completion_status = VALUES(completion_status)-->
+<!--    </insert>-->
+
+    <!--  H2 -->
+    <insert id="save">
+        MERGE INTO unexpected_faults_user_input (
+            alarm_id,
+            fault_detail,
+            action_start_time,
+            action_completion_time,
+            downtime,
+            completion_status
+        ) KEY(alarm_id) VALUES (
+            #{alarmId},
+            #{faultDetail},
+            #{actionStartTime},
+            #{actionCompletionTime},
+            #{downtime},
+            #{completionStatus}
+        )
     </insert>
 
-    <delete id="deleteAll">
-        DELETE FROM unexpected_faults_user_input;
+    <insert id="saveActionDetail">
+        INSERT INTO alert_action_details (
+            alarm_id,
+            fault_type,
+            action_detail, 
+            maintenance_staff, 
+            action_time, 
+            action_sequence
+        ) VALUES (
+            #{alarmId},
+            #{faultType},
+            #{actionDetail},
+            #{maintenanceStaff}, 
+            #{actionTime}, 
+            #{actionSequence}
+        )
+    </insert>
+
+    <select id="findByAlarmId" resultType="com.hae5.sfaas.alerts.model.AlertAction">
+        SELECT *
+        FROM unexpected_faults_user_input
+        WHERE alarm_id = #{alarmId}
+        LIMIT 1
+    </select>
+
+    <select id="findDetailsByAlarmId" resultType="com.hae5.sfaas.alerts.model.AlertActionDetail">
+        SELECT * FROM alert_action_details 
+        WHERE alarm_id = #{alarmId} 
+        ORDER BY action_time ASC, action_sequence ASC
+    </select>
+
+    <delete id="deleteAllDetails">
+        DELETE FROM alert_action_details
     </delete>
 
+    <delete id="deleteAll">
+        DELETE FROM unexpected_faults_user_input
+    </delete>
 
-    <select id="findById" resultType="com.hae5.sfaas.alerts.model.AlertAction">
-        SELECT u.*
-        FROM unexpected_faults_user_input as u
-        WHERE u.id = #{alarm_id}
-        LIMIT 1;
-    </select>
+    <delete id="deleteByAlarmId">
+        DELETE FROM unexpected_faults WHERE alarm_id = #{alarmId}
+    </delete>
 
-    <select id="findAll" resultType="com.hae5.sfaas.alerts.model.AlertAction">
-        SELECT u.*
-        FROM unexpected_faults_user_input as u;
-    </select>
-
+    <delete id="deleteAllDetailsByAlarmId">
+        DELETE FROM alert_action_details 
+        WHERE alarm_id = #{alarmId}
+    </delete>
 </mapper>

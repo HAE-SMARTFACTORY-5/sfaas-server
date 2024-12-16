@@ -11,4 +11,8 @@ public interface AlertsMapper {
     List<Alerts> findAll();
 
     Optional<Alerts> findById(String alarmId);
+
+    void save(Alerts alerts);
+
+    void deleteAll();
 }

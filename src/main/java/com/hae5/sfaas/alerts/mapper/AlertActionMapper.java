@@ -1,6 +1,8 @@
 package com.hae5.sfaas.alerts.mapper;
 
 import com.hae5.sfaas.alerts.model.AlertAction;
+import com.hae5.sfaas.alerts.model.AlertActionDetail;
+
 import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 import java.util.Optional;
@@ -9,9 +11,16 @@ import java.util.Optional;
 public interface AlertActionMapper {
     void save(AlertAction alertAction);
 
-    Optional<AlertAction> findById(String alarmId);
+    void saveActionDetail(AlertActionDetail detail);
 
-    List<AlertAction> findAll();
+    Optional<AlertAction> findByAlarmId(String alarmId);
+
+    List<AlertActionDetail> findDetailsByAlarmId(String alarmId);
 
     void deleteAll();
+
+    void deleteAllDetails();
+
+    void deleteAllDetailsByAlarmId(String alarmId);
+
 }

@@ -14,8 +14,9 @@ public class AlertsService {
 
     private final AlertsMapper alertsMapper;
 
+    // 모든 알람 내역 가져오기
     @Transactional(readOnly = true)
-    public List<AlertsResponse> getFault() {
+    public List<AlertsResponse> getAlerts() {
         return alertsMapper.findAll().stream()
                 .map(AlertsResponse::from)
                 .toList();
