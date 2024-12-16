@@ -2,8 +2,6 @@ package com.hae5.sfaas.line.dto.response;
 
 import lombok.Getter;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 @Getter
 public class MonthlyLineOperationRateResponse {

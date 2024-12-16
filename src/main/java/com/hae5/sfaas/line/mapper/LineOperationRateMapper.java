@@ -7,5 +7,8 @@ import java.util.List;
 
 @Mapper
 public interface LineOperationRateMapper {
-    List<LineOperationRate> getQuarterLineOperationRate(Long factoryId, int year);
+    void save(LineOperationRate lineOperationRate);
+    void deleteAll();
+    List<LineOperationRate> findAll();
+    List<LineOperationRate> getNowYearLineOperationRate(Long factoryId, int year);
 }
