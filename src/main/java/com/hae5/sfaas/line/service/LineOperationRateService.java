@@ -50,7 +50,7 @@ public class LineOperationRateService {
     public AllLineOperationRateResponse getAllLineOperationRate(Long userId) {
         User user = userMapper.findById(userId)
                 .orElseThrow(() -> SfaasException.create(ExceptionCode.USER_NOT_FOUNT_ERROR));
-        List<String> nowQuarterMonths = getNowQuarterMonths();
+        List<String> nowQuarterMonths = QuarterUtil.getAllMonths();
 
         Map<String, List<LineOperationRate>> collect = getUserFactoryLineOperationRate(user);
 
@@ -66,7 +66,7 @@ public class LineOperationRateService {
 
     private Map<String, List<LineOperationRate>> getUserFactoryLineOperationRate(User user) {
         // 공정별 그룹화
-        Map<String, List<LineOperationRate>> collect = lineOperationRateMapper.getQuarterLineOperationRate(user.getFactoryId(), LocalDate.now().getYear()).stream()
+        Map<String, List<LineOperationRate>> collect = lineOperationRateMapper.getNowYearLineOperationRate(user.getFactoryId(), LocalDate.now().getYear()).stream()
                 .collect(Collectors.groupingBy(
                         LineOperationRate::getProcessId,
                         Collectors.toList()
