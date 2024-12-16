@@ -65,4 +65,31 @@ public class ProductionPerformanceControllerTest extends SfaasApplicationTests {
                 .andExpect(status().isOk());
     }
 
+    @DisplayName("이번달 생산 계획 및 실적 조회")
+    @Test
+    public void getMonthPerformanceTest() throws Exception {
+        //given
+        User user = User.builder()
+                .userId(1L)
+                .employId("test")
+                .password("pwd")
+                .role(UserRole.MEMBER)
+                .build();
+
+        AccessTokenInfo accessTokenInfo = AccessTokenInfo.of(user.getUserId().toString(), user.getRole().name());
+
+        List<ProductionPerformanceResponse> response = new ArrayList<>();
+        response.add(new ProductionPerformanceResponse("프레스", 10, 9));
+
+
+        when(jwtProvider.resolveToken(any(String.class))).thenReturn(accessTokenInfo);
+        when(productionPerformanceService.getMonthPerformance()).thenReturn(response);
+
+        //when & then
+        mockMvc.perform(get("/api/v1/production-performance/month")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", "Baerer accessToken"))
+                .andExpect(status().isOk());
+    }
+
 }

@@ -118,4 +118,30 @@ public class ProductionPerformanceMapperTest extends SfaasApplicationTests {
         assertThat(performanceResponses.size()).isEqualTo(1);
     }
 
+    @DisplayName("이번달 해당하는 ProductionPerformance 전체 조회")
+    @Test
+    public void getMonthPerformanceTest() {
+        //given
+        ProductionPerformance productionPerformance1 = ProductionPerformance.builder()
+                .performanceId(100L)
+                .date(LocalDate.now().minusMonths(1))
+                .plannedQuantity(20)
+                .actualQuantity(10)
+                .build();
+        ProductionPerformance productionPerformance2 = ProductionPerformance.builder()
+                .performanceId(101L)
+                .date(LocalDate.now())
+                .plannedQuantity(20)
+                .actualQuantity(10)
+                .build();
+        productionPerformanceMapper.save(productionPerformance1);
+        productionPerformanceMapper.save(productionPerformance2);
+
+        //when
+        List<ProductionPerformanceResponse> performanceResponses = productionPerformanceMapper.getTodayPerformance();
+
+        //then
+        assertThat(performanceResponses.size()).isEqualTo(1);
+    }
+
 }

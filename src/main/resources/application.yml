@@ -55,6 +55,6 @@ spring:
 
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:hae5-sfaas;NON_KEYWORDS=NAME,USER
+    url: jdbc:h2:mem:hae5-sfaas;NON_KEYWORDS=NAME,USER,YEAR
     username: sa
     password:

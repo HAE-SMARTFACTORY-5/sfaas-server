@@ -156,3 +156,33 @@ CREATE TABLE IF NOT EXISTS alert_action_details (
     FOREIGN KEY (alarm_id) REFERENCES unexpected_faults(alarm_id),
     CONSTRAINT check_max_sequence CHECK (action_sequence <= 10)
 );
+
+
+create table IF NOT EXISTS line_operation_rate
+(
+    id         int                                 not null
+        primary key,
+    factory_id int                                 not null,
+    year       int                                 not null,
+    jan        decimal(10, 2)                      null,
+    feb        decimal(10, 2)                      null,
+    mar        decimal(10, 2)                      null,
+    apr        decimal(10, 2)                      null,
+    may        decimal(10, 2)                      null,
+    aug        decimal(10, 2)                      null,
+    oct        decimal(10, 2)                      null,
+    nov        decimal(10, 2)                      null,
+    decem       decimal(10, 2)                      null,
+    total      decimal(10, 2)                      null,
+    created_at timestamp default CURRENT_TIMESTAMP null,
+    process_id varchar(20)                         null,
+    line_id    int                                 null,
+    category   varchar(50)                         null,
+    jun        double                              null,
+    jul        double                              null,
+    sep        double                              null
+);
+
+create index IF NOT EXISTS factory_id
+    on line_operation_rate (factory_id);
+

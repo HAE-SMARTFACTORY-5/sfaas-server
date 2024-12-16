@@ -26,4 +26,17 @@
         ORDER BY pp.process_id;
     </select>
 
+    <select id="getMonthPerformance" resultType="com.hae5.sfaas.production.dto.response.ProductionPerformanceResponse">
+        SELECT SUM(pp.planned_quantity) as planned_quantity,
+               SUM(pp.actual_quantity) as actual_quantity,
+               p.process_name
+        FROM production_performance as pp
+                 LEFT JOIN process as p ON p.process_id = pp.process_id
+        WHERE MONTH(pp.date) = MONTH(CURRENT_DATE())
+          AND YEAR(pp.date) = YEAR(CURRENT_DATE())
+        GROUP BY pp.process_id
+        ORDER BY pp.process_id;
+
+    </select>
+
 </mapper>

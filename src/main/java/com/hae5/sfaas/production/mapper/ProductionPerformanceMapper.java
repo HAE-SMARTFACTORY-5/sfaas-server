@@ -13,4 +13,5 @@ public interface ProductionPerformanceMapper {
     List<ProductionPerformanceResponse> findAll();
     List<ProductionPerformanceResponse> getTodayPerformance();
 
+    List<ProductionPerformanceResponse> getMonthPerformance();
 }

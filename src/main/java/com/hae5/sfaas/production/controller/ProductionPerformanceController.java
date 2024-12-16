@@ -22,4 +22,10 @@ public class ProductionPerformanceController {
         List<ProductionPerformanceResponse> response = productionPerformanceService.getTodayPerformance();
         return ResponseEntity.ok().body(response);
     }
+
+    @GetMapping("/month")
+    public ResponseEntity<List<ProductionPerformanceResponse>> getMonthPerformance() {
+        List<ProductionPerformanceResponse> response = productionPerformanceService.getMonthPerformance();
+        return ResponseEntity.ok().body(response);
+    }
 }
