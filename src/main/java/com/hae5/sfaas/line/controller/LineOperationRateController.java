@@ -1,7 +1,7 @@
 package com.hae5.sfaas.line.controller;
 
 import com.hae5.sfaas.common.config.security.UserDetailsImpl;
-import com.hae5.sfaas.line.dto.response.MonthlyLineOperationRateResponse;
+import com.hae5.sfaas.line.dto.response.AllLineOperationRateResponse;
 import com.hae5.sfaas.line.dto.response.QuarterLineOperationRateResponse;
 import com.hae5.sfaas.line.service.LineOperationRateService;
 import lombok.RequiredArgsConstructor;
@@ -10,9 +10,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/line-operation-rate")
@@ -26,6 +23,13 @@ public class LineOperationRateController {
             @AuthenticationPrincipal UserDetailsImpl userDetails) {
         QuarterLineOperationRateResponse response = lineOperationRateService.getQuarterLineOperationRate(userDetails.getUserId());
         return ResponseEntity.ok().body(response);
-
     }
+
+    @GetMapping("/all")
+    public ResponseEntity<AllLineOperationRateResponse> getAllLineOperationRate(
+            @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        AllLineOperationRateResponse response = lineOperationRateService.getAllLineOperationRate(userDetails.getUserId());
+        return ResponseEntity.ok().body(response);
+    }
+
 }

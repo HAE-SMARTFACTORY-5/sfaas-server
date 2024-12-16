@@ -3,6 +3,7 @@ package com.hae5.sfaas.line.service;
 import com.hae5.sfaas.common.exception.ExceptionCode;
 import com.hae5.sfaas.common.exception.SfaasException;
 import com.hae5.sfaas.common.utils.QuarterUtil;
+import com.hae5.sfaas.line.dto.response.AllLineOperationRateResponse;
 import com.hae5.sfaas.line.dto.response.MonthlyLineOperationRateResponse;
 import com.hae5.sfaas.line.dto.response.QuarterLineOperationRateResponse;
 import com.hae5.sfaas.line.mapper.LineOperationRateMapper;
@@ -32,7 +33,7 @@ public class LineOperationRateService {
                 .orElseThrow(() -> SfaasException.create(ExceptionCode.USER_NOT_FOUNT_ERROR));
         List<String> nowQuarterMonths = getNowQuarterMonths();
 
-        Map<String, List<LineOperationRate>> collect = getAllLineOperationRate(user);
+        Map<String, List<LineOperationRate>> collect = getUserFactoryLineOperationRate(user);
 
         // Month 별 그룹화
         Map<String, List<MonthlyLineOperationRateResponse>> result = new LinkedHashMap<>();
@@ -44,7 +45,26 @@ public class LineOperationRateService {
         return QuarterLineOperationRateResponse.of(nowQuarterMonths, result);
     }
 
-    private Map<String, List<LineOperationRate>> getAllLineOperationRate(User user) {
+
+    @Transactional(readOnly = true)
+    public AllLineOperationRateResponse getAllLineOperationRate(Long userId) {
+        User user = userMapper.findById(userId)
+                .orElseThrow(() -> SfaasException.create(ExceptionCode.USER_NOT_FOUNT_ERROR));
+        List<String> nowQuarterMonths = getNowQuarterMonths();
+
+        Map<String, List<LineOperationRate>> collect = getUserFactoryLineOperationRate(user);
+
+        // Month 별 그룹화
+        Map<String, List<MonthlyLineOperationRateResponse>> result = new LinkedHashMap<>();
+        for (String key : collect.keySet()) {
+            List<MonthlyLineOperationRateResponse> monthlyLineOperationRateResponses = transformToMonthly(nowQuarterMonths, collect.get(key));
+            result.put(key, monthlyLineOperationRateResponses);
+        }
+
+        return AllLineOperationRateResponse.from(result);
+    }
+
+    private Map<String, List<LineOperationRate>> getUserFactoryLineOperationRate(User user) {
         // 공정별 그룹화
         Map<String, List<LineOperationRate>> collect = lineOperationRateMapper.getQuarterLineOperationRate(user.getFactoryId(), LocalDate.now().getYear()).stream()
                 .collect(Collectors.groupingBy(
