@@ -2,8 +2,6 @@ package com.hae5.sfaas.line.mapper;
 
 import com.hae5.sfaas.SfaasApplicationTests;
 import com.hae5.sfaas.line.model.LineOperationRate;
-import com.hae5.sfaas.user.enums.UserRole;
-import com.hae5.sfaas.user.model.User;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
