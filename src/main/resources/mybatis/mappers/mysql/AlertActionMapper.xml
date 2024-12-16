@@ -5,40 +5,15 @@
 <mapper namespace="com.hae5.sfaas.alerts.mapper.AlertActionMapper">
 
      <!--  MYSQL  -->
-<!--    <insert id="save">-->
-<!--        INSERT INTO unexpected_faults_user_input (-->
-<!--            alarm_id,-->
-<!--            fault_detail,-->
-<!--            action_start_time,-->
-<!--            action_completion_time,-->
-<!--            downtime,-->
-<!--            completion_status-->
-<!--        ) VALUES (-->
-<!--            #{alarmId},-->
-<!--            #{faultDetail},-->
-<!--            #{actionStartTime},-->
-<!--            #{actionCompletionTime},-->
-<!--            #{downtime},-->
-<!--            #{completionStatus}-->
-<!--        )-->
-<!--        ON DUPLICATE KEY UPDATE-->
-<!--            fault_detail = VALUES(fault_detail),-->
-<!--            action_start_time = VALUES(action_start_time),-->
-<!--            action_completion_time = VALUES(action_completion_time),-->
-<!--            downtime = VALUES(downtime),-->
-<!--            completion_status = VALUES(completion_status)-->
-<!--    </insert>-->
-
-    <!--  H2 -->
     <insert id="save">
-        MERGE INTO unexpected_faults_user_input (
+        INSERT INTO unexpected_faults_user_input (
             alarm_id,
             fault_detail,
             action_start_time,
             action_completion_time,
             downtime,
             completion_status
-        ) KEY(alarm_id) VALUES (
+        ) VALUES (
             #{alarmId},
             #{faultDetail},
             #{actionStartTime},
@@ -46,22 +21,47 @@
             #{downtime},
             #{completionStatus}
         )
+        ON DUPLICATE KEY UPDATE
+            fault_detail = VALUES(fault_detail),
+            action_start_time = VALUES(action_start_time),
+            action_completion_time = VALUES(action_completion_time),
+            downtime = VALUES(downtime),
+            completion_status = VALUES(completion_status)
     </insert>
+
+    <!--  H2 -->
+<!--    <insert id="save">-->
+<!--        MERGE INTO unexpected_faults_user_input (-->
+<!--            alarm_id,-->
+<!--            fault_detail,-->
+<!--            action_start_time,-->
+<!--            action_completion_time,-->
+<!--            downtime,-->
+<!--            completion_status-->
+<!--        ) KEY(alarm_id) VALUES (-->
+<!--            #{alarmId},-->
+<!--            #{faultDetail},-->
+<!--            #{actionStartTime},-->
+<!--            #{actionCompletionTime},-->
+<!--            #{downtime},-->
+<!--            #{completionStatus}-->
+<!--        )-->
+<!--    </insert>-->
 
     <insert id="saveActionDetail">
         INSERT INTO alert_action_details (
             alarm_id,
             fault_type,
-            action_detail, 
-            maintenance_staff, 
-            action_time, 
+            action_detail,
+            maintenance_staff,
+            action_time,
             action_sequence
         ) VALUES (
             #{alarmId},
             #{faultType},
             #{actionDetail},
-            #{maintenanceStaff}, 
-            #{actionTime}, 
+            #{maintenanceStaff},
+            #{actionTime},
             #{actionSequence}
         )
     </insert>
