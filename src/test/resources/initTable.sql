@@ -186,3 +186,15 @@ create table IF NOT EXISTS line_operation_rate
 create index IF NOT EXISTS factory_id
     on line_operation_rate (factory_id);
 
+CREATE TABLE IF NOT EXISTS item (
+   item_code VARCHAR(20) PRIMARY KEY,
+   item_name VARCHAR(100) NOT NULL,
+   location VARCHAR(10) NOT NULL,
+   stock INT NOT NULL,
+   safety_stock INT NOT NULL,
+   shortage_amount INT,
+   price DECIMAL(10,2) NOT NULL,
+   factory_id INT NOT NULL,
+   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
