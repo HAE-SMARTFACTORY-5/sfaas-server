@@ -3,7 +3,6 @@ package com.hae5.sfaas.alerts.controller;
 import com.hae5.sfaas.alerts.dto.request.AlertActionRequest;
 import com.hae5.sfaas.alerts.dto.response.AlertActionResponse;
 import com.hae5.sfaas.alerts.dto.response.AlertsResponse;
-import com.hae5.sfaas.alerts.model.AlertAction;
 import com.hae5.sfaas.alerts.service.AlertsService;
 import com.hae5.sfaas.alerts.service.AlertActionService;
 import lombok.RequiredArgsConstructor;
