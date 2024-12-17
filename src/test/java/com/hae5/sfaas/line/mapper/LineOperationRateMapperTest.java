@@ -146,4 +146,42 @@ public class LineOperationRateMapperTest extends SfaasApplicationTests {
         //then
         assertThat(nowYearLineOperationRates.size()).isEqualTo(1);
     }
+
+    @DisplayName("올해의 라인 가동률 계획 및 실적 조회")
+    @Test
+    public void getNowYearLineOperationTest() {
+        //given
+        LineOperationRate lineOperationRate1 = LineOperationRate.builder()
+                .lineOperationRateId(1L)
+                .factoryId(1L)
+                .year(2023)
+                .jan(10.0).feb(20.0).mar(30.0).apr(40.0).may(50.0).jun(60.0)
+                .jul(70.0).aug(80.0).sep(90.0).oct(100.0).nov(110.0).decem(120.0)
+                .total(820.0)
+                .createdAt(LocalDateTime.now())
+                .processId("CT")
+                .lineId(1L)
+                .category("종합가동률")
+                .build();
+        LineOperationRate lineOperationRate2 = LineOperationRate.builder()
+                .lineOperationRateId(2L)
+                .factoryId(1L)
+                .year(2024)
+                .jan(10.0).feb(20.0).mar(30.0).apr(40.0).may(50.0).jun(60.0)
+                .jul(70.0).aug(80.0).sep(90.0).oct(100.0).nov(110.0).decem(120.0)
+                .total(820.0)
+                .createdAt(LocalDateTime.now())
+                .processId("CT")
+                .lineId(1L)
+                .category("종합가동률")
+                .build();
+        lineOperationRateMapper.save(lineOperationRate1);
+        lineOperationRateMapper.save(lineOperationRate2);
+
+        //when
+        List<LineOperationRate> nowYearLineOperationRates = lineOperationRateMapper.getNowYearLineOperation(1L, 2024);
+
+        //then
+        assertThat(nowYearLineOperationRates.size()).isEqualTo(1);
+    }
 }

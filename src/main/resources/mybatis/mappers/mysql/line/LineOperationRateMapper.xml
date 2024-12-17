@@ -25,4 +25,10 @@
         SELECT lor.*
         FROM line_operation_rate as lor;
     </select>
+
+    <select id="getNowYearLineOperation" resultType="com.hae5.sfaas.line.model.LineOperationRate">
+        SELECT lor.*
+        FROM line_operation_rate as lor
+        WHERE lor.factory_id = #{factoryId} AND lor.year = #{year} AND lor.category in ('사업계획', '종합가동률');
+    </select>
 </mapper>

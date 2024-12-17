@@ -8,6 +8,7 @@ import com.hae5.sfaas.common.utils.QuarterUtil;
 import com.hae5.sfaas.line.dto.response.AllLineOperationRateResponse;
 import com.hae5.sfaas.line.dto.response.MonthlyLineOperationRateResponse;
 import com.hae5.sfaas.line.dto.response.QuarterLineOperationRateResponse;
+import com.hae5.sfaas.line.dto.response.TotalLineOperationResponse;
 import com.hae5.sfaas.line.service.LineOperationRateService;
 import com.hae5.sfaas.user.enums.UserRole;
 import com.hae5.sfaas.user.model.User;
@@ -105,6 +106,30 @@ public class LineOperationRateControllerTest extends SfaasApplicationTests {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.success").value(true))
                 .andExpect(jsonPath("$.data.result.CT.size()").value(1));
+    }
+
+    @DisplayName("올해 라인 가동률의 계획 및 실적 조회")
+    @Test
+    public void getTotalLineOperationData() throws Exception {
+        //given
+        User user = User.builder()
+                .userId(1L)
+                .employId("test")
+                .password("pwd")
+                .role(UserRole.ADMIN)
+                .build();
+        AccessTokenInfo accessTokenInfo = AccessTokenInfo.of(user.getUserId().toString(), user.getRole().name());
+
+
+        when(jwtProvider.resolveToken(any(String.class))).thenReturn(accessTokenInfo);
+        when(lineOperationRateService.getTotalLineOperation(any(Long.class))).thenReturn(TotalLineOperationResponse.of(null, null));
+
+        //when & then
+        mockMvc.perform(get("/api/v1/line-operation-rate/total", user.getUserId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", "Baerer accessToken"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.success").value(true));
     }
 
 }
