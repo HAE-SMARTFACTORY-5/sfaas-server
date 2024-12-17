@@ -99,7 +99,7 @@ class AlertsControllerTest extends SfaasApplicationTests {
 
         // when & then
         mockMvc.perform(get("/api/v1/alerts")
-                .header("Authorization", "Baerer test-token"))
+                .header("Authorization", "Bearer test-token"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.success").value(true))
                 .andExpect(jsonPath("$.status").value(200))
