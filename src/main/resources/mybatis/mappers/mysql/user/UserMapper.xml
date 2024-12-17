@@ -10,7 +10,7 @@
 
     <update id="updateRole">
         UPDATE user as u
-        SET u.role = #{role}
+        SET u.factory_id = #{request.factoryId}, u.dept_id = #{request.departmentId}, u.position = #{request.position}, u.role = #{request.role}
         WHERE u.user_id = #{userId};
     </update>
 
