@@ -13,7 +13,7 @@
             alarm_time as alarmTime
         FROM unexpected_faults
         ORDER BY alarm_time
-        LIMIT 5
+        LIMIT 10
     </select>
 
     <select id="findById" parameterType="String" resultType="com.hae5.sfaas.alerts.model.Alerts">

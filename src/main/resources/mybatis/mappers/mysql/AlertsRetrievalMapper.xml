@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hae5.sfaas.alerts.mapper.AlertsRetrievalMapper">
+    <select id="findAll" resultType="com.hae5.sfaas.alerts.model.AlertsRetrieval">
+        SELECT 
+            uf.alarm_id,
+            ufu.action_start_time,
+            uf.line_id,
+            uf.process_id,
+            uf.alarm_type,
+            aad.action_detail,
+            ufu.completion_status,
+            ufu.action_completion_time
+        FROM unexpected_faults uf
+        JOIN unexpected_faults_user_input ufu ON uf.alarm_id = ufu.alarm_id
+        LEFT JOIN (
+            SELECT 
+                alarm_id,
+                action_detail
+            FROM alert_action_details aad1
+            WHERE action_sequence = (
+                SELECT MAX(action_sequence)
+                FROM alert_action_details aad2
+                WHERE aad1.alarm_id = aad2.alarm_id
+            )
+        ) aad ON uf.alarm_id = aad.alarm_id
+        ORDER BY ufu.action_start_time DESC
+    </select>
+
+    <select id="findByAlarmId" resultType="com.hae5.sfaas.alerts.model.AlertsRetrieval">
+        SELECT 
+            uf.alarm_id,
+            ufu.action_start_time,
+            uf.line_id,
+            uf.process_id,
+            uf.alarm_type,
+            aad.action_detail,
+            ufu.completion_status,
+            ufu.action_completion_time
+        FROM unexpected_faults uf
+        JOIN unexpected_faults_user_input ufu ON uf.alarm_id = ufu.alarm_id
+        LEFT JOIN (
+            SELECT 
+                alarm_id,
+                action_detail
+            FROM alert_action_details aad1
+            WHERE action_sequence = (
+                SELECT MAX(action_sequence)
+                FROM alert_action_details aad2
+                WHERE aad1.alarm_id = aad2.alarm_id
+            )
+        ) aad ON uf.alarm_id = aad.alarm_id
+        WHERE uf.alarm_id = #{alarmId}
+    </select>
+
+    <select id="findByDateRange" resultType="com.hae5.sfaas.alerts.model.AlertsRetrieval">
+        SELECT 
+            uf.alarm_id,
+            ufu.action_start_time,
+            uf.line_id,
+            uf.process_id,
+            uf.alarm_type,
+            aad.action_detail,
+            ufu.completion_status,
+            ufu.action_completion_time
+        FROM unexpected_faults uf
+        JOIN unexpected_faults_user_input ufu ON uf.alarm_id = ufu.alarm_id
+        LEFT JOIN (
+            SELECT 
+                alarm_id,
+                action_detail
+            FROM alert_action_details aad1
+            WHERE action_sequence = (
+                SELECT MAX(action_sequence)
+                FROM alert_action_details aad2
+                WHERE aad1.alarm_id = aad2.alarm_id
+            )
+        ) aad ON uf.alarm_id = aad.alarm_id
+        WHERE ufu.action_start_time BETWEEN #{startDate} AND #{endDate}
+        ORDER BY ufu.action_start_time DESC
+    </select>
+
+    <select id="findByLineAndProcess" resultType="com.hae5.sfaas.alerts.model.AlertsRetrieval">
+        SELECT 
+            uf.alarm_id,
+            ufu.action_start_time,
+            uf.line_id,
+            uf.process_id,
+            uf.alarm_type,
+            aad.action_detail,
+            ufu.completion_status,
+            ufu.action_completion_time
+        FROM unexpected_faults uf
+        JOIN unexpected_faults_user_input ufu ON uf.alarm_id = ufu.alarm_id
+        LEFT JOIN (
+            SELECT 
+                alarm_id,
+                action_detail
+            FROM alert_action_details aad1
+            WHERE action_sequence = (
+                SELECT MAX(action_sequence)
+                FROM alert_action_details aad2
+                WHERE aad1.alarm_id = aad2.alarm_id
+            )
+        ) aad ON uf.alarm_id = aad.alarm_id
+        WHERE 1=1
+        <if test="lineId != null">
+            AND uf.line_id = #{lineId}
+        </if>
+        <if test="processId != null">
+            AND uf.process_id = #{processId}
+        </if>
+        ORDER BY ufu.action_start_time DESC
+    </select>
+</mapper>
