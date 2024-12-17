@@ -3,6 +3,7 @@ package com.hae5.sfaas.line.controller;
 import com.hae5.sfaas.common.config.security.UserDetailsImpl;
 import com.hae5.sfaas.line.dto.response.AllLineOperationRateResponse;
 import com.hae5.sfaas.line.dto.response.QuarterLineOperationRateResponse;
+import com.hae5.sfaas.line.dto.response.TotalLineOperationResponse;
 import com.hae5.sfaas.line.service.LineOperationRateService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ public class LineOperationRateController {
 
     private final LineOperationRateService lineOperationRateService;
 
+    @Deprecated
     @GetMapping("/quarter")
     public ResponseEntity<QuarterLineOperationRateResponse> getQuarterLineOperationRate(
             @AuthenticationPrincipal UserDetailsImpl userDetails) {
@@ -25,10 +27,18 @@ public class LineOperationRateController {
         return ResponseEntity.ok().body(response);
     }
 
+    @Deprecated
     @GetMapping("/all")
     public ResponseEntity<AllLineOperationRateResponse> getAllLineOperationRate(
             @AuthenticationPrincipal UserDetailsImpl userDetails) {
         AllLineOperationRateResponse response = lineOperationRateService.getAllLineOperationRate(userDetails.getUserId());
+        return ResponseEntity.ok().body(response);
+    }
+
+    @GetMapping("/total")
+    public ResponseEntity<TotalLineOperationResponse> getTotalLineOperationData(
+            @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        TotalLineOperationResponse response = lineOperationRateService.getTotalLineOperation(userDetails.getUserId());
         return ResponseEntity.ok().body(response);
     }
 

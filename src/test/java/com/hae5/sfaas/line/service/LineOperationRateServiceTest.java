@@ -3,6 +3,7 @@ package com.hae5.sfaas.line.service;
 import com.hae5.sfaas.SfaasApplicationTests;
 import com.hae5.sfaas.line.dto.response.AllLineOperationRateResponse;
 import com.hae5.sfaas.line.dto.response.QuarterLineOperationRateResponse;
+import com.hae5.sfaas.line.dto.response.TotalLineOperationResponse;
 import com.hae5.sfaas.line.mapper.LineOperationRateMapper;
 import com.hae5.sfaas.line.model.LineOperationRate;
 import com.hae5.sfaas.user.enums.UserRole;
@@ -109,6 +110,62 @@ public class LineOperationRateServiceTest extends SfaasApplicationTests {
 
         //then
         Assertions.assertThat(response.getResult().get("CT").size()).isEqualTo(12);
+    }
+
+    @DisplayName("올해 라인 가동률의 계획 및 실적 조회")
+    @Test
+    public void getTotalLineOperationTest () {
+
+        //given
+        User user = User.builder()
+                .userId(1L)
+                .factoryId(1L)
+                .employId("test")
+                .password("pwd")
+                .role(UserRole.MEMBER)
+                .build();
+
+        Double expectJanData = 20.0;
+
+        LineOperationRate lineOperationRate1 = LineOperationRate.builder()
+                .lineOperationRateId(1L)
+                .factoryId(1L)
+                .year(2023)
+                .jan(10.0).feb(20.0).mar(30.0).apr(40.0).may(50.0).jun(60.0)
+                .jul(70.0).aug(80.0).sep(90.0).oct(100.0).nov(110.0).decem(120.0)
+                .total(820.0)
+                .createdAt(LocalDateTime.now())
+                .processId("CT")
+                .lineId(1L)
+                .category("종합가동률")
+                .build();
+        LineOperationRate lineOperationRate2 = LineOperationRate.builder()
+                .lineOperationRateId(1L)
+                .factoryId(1L)
+                .year(2023)
+                .jan(10.0).feb(20.0).mar(30.0).apr(40.0).may(50.0).jun(60.0)
+                .jul(70.0).aug(80.0).sep(90.0).oct(100.0).nov(110.0).decem(120.0)
+                .total(820.0)
+                .createdAt(LocalDateTime.now())
+                .processId("CT")
+                .lineId(1L)
+                .category("종합가동률")
+                .build();
+
+        List<LineOperationRate> result = new ArrayList<>();
+        result.add(lineOperationRate1);
+        result.add(lineOperationRate2);
+
+        when(lineOperationRateMapper.getNowYearLineOperation(any(Long.class), any(Integer.class))).thenReturn(result);
+        when(userMapper.findById(any(Long.class))).thenReturn(Optional.ofNullable(user));
+
+        //when
+        TotalLineOperationResponse response = lineOperationRateService.getTotalLineOperation(1L);
+
+        //then
+        Assertions.assertThat(response.getActualLineOperations().getLineId()).isEqualTo(1L);
+        Assertions.assertThat(response.getActualLineOperations().getJan()).isEqualTo(expectJanData);
+        Assertions.assertThat(response.getPlannedLineOperations()).isNull();
     }
 
 }
