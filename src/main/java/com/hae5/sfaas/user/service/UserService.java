@@ -2,9 +2,9 @@ package com.hae5.sfaas.user.service;
 
 import com.hae5.sfaas.common.exception.SfaasException;
 import com.hae5.sfaas.common.response.PaginationResponse;
-import com.hae5.sfaas.user.dto.request.UserRoleEditRequest;
+import com.hae5.sfaas.user.dto.request.UserDataEditRequest;
 import com.hae5.sfaas.user.dto.response.UserResponse;
-import com.hae5.sfaas.user.dto.response.UserRoleEditResponse;
+import com.hae5.sfaas.user.dto.response.UserDataEditResponse;
 import com.hae5.sfaas.user.enums.UserRole;
 import com.hae5.sfaas.user.mapper.UserMapper;
 import com.hae5.sfaas.user.model.User;
@@ -36,10 +36,11 @@ public class UserService {
     }
 
     @Transactional
-    public UserRoleEditResponse updateUserRole(Long userId, UserRoleEditRequest request) {
+    public UserDataEditResponse updateUserData(Long userId, UserDataEditRequest request) {
         userMapper.findById(userId).orElseThrow(() -> SfaasException.create(USER_NOT_FOUNT_ERROR));
-        userMapper.updateRole(userId, request.role());
-        return UserRoleEditResponse.of(userId, request.role());
+        userMapper.updateRole(userId, request);
+        return UserDataEditResponse.of(userId, request.factoryId(),
+                                            request.departmentId(), request.position(), request.role());
     }
 
     @Transactional(readOnly = true)

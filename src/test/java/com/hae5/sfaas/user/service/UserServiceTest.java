@@ -3,9 +3,9 @@ package com.hae5.sfaas.user.service;
 import com.hae5.sfaas.SfaasApplicationTests;
 import com.hae5.sfaas.common.exception.SfaasException;
 import com.hae5.sfaas.common.response.PaginationResponse;
-import com.hae5.sfaas.user.dto.request.UserRoleEditRequest;
+import com.hae5.sfaas.user.dto.request.UserDataEditRequest;
 import com.hae5.sfaas.user.dto.response.UserResponse;
-import com.hae5.sfaas.user.dto.response.UserRoleEditResponse;
+import com.hae5.sfaas.user.dto.response.UserDataEditResponse;
 import com.hae5.sfaas.user.enums.UserRole;
 import com.hae5.sfaas.user.mapper.UserMapper;
 import com.hae5.sfaas.user.model.User;
@@ -94,7 +94,7 @@ public class UserServiceTest extends SfaasApplicationTests {
     @Test
     public void updateUserRoleTest () {
         //given
-        UserRoleEditRequest request = new UserRoleEditRequest(UserRole.ADMIN);
+        UserDataEditRequest request = new UserDataEditRequest(1L, 1L, "position", UserRole.ADMIN);
         User user = User.builder()
                 .userId(1L)
                 .employId("test")
@@ -105,10 +105,10 @@ public class UserServiceTest extends SfaasApplicationTests {
         when(userMapper.findById(eq(user.getUserId()))).thenReturn(Optional.ofNullable(user));
 
         //when
-        UserRoleEditResponse response = userService.updateUserRole(user.getUserId(), request);
+        UserDataEditResponse response = userService.updateUserData(user.getUserId(), request);
 
         //then
-        verify(userMapper).updateRole(user.getUserId(), request.role());
+        verify(userMapper).updateRole(user.getUserId(), request);
         assertThat(response.getUserId()).isEqualTo(user.getUserId());
         assertThat(response.getRole()).isEqualTo(request.role());
 
@@ -118,7 +118,7 @@ public class UserServiceTest extends SfaasApplicationTests {
     @Test
     public void updateUserRole_User_Not_Found_Error_Test () {
         //given
-        UserRoleEditRequest request = new UserRoleEditRequest(UserRole.ADMIN);
+        UserDataEditRequest request = new UserDataEditRequest(1L, 1L, "position", UserRole.ADMIN);
         User user = User.builder()
                 .userId(1L)
                 .employId("test")
@@ -129,7 +129,7 @@ public class UserServiceTest extends SfaasApplicationTests {
         when(userMapper.findById(eq(user.getUserId()))).thenReturn(Optional.empty());
 
         //when & then
-        assertThatThrownBy(() -> userService.updateUserRole(user.getUserId(), request))
+        assertThatThrownBy(() -> userService.updateUserData(user.getUserId(), request))
                 .isInstanceOf(SfaasException.class)
                 .hasMessageContaining("존재하지 않는 사용자");
     }
@@ -138,7 +138,7 @@ public class UserServiceTest extends SfaasApplicationTests {
     @Test
     public void searchUser_Test () {
         //given
-        UserRoleEditRequest request = new UserRoleEditRequest(UserRole.ADMIN);
+        UserDataEditRequest request = new UserDataEditRequest(1L, 1L, "position", UserRole.ADMIN);
         User user = User.builder()
                 .userId(1L)
                 .employId("test")

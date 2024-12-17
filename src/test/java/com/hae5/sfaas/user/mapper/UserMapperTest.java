@@ -1,6 +1,7 @@
 package com.hae5.sfaas.user.mapper;
 
 import com.hae5.sfaas.SfaasApplicationTests;
+import com.hae5.sfaas.user.dto.request.UserDataEditRequest;
 import com.hae5.sfaas.user.dto.response.UserResponse;
 import com.hae5.sfaas.user.enums.UserRole;
 import com.hae5.sfaas.user.model.User;
@@ -151,11 +152,14 @@ public class UserMapperTest extends SfaasApplicationTests {
         assertThat(userMapper.findAll().size()).isEqualTo(0);
     }
 
-    @DisplayName("사용자 권한 변경")
+    @DisplayName("사용자 정보 변경")
     @Test
     public void updateRoleTest() {
         //given
         UserRole expectRole = UserRole.ADMIN;
+        Long expectFactoryId = 1L;
+        Long expectDepartmentId = 1L;
+        String expectPosition = "position";
         User newUser = User.builder()
                 .name("5조")
                 .employId("employeeId")
@@ -164,8 +168,9 @@ public class UserMapperTest extends SfaasApplicationTests {
                 .build();
         userMapper.save(newUser);
 
+        UserDataEditRequest request = new UserDataEditRequest(expectFactoryId, expectDepartmentId, expectPosition    , expectRole);
         //when
-        userMapper.updateRole(newUser.getUserId(), expectRole);
+        userMapper.updateRole(newUser.getUserId(), request);
 
         //then
         User user = userMapper.findById(newUser.getUserId()).orElse(null);
