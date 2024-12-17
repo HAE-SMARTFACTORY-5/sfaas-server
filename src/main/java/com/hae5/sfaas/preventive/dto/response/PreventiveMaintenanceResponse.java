@@ -10,23 +10,19 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class PreventiveMaintenanceResponse {
-    private Integer maintenanceId;
-    private String equipmentId; // db 생성 완료 후 설비 Id로 설비명으로 대체하기
+    private String lineId;
+    private String processId;
+    private String serialNumber;
     private LocalDateTime plannedDate;
-    private LocalDateTime executionDate;
-    private String InspectResult;
     private Integer estimatedTime;
-    private String status;
 
     public static PreventiveMaintenanceResponse from(PreventiveMaintenance preventiveMaintenance) {
         return PreventiveMaintenanceResponse.builder()
-                .maintenanceId(preventiveMaintenance.getMaintenanceId())
-                .equipmentId(preventiveMaintenance.getEquipmentId())
+                .lineId(preventiveMaintenance.getLineId())
+                .processId(preventiveMaintenance.getProcessId())
+                .serialNumber(preventiveMaintenance.getSerialNumber())
                 .plannedDate(preventiveMaintenance.getPlannedDate())
-                .executionDate(preventiveMaintenance.getExecutionDate())
-                .InspectResult(preventiveMaintenance.getInspectResult())
                 .estimatedTime(preventiveMaintenance.getEstimatedTime())
-                .status(preventiveMaintenance.getStatus())
                 .build();
     }
 }

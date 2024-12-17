@@ -12,22 +12,29 @@ public class PreventiveMaintenance {
 
     private Integer maintenanceId;
     private String equipmentId;
+    private String lineId;
+    private String processId;
+    private String serialNumber;
     private LocalDateTime plannedDate;
     private LocalDateTime executionDate;
-    private String InspectResult;
+    private String inspectResult;
     private Integer estimatedTime;
     private String status;
     private LocalDateTime createdAt;
 
-    public static PreventiveMaintenance create(Integer maintenanceId, String equipmentId, LocalDateTime plannedDate,
-                                               LocalDateTime executionDate, String InspectResult, Integer estimatedTime,
-                                               String status, LocalDateTime createdAt){
+    public static PreventiveMaintenance create(Integer maintenanceId, String equipmentId, String lineId,
+            String processId,
+            String serialNumber, LocalDateTime plannedDate, LocalDateTime executionDate, String inspectResult,
+            Integer estimatedTime, String status, LocalDateTime createdAt) {
         return PreventiveMaintenance.builder()
                 .maintenanceId(maintenanceId)
                 .equipmentId(equipmentId)
+                .lineId(lineId)
+                .processId(processId)
+                .serialNumber(serialNumber)
                 .plannedDate(plannedDate)
                 .executionDate(executionDate)
-                .InspectResult(InspectResult)
+                .inspectResult(inspectResult)
                 .estimatedTime(estimatedTime)
                 .status(status)
                 .createdAt(createdAt)

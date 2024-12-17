@@ -23,8 +23,13 @@
     </select>
 
     <select id="findAll" resultType="com.hae5.sfaas.preventive.model.PreventiveMaintenance">
-        SELECT p.*
-        FROM preventive_maintenance as p
+        SELECT 
+            p.*,
+            e.line_id,
+            e.process_id,
+            e.serial_number
+        FROM preventive_maintenance p
+        LEFT JOIN equipment e ON p.equipment_id = e.equipment_id
         WHERE p.inspect_result != '정상'
     </select>
 
