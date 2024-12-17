@@ -198,3 +198,19 @@ CREATE TABLE IF NOT EXISTS item (
    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
+
+create table IF NOT EXISTS alarm_history
+(
+    alarm_id        int                                 not null
+        primary key,
+    line_id         varchar(20)                         null,
+    process_id      varchar(20)                         null,
+    category_l3_id  int                                 not null,
+    occurrence_time timestamp                           not null,
+    resolution_time timestamp                           null,
+    status          varchar(20)                         not null,
+    cause           text                                null,
+    action_taken    text                                null,
+    created_at      timestamp default CURRENT_TIMESTAMP null
+);
+
