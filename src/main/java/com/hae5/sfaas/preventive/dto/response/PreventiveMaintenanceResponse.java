@@ -15,6 +15,7 @@ public class PreventiveMaintenanceResponse {
     private String serialNumber;
     private LocalDateTime plannedDate;
     private Integer estimatedTime;
+    private String inspectionName;
 
     public static PreventiveMaintenanceResponse from(PreventiveMaintenance preventiveMaintenance) {
         return PreventiveMaintenanceResponse.builder()
@@ -23,6 +24,7 @@ public class PreventiveMaintenanceResponse {
                 .serialNumber(preventiveMaintenance.getSerialNumber())
                 .plannedDate(preventiveMaintenance.getPlannedDate())
                 .estimatedTime(preventiveMaintenance.getEstimatedTime())
+                .inspectionName(preventiveMaintenance.getInspectionName())
                 .build();
     }
 }

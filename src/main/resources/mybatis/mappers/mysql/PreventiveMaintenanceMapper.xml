@@ -7,7 +7,7 @@
     <insert id="save" parameterType="com.hae5.sfaas.preventive.model.PreventiveMaintenance" useGeneratedKeys="true" keyProperty="maintenanceId">
         INSERT INTO preventive_maintenance
         VALUES (#{maintenanceId}, #{equipmentId}, #{plannedDate}, #{executionDate}, #{inspectResult},
-        #{estimatedTime}, #{status}, #{createdAt})
+        #{estimatedTime}, #{status}, #{createdAt}, #{inspectionName})
     </insert>
 
     <delete id="deleteAll">
