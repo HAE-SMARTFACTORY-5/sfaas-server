@@ -74,4 +74,10 @@ public class AlertsController {
                 normalizedLineId,
                 normalizedProcessId));
     }
+
+    @GetMapping("/facility")
+    public ResponseEntity<SparePartsResponse> getFacilityAlarm(@RequestParam("line") String lineId) {
+        SparePartsResponse response = alertsService.getFacilityAlertsByLineId(lineId);
+        return ResponseEntity.ok().body(response);
+    }
 }
