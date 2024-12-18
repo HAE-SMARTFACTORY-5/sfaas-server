@@ -16,23 +16,5 @@ public class AlertsRetrieval {
     private String completionStatus;
     private Integer downtime;
     private LocalDateTime alarmTime;
-
-    public static AlertsRetrieval create(
-            String alarmId,
-            String lineId,
-            String processId,
-            String alarmType,
-            String completionStatus,
-            Integer downtime,
-            LocalDateTime alarmTime) {
-        return AlertsRetrieval.builder()
-                .alarmId(alarmId)
-                .alarmTime(alarmTime)
-                .lineId(lineId)
-                .processId(processId)
-                .alarmType(alarmType)
-                .completionStatus(completionStatus)
-                .downtime(downtime)
-                .build();
-    }
+    private String actionDetail;
 }

@@ -17,6 +17,7 @@ public class AlertsRetrievalResponse {
     private String completionStatus;
     private Integer downtime;
     private LocalDateTime alarmTime;
+    private String actionDetail;
 
     public static AlertsRetrievalResponse from(AlertsRetrieval alertsRetrieval) {
         return AlertsRetrievalResponse.builder()
@@ -27,6 +28,7 @@ public class AlertsRetrievalResponse {
                 .completionStatus(alertsRetrieval.getCompletionStatus())
                 .downtime(alertsRetrieval.getDowntime())
                 .alarmTime(alertsRetrieval.getAlarmTime())
+                .actionDetail(alertsRetrieval.getActionDetail())
                 .build();
     }
 }
