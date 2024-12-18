@@ -21,7 +21,7 @@ public class LineOperationRateResponse {
     private Double oct;
     private Double nov;
     private Double decem;
-    private Long lineId;
+    private String lineId;
     private String category;
 
 }

@@ -189,7 +189,7 @@ create table IF NOT EXISTS line_operation_rate
     total      decimal(10, 2)                      null,
     created_at timestamp default CURRENT_TIMESTAMP null,
     process_id varchar(20)                         null,
-    line_id    int                                 null,
+    line_id    varchar(50)                                 null,
     category   varchar(50)                         null,
     jun        double                              null,
     jul        double                              null,

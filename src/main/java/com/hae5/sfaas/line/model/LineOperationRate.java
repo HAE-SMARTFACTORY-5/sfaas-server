@@ -25,7 +25,7 @@ public class LineOperationRate {
     private Double total;
     private LocalDateTime createdAt;
     private String processId;
-    private Long lineId;
+    private String lineId;
     private String category;
     private Double jun;
     private Double jul;
@@ -33,7 +33,7 @@ public class LineOperationRate {
     
     public static LineOperationRate create(Long lineOperationRateId, Long factoryId, Integer year, Double jan, Double feb,
                                             Double mar, Double apr, Double may, Double aug, Double oct, Double nov, Double decem,
-                                           Double total, LocalDateTime createdAt, String processId, Long lineId, String category, 
+                                           Double total, LocalDateTime createdAt, String processId, String lineId, String category,
                                            Double jun, Double jul, Double sep) {
         return LineOperationRate.builder()
                 .lineOperationRateId(lineOperationRateId)

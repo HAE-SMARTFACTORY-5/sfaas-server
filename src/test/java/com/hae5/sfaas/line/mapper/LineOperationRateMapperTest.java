@@ -35,7 +35,7 @@ public class LineOperationRateMapperTest extends SfaasApplicationTests {
                 .total(820.0)
                 .createdAt(LocalDateTime.now())
                 .processId("CT")
-                .lineId(1L)
+                .lineId("C_L")
                 .category("종합가동률")
                 .build();
 
@@ -59,7 +59,7 @@ public class LineOperationRateMapperTest extends SfaasApplicationTests {
                 .total(820.0)
                 .createdAt(LocalDateTime.now())
                 .processId("CT")
-                .lineId(1L)
+                .lineId("C_L")
                 .category("종합가동률")
                 .build();
         lineOperationRateMapper.save(lineOperationRate);
@@ -84,7 +84,7 @@ public class LineOperationRateMapperTest extends SfaasApplicationTests {
                 .total(820.0)
                 .createdAt(LocalDateTime.now())
                 .processId("CT")
-                .lineId(1L)
+                .lineId("C_L")
                 .category("종합가동률")
                 .build();
         LineOperationRate lineOperationRate2 = LineOperationRate.builder()
@@ -96,7 +96,7 @@ public class LineOperationRateMapperTest extends SfaasApplicationTests {
                 .total(820.0)
                 .createdAt(LocalDateTime.now())
                 .processId("CT")
-                .lineId(1L)
+                .lineId("C_L")
                 .category("차이")
                 .build();
         lineOperationRateMapper.save(lineOperationRate1);
@@ -122,7 +122,7 @@ public class LineOperationRateMapperTest extends SfaasApplicationTests {
                 .total(820.0)
                 .createdAt(LocalDateTime.now())
                 .processId("CT")
-                .lineId(1L)
+                .lineId("C_L")
                 .category("종합가동률")
                 .build();
         LineOperationRate lineOperationRate2 = LineOperationRate.builder()
@@ -134,7 +134,7 @@ public class LineOperationRateMapperTest extends SfaasApplicationTests {
                 .total(820.0)
                 .createdAt(LocalDateTime.now())
                 .processId("CT")
-                .lineId(1L)
+                .lineId("C_L")
                 .category("차이")
                 .build();
         lineOperationRateMapper.save(lineOperationRate1);
@@ -160,7 +160,7 @@ public class LineOperationRateMapperTest extends SfaasApplicationTests {
                 .total(820.0)
                 .createdAt(LocalDateTime.now())
                 .processId("CT")
-                .lineId(1L)
+                .lineId("C_L")
                 .category("종합가동률")
                 .build();
         LineOperationRate lineOperationRate2 = LineOperationRate.builder()
@@ -172,7 +172,7 @@ public class LineOperationRateMapperTest extends SfaasApplicationTests {
                 .total(820.0)
                 .createdAt(LocalDateTime.now())
                 .processId("CT")
-                .lineId(1L)
+                .lineId("C_L")
                 .category("종합가동률")
                 .build();
         lineOperationRateMapper.save(lineOperationRate1);
