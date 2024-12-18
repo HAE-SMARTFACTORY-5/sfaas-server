@@ -13,7 +13,7 @@ import com.hae5.sfaas.alerts.model.Alerts;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class AlertsResponse {
-    private String alarmId;
+    private Integer alarmId;
     private String line;
     private String process;
     private String alarmType;

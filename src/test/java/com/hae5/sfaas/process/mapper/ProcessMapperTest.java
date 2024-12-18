@@ -30,7 +30,7 @@ public class ProcessMapperTest extends SfaasApplicationTests {
     public void saveTest() {
         //given
         Process process = Process.builder()
-                .processId(1L)
+                .processId("1L")
                 .processName("process")
                 .description("des")
                 .build();
@@ -47,7 +47,7 @@ public class ProcessMapperTest extends SfaasApplicationTests {
     public void deleteAllTest() {
         //given
         Process process = Process.builder()
-                .processId(1L)
+                .processId("1L")
                 .processName("process")
                 .description("des")
                 .build();
@@ -65,12 +65,12 @@ public class ProcessMapperTest extends SfaasApplicationTests {
     public void findAllTest() {
         //given
         Process process1 = Process.builder()
-                .processId(1L)
+                .processId("1L")
                 .processName("process")
                 .description("des")
                 .build();
         Process process2 = Process.builder()
-                .processId(2L)
+                .processId("2L")
                 .processName("process")
                 .description("des")
                 .build();

@@ -68,8 +68,8 @@ class AlertsControllerTest extends SfaasApplicationTests {
     @DisplayName("알람 내역 생성 테스트")
     void getAlerts_ReturnsList() throws Exception {
         // given
-        Alerts f1 = Alerts.create("a1", "l1", "p1", "t1", LocalDateTime.now());
-        Alerts f2 = Alerts.create("a2", "l2", "p2", "t2", LocalDateTime.now());
+        Alerts f1 = Alerts.create(1, "l1", "p1", "t1", LocalDateTime.now());
+        Alerts f2 = Alerts.create(2, "l2", "p2", "t2", LocalDateTime.now());
 
         AlertsResponse fault1 = AlertsResponse.from(f1);
         AlertsResponse fault2 = AlertsResponse.from(f2);

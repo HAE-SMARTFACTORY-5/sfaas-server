@@ -41,13 +41,11 @@
 
     <insert id="save" parameterType="com.hae5.sfaas.alerts.model.Alerts">
         INSERT INTO unexpected_faults (
-            alarm_id,
             line_id,
             process_id,
             alarm_type,
             alarm_time
         ) VALUES (
-            #{alarmId},
             #{line},
             #{process},
             #{alarmType},

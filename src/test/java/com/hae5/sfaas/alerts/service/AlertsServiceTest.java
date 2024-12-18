@@ -38,14 +38,12 @@ class AlertsServiceTest extends SfaasApplicationTests {
     void getAlerts_Success() {
         // given
         Alerts alert1 = Alerts.create(
-                "241212019",
                 "L1",
                 "P1",
                 "FAULT",
                 LocalDateTime.of(2024, 12, 15, 14, 0));
 
         Alerts alert2 = Alerts.create(
-                "241212020",
                 "L2",
                 "P2",
                 "FAULT",
@@ -60,10 +58,8 @@ class AlertsServiceTest extends SfaasApplicationTests {
         // then
         assertThat(result).isNotNull();
         assertThat(result).hasSize(2);
-        assertThat(result.get(0).getAlarmId()).isEqualTo("241212019");
         assertThat(result.get(0).getLine()).isEqualTo("L1");
         assertThat(result.get(0).getProcess()).isEqualTo("P1");
-        assertThat(result.get(1).getAlarmId()).isEqualTo("241212020");
         assertThat(result.get(1).getLine()).isEqualTo("L2");
         assertThat(result.get(1).getProcess()).isEqualTo("P2");
     }

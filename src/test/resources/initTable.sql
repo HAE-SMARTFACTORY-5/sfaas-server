@@ -138,7 +138,7 @@ create index IF NOT EXISTS line_id
 
 
 CREATE TABLE IF NOT EXISTS unexpected_faults (
-    alarm_id VARCHAR(10) PRIMARY KEY,
+    alarm_id int auto_increment PRIMARY KEY,
     line_id VARCHAR(10),
     process_id VARCHAR(10),
     alarm_type VARCHAR(10),
