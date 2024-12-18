@@ -11,24 +11,22 @@ import java.time.LocalDateTime;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class AlertsRetrievalResponse {
     private String alarmId;
-    private LocalDateTime actionStartTime;
     private String lineId;
     private String processId;
     private String alarmType;
-    private String actionDetail;
     private String completionStatus;
-    private LocalDateTime actionCompletionTime;
+    private Integer downtime;
+    private LocalDateTime alarmTime;
 
     public static AlertsRetrievalResponse from(AlertsRetrieval alertsRetrieval) {
         return AlertsRetrievalResponse.builder()
                 .alarmId(alertsRetrieval.getAlarmId())
-                .actionStartTime(alertsRetrieval.getActionStartTime())
                 .lineId(alertsRetrieval.getLineId())
                 .processId(alertsRetrieval.getProcessId())
                 .alarmType(alertsRetrieval.getAlarmType())
-                .actionDetail(alertsRetrieval.getActionDetail())
                 .completionStatus(alertsRetrieval.getCompletionStatus())
-                .actionCompletionTime(alertsRetrieval.getActionCompletionTime())
+                .downtime(alertsRetrieval.getDowntime())
+                .alarmTime(alertsRetrieval.getAlarmTime())
                 .build();
     }
 }

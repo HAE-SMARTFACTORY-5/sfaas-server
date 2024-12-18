@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -15,29 +16,13 @@ public class AlertsRetrievalService {
     private final AlertsRetrievalMapper alertsRetrievalMapper;
 
     @Transactional(readOnly = true)
-    public List<AlertsRetrievalResponse> getAllAlerts() {
-        return alertsRetrievalMapper.findAll().stream()
-                .map(AlertsRetrievalResponse::from)
-                .toList();
-    }
+    public List<AlertsRetrievalResponse> retrieveAlerts(LocalDate startDate, LocalDate endDate, String lineId,
+            String processId) {
+        LocalDateTime startDateTime = startDate.atStartOfDay();
+        LocalDateTime endDateTime = endDate.plusDays(1).atStartOfDay();
 
-    @Transactional(readOnly = true)
-    public List<AlertsRetrievalResponse> getAlertsByAlarmId(String alarmId) {
-        return alertsRetrievalMapper.findByAlarmId(alarmId).stream()
-                .map(AlertsRetrievalResponse::from)
-                .toList();
-    }
-
-    @Transactional(readOnly = true)
-    public List<AlertsRetrievalResponse> getAlertsByDateRange(LocalDateTime startDate, LocalDateTime endDate) {
-        return alertsRetrievalMapper.findByDateRange(startDate, endDate).stream()
-                .map(AlertsRetrievalResponse::from)
-                .toList();
-    }
-
-    @Transactional(readOnly = true)
-    public List<AlertsRetrievalResponse> getAlertsByLineAndProcess(String lineId, String processId) {
-        return alertsRetrievalMapper.findByLineAndProcess(lineId, processId).stream()
+        return alertsRetrievalMapper.retrieveAlerts(startDateTime, endDateTime, lineId, processId)
+                .stream()
                 .map(AlertsRetrievalResponse::from)
                 .toList();
     }

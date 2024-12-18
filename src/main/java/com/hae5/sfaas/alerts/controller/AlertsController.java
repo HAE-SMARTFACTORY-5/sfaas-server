@@ -9,6 +9,7 @@ import com.hae5.sfaas.alerts.service.AlertActionService;
 import com.hae5.sfaas.alerts.service.AlertsRetrievalService;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -53,32 +55,23 @@ public class AlertsController {
         return ResponseEntity.ok().body(response);
     }
 
-    // 모든 알람 내역 조회
+    // 날짜 + 라인 + 공정 알람 내역 조회
     @GetMapping("/retrieval")
-    public ResponseEntity<List<AlertsRetrievalResponse>> getAllAlerts() {
-        return ResponseEntity.ok(alertsRetrievalService.getAllAlerts());
-    }
-
-    // 특정 알람 ID로 조회
-    @GetMapping("/retrieval/{alarmId}")
-    public ResponseEntity<List<AlertsRetrievalResponse>> getAlertsByAlarmId(
-            @PathVariable String alarmId) {
-        return ResponseEntity.ok(alertsRetrievalService.getAlertsByAlarmId(alarmId));
-    }
-
-    // 날짜 범위로 조회
-    @GetMapping("/retrieval/date")
-    public ResponseEntity<List<AlertsRetrievalResponse>> getAlertsByDateRange(
-            @RequestParam LocalDateTime startDate,
-            @RequestParam LocalDateTime endDate) {
-        return ResponseEntity.ok(alertsRetrievalService.getAlertsByDateRange(startDate, endDate));
-    }
-
-    // 라인과 프로세스로 조회
-    @GetMapping("/retrieval/line-process")
-    public ResponseEntity<List<AlertsRetrievalResponse>> getAlertsByLineAndProcess(
+    public ResponseEntity<List<AlertsRetrievalResponse>> retrieveAlerts(
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate,
             @RequestParam(required = false) String lineId,
             @RequestParam(required = false) String processId) {
-        return ResponseEntity.ok(alertsRetrievalService.getAlertsByLineAndProcess(lineId, processId));
+
+        // 빈 문자열이나 null인 경우 "ALL"로 설정
+        String normalizedLineId = (lineId == null || lineId.trim().isEmpty()) ? "ALL" : lineId;
+        String normalizedProcessId = (processId == null || processId.trim().isEmpty()) ? "ALL" : processId;
+
+        return ResponseEntity.ok(alertsRetrievalService.retrieveAlerts(
+                startDate,
+                endDate,
+                normalizedLineId,
+                normalizedProcessId));
     }
+
 }
