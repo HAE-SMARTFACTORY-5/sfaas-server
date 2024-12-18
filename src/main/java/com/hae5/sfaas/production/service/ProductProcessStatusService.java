@@ -27,4 +27,11 @@ public class ProductProcessStatusService {
         result.set(productProcessStatus.getSequence()-1, 1);
         return SparePartsResponse.of(result, productId);
     }
+
+    @Transactional
+    public void saveProductProcessStatus(String serial) {
+        String lineId = "G_L";
+        ProductProcessStatus newProductProcessStatus = ProductProcessStatus.create(serial, lineId, 0);
+        productProcessStatusMapper.save(newProductProcessStatus);
+    }
 }
