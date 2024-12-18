@@ -1,43 +1,44 @@
 package com.hae5.sfaas.spareParts.dto.response;
 
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.hae5.sfaas.spareParts.model.SpareParts;
 import lombok.*;
 
 import java.util.List;
 
-@Getter
 @Builder(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class SparePartsResponse {
     private String chartTitle;
     private String chartType;
-    @JsonProperty("xAxis")
+    @JsonIgnore
     private XAxis xAxis;
-    @JsonProperty("yAxis")
+    @JsonIgnore
     private YAxis yAxis;
 
-    @Getter
-    @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class XAxis {
-        private String key;
-        private List<String> label;
+    public String getChartTitle() {
+        return chartTitle;
     }
 
-    @Getter
-    @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class YAxis {
-        private String key;
-        private List<Integer> value;
+    public String getChartType() {
+        return chartType;
     }
 
-//   Deprecated
+    @JsonProperty("xAxis")
+    public XAxis getxAxis() {
+        return xAxis;
+    }
+
+    @JsonProperty("yAxis")
+    public YAxis getyAxis() {
+        return yAxis;
+    }
+
+    //   Deprecated
     public static SparePartsResponse from(List<SpareParts> spareParts) {
         return SparePartsResponse.builder()
                 .chartTitle("ProductGroup0")

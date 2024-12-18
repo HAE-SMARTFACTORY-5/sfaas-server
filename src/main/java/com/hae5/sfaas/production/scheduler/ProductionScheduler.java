@@ -13,9 +13,9 @@ public class ProductionScheduler {
 
     private final ProductProcessStatusMapper productProcessStatusMapper;
 
-    @Scheduled(fixedDelay = 10000) // 프레스 -> 차체
-    public void updateProductProcessStatusSequence() {
-        productProcessStatusMapper.updateSequence();
-    }
+//    @Scheduled(fixedDelay = 10000) // 프레스 -> 차체
+//    public void updateProductProcessStatusSequence() {
+//        productProcessStatusMapper.updateSequence();
+//    }
 
 }

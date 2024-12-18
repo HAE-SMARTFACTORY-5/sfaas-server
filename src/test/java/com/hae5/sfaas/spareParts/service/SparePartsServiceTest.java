@@ -57,12 +57,12 @@ class SparePartsServiceTest extends SfaasApplicationTests {
         assertThat(response).isNotNull();
         assertThat(response.getChartTitle()).isEqualTo("ProductGroup0");
         assertThat(response.getChartType()).isEqualTo("bar");
-        assertThat(response.getXAxis().getKey()).isEqualTo("ProductName");
-        assertThat(response.getXAxis().getLabel()).hasSize(1);
-        assertThat(response.getXAxis().getLabel().get(0)).isEqualTo("ELC-001");
-        assertThat(response.getYAxis().getKey()).isEqualTo("ProductOutput");
-        assertThat(response.getYAxis().getValue()).hasSize(1);
-        assertThat(response.getYAxis().getValue().get(0)).isEqualTo(11);
+        assertThat(response.getxAxis().getKey()).isEqualTo("ProductName");
+        assertThat(response.getxAxis().getLabel()).hasSize(1);
+        assertThat(response.getxAxis().getLabel().get(0)).isEqualTo("ELC-001");
+        assertThat(response.getyAxis().getKey()).isEqualTo("ProductOutput");
+        assertThat(response.getyAxis().getValue()).hasSize(1);
+        assertThat(response.getyAxis().getValue().get(0)).isEqualTo(11);
     }
 
     @Test
@@ -75,7 +75,7 @@ class SparePartsServiceTest extends SfaasApplicationTests {
         assertThat(response).isNotNull();
         assertThat(response.getChartTitle()).isEqualTo("ProductGroup0");
         assertThat(response.getChartType()).isEqualTo("bar");
-        assertThat(response.getXAxis().getLabel()).isEmpty();
-        assertThat(response.getYAxis().getValue()).isEmpty();
+        assertThat(response.getxAxis().getLabel()).isEmpty();
+        assertThat(response.getyAxis().getValue()).isEmpty();
     }
 }

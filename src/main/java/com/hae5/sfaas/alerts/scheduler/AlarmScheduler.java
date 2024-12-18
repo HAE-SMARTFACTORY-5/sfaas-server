@@ -22,16 +22,16 @@ public class AlarmScheduler {
     private final ProcessMapper processMapper;
     private final AlarmCategoryL2Mapper alarmCategoryL2Mapper;
 
-    @Scheduled(fixedDelay = 10000)
-    public void insertAlarmSchedule() {
-        String lineId = "G_L"; // 1개로 운영중
-        List<Process> processes = processMapper.findAll();
-        List<AlarmCategoryL2> alarmCategoryL2s = alarmCategoryL2Mapper.findAll();
-        if (!processes.isEmpty() && !alarmCategoryL2s.isEmpty()) {
-            Collections.shuffle(processes);
-            Collections.shuffle(alarmCategoryL2s);
-            alertsMapper.save(Alerts.create(lineId, processes.get(0).getProcessId(), alarmCategoryL2s.get(0).getCategoryL2Id(), LocalDateTime.now()));
-        }
-    }
+//    @Scheduled(fixedDelay = 10000)
+//    public void insertAlarmSchedule() {
+//        String lineId = "G_L"; // 1개로 운영중
+//        List<Process> processes = processMapper.findAll();
+//        List<AlarmCategoryL2> alarmCategoryL2s = alarmCategoryL2Mapper.findAll();
+//        if (!processes.isEmpty() && !alarmCategoryL2s.isEmpty()) {
+//            Collections.shuffle(processes);
+//            Collections.shuffle(alarmCategoryL2s);
+//            alertsMapper.save(Alerts.create(lineId, processes.get(0).getProcessId(), alarmCategoryL2s.get(0).getCategoryL2Id(), LocalDateTime.now()));
+//        }
+//    }
 
 }
