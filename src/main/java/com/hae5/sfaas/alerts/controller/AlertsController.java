@@ -7,6 +7,7 @@ import com.hae5.sfaas.alerts.dto.response.AlertsRetrievalResponse;
 import com.hae5.sfaas.alerts.service.AlertsService;
 import com.hae5.sfaas.alerts.service.AlertActionService;
 import com.hae5.sfaas.alerts.service.AlertsRetrievalService;
+import com.hae5.sfaas.spareParts.dto.response.SparePartsResponse;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
@@ -80,5 +81,10 @@ public class AlertsController {
             @RequestParam(required = false) String lineId,
             @RequestParam(required = false) String processId) {
         return ResponseEntity.ok(alertsRetrievalService.getAlertsByLineAndProcess(lineId, processId));
+    }
+
+    @GetMapping("/facility")
+    public ResponseEntity<SparePartsResponse> getFacilityAlertsByLineId(@RequestParam("line") String lineId) {
+        return ResponseEntity.ok(alertsService.getFacilityAlertsByLineId(lineId));
     }
 }

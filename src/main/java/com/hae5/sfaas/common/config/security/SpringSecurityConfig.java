@@ -67,9 +67,10 @@ public class SpringSecurityConfig {
                 .formLogin(AbstractHttpConfigurer::disable)
                 .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers(PERMIT_URL).permitAll()
-                        .requestMatchers(ADMIN_URL).hasAuthority(ADMIN.name())
-                        .anyRequest().authenticated()
+//                        .requestMatchers(PERMIT_URL).permitAll()
+//                        .requestMatchers(ADMIN_URL).hasAuthority(ADMIN.name())
+//                        .anyRequest().authenticated()
+                                .anyRequest().permitAll()
                 )
                 .exceptionHandling((config) -> config.authenticationEntryPoint(customAuthenticationEntryPoint))
                 .exceptionHandling((config) -> config.accessDeniedHandler(customAccessDeniedHandler))

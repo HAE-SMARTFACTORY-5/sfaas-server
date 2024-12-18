@@ -34,6 +34,7 @@ public class SparePartsResponse {
         private List<Integer> value;
     }
 
+//   Deprecated
     public static SparePartsResponse from(List<SpareParts> spareParts) {
         return SparePartsResponse.builder()
                 .chartTitle("ProductGroup0")
@@ -49,6 +50,21 @@ public class SparePartsResponse {
                         .value(spareParts.stream()
                                 .map(SpareParts::getStock)
                                 .toList())
+                        .build())
+                .build();
+    }
+
+    public static SparePartsResponse of(List<Integer> errorStatus, String lineId) {
+        return SparePartsResponse.builder()
+                .chartTitle("line")
+                .chartType("bar")
+                .xAxis(XAxis.builder()
+                        .key(lineId)
+                        .label(List.of("Press", "Welding", "Assembly", "Paintinh", "Check"))
+                        .build())
+                .yAxis(YAxis.builder()
+                        .key("state")
+                        .value(errorStatus)
                         .build())
                 .build();
     }
