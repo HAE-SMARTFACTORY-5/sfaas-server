@@ -78,7 +78,7 @@
                 WHERE aad1.alarm_id = aad2.alarm_id
             )
         ) aad ON uf.alarm_id = aad.alarm_id
-        WHERE ufu.action_start_time BETWEEN #{startDateTime} AND #{endDateTime}
+        WHERE uf.alarm_time BETWEEN #{startDateTime} AND #{endDateTime}
         <if test="lineId != 'ALL'">
             AND uf.line_id = #{lineId}
         </if>
