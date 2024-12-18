@@ -48,7 +48,9 @@ public class SpringSecurityConfig {
     private final CustomAccessDeniedHandler customAccessDeniedHandler;
 
     private static final String[] PERMIT_URL = {
-        "/api/v1/auth/login", "/api/v1/auth/register"
+        "/api/v1/auth/login", "/api/v1/auth/register",
+        "/api/v1/alerts/facility",
+        "/api/v1/product-process/status"
     };
 
     private static final String[] ADMIN_URL = {

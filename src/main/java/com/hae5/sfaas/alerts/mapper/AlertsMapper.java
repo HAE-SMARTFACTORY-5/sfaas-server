@@ -15,4 +15,6 @@ public interface AlertsMapper {
     void save(Alerts alerts);
 
     void deleteAll();
+
+    List<Alerts> findAllByLineId(String lineId);
 }

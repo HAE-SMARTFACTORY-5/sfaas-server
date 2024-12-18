@@ -56,7 +56,7 @@ public class LineOperationRateServiceTest extends SfaasApplicationTests {
                 .total(820.0)
                 .createdAt(LocalDateTime.now())
                 .processId("CT")
-                .lineId(1L)
+                .lineId("C_L")
                 .category("종합가동률")
                 .build();
 
@@ -95,7 +95,7 @@ public class LineOperationRateServiceTest extends SfaasApplicationTests {
                 .total(820.0)
                 .createdAt(LocalDateTime.now())
                 .processId("CT")
-                .lineId(1L)
+                .lineId("C_L")
                 .category("종합가동률")
                 .build();
 
@@ -136,7 +136,7 @@ public class LineOperationRateServiceTest extends SfaasApplicationTests {
                 .total(820.0)
                 .createdAt(LocalDateTime.now())
                 .processId("CT")
-                .lineId(1L)
+                .lineId("C_L")
                 .category("종합가동률")
                 .build();
         LineOperationRate lineOperationRate2 = LineOperationRate.builder()
@@ -148,7 +148,7 @@ public class LineOperationRateServiceTest extends SfaasApplicationTests {
                 .total(820.0)
                 .createdAt(LocalDateTime.now())
                 .processId("CT")
-                .lineId(1L)
+                .lineId("C_L")
                 .category("종합가동률")
                 .build();
 
@@ -163,7 +163,7 @@ public class LineOperationRateServiceTest extends SfaasApplicationTests {
         TotalLineOperationResponse response = lineOperationRateService.getTotalLineOperation(1L);
 
         //then
-        Assertions.assertThat(response.getActualLineOperations().getLineId()).isEqualTo(1L);
+        Assertions.assertThat(response.getActualLineOperations().getLineId()).isEqualTo("C_L");
         Assertions.assertThat(response.getActualLineOperations().getJan()).isEqualTo(expectJanData);
         Assertions.assertThat(response.getPlannedLineOperations()).isNull();
     }

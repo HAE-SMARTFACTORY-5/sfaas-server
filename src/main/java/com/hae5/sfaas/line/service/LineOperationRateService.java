@@ -126,7 +126,7 @@ public class LineOperationRateService {
         Double oct = 0.0;
         Double nov = 0.0;
         Double decem = 0.0;
-        Long lineId = lineOperationRates.get(0).getLineId();
+        String lineId = lineOperationRates.get(0).getLineId();
         String category = lineOperationRates.get(0).getCategory();
 
         for (LineOperationRate lineOperationRate : lineOperationRates) {

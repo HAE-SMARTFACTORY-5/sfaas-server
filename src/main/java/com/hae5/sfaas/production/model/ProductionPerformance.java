@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class ProductionPerformance {
 
     private Long performanceId;
-    private Long lineId;
+    private String lineId;
     private LocalDate date;
     private Integer plannedQuantity;
     private Integer actualQuantity;
@@ -21,7 +21,7 @@ public class ProductionPerformance {
     private Double operatingRate;
     private String processId;
 
-    public static ProductionPerformance create (Long performanceId, Long lineId, LocalDate date, Integer plannedQuantity,
+    public static ProductionPerformance create (Long performanceId, String lineId, LocalDate date, Integer plannedQuantity,
                                                 Integer actualQuantity, LocalDateTime createdAt, String shift,
                                                 Double operatingRate, String processId) {
         return ProductionPerformance.builder()

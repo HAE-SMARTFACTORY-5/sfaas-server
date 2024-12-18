@@ -7,6 +7,7 @@ import com.hae5.sfaas.alerts.dto.response.AlertsRetrievalResponse;
 import com.hae5.sfaas.alerts.service.AlertsService;
 import com.hae5.sfaas.alerts.service.AlertActionService;
 import com.hae5.sfaas.alerts.service.AlertsRetrievalService;
+import com.hae5.sfaas.spareParts.dto.response.SparePartsResponse;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -73,5 +74,4 @@ public class AlertsController {
                 normalizedLineId,
                 normalizedProcessId));
     }
-
 }

@@ -42,6 +42,12 @@ spring:
   config:
     activate:
       on-profile: dev
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.50.208:3306/sfaas
+    username: test
+    password: 1234
 ---
 spring:
   config:

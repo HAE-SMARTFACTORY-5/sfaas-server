@@ -27,6 +27,18 @@
         WHERE alarm_id = #{alarmId}
     </select>
 
+    <select id="findAllByLineId" resultType="com.hae5.sfaas.alerts.model.Alerts">
+        SELECT
+            uf.alarm_id as alarmId,
+            uf.line_id as line,
+            uf.process_id as process,
+            uf.alarm_type as alarmType,
+            uf.alarm_time as alarmTime
+        FROM unexpected_faults as uf
+            LEFT JOIN unexpected_faults_user_input as ufui ON uf.alarm_id = ufui.alarm_id
+        WHERE ufui.completion_status != '완료' AND uf.line_id = #{lineId};
+    </select>
+
     <insert id="save" parameterType="com.hae5.sfaas.alerts.model.Alerts">
         INSERT INTO unexpected_faults (
             alarm_id,
