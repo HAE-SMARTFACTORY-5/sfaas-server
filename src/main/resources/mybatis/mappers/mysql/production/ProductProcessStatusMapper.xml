@@ -3,8 +3,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.hae5.sfaas.production.mapper.ProductProcessStatusMapper">
+    <update id="updateSequence">
+        UPDATE product_process_status as pps
+        SET pps.sequence = #{nextSequence}
+        WHERE pps.sequence = #{nowSequence};
+    </update>
 
-        <select id="findByProductId" resultType="com.hae5.sfaas.production.model.ProductProcessStatus">
+    <select id="findByProductId" resultType="com.hae5.sfaas.production.model.ProductProcessStatus">
             SELECT pps.*
             FROM product_process_status as pps
             WHERE pps.product_id = #{productId}

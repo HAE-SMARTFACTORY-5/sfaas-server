@@ -8,11 +8,11 @@ import lombok.*;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Process {
 
-    private Long processId;
+    private String processId;
     private String processName;
     private String description;
 
-    public static Process create(Long processId, String processName, String description) {
+    public static Process create(String processId, String processName, String description) {
         return Process.builder()
                 .processId(processId)
                 .processName(processName)

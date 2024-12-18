@@ -26,4 +26,14 @@ public class Alerts {
                 .alarmTime(alarmTime)
                 .build();
     }
+
+    public static Alerts create(String line, String process, String alarmType,
+                                LocalDateTime alarmTime) {
+        return Alerts.builder()
+                .line(line)
+                .process(process)
+                .alarmType(alarmType)
+                .alarmTime(alarmTime)
+                .build();
+    }
 }
