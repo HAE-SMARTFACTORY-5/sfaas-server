@@ -48,7 +48,9 @@ public class SpringSecurityConfig {
     private final CustomAccessDeniedHandler customAccessDeniedHandler;
 
     private static final String[] PERMIT_URL = {
-        "/api/v1/auth/login", "/api/v1/auth/register"
+        "/api/v1/auth/login", "/api/v1/auth/register",
+        "/api/v1/alerts/facility",
+        "/api/v1/product-process/status"
     };
 
     private static final String[] ADMIN_URL = {
@@ -67,10 +69,9 @@ public class SpringSecurityConfig {
                 .formLogin(AbstractHttpConfigurer::disable)
                 .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests((authorize) -> authorize
-//                        .requestMatchers(PERMIT_URL).permitAll()
-//                        .requestMatchers(ADMIN_URL).hasAuthority(ADMIN.name())
-//                        .anyRequest().authenticated()
-                                .anyRequest().permitAll()
+                        .requestMatchers(PERMIT_URL).permitAll()
+                        .requestMatchers(ADMIN_URL).hasAuthority(ADMIN.name())
+                        .anyRequest().authenticated()
                 )
                 .exceptionHandling((config) -> config.authenticationEntryPoint(customAuthenticationEntryPoint))
                 .exceptionHandling((config) -> config.accessDeniedHandler(customAccessDeniedHandler))

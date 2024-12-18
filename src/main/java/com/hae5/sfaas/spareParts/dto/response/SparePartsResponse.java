@@ -54,17 +54,17 @@ public class SparePartsResponse {
                 .build();
     }
 
-    public static SparePartsResponse of(List<Integer> errorStatus, String lineId) {
+    public static SparePartsResponse of(List<Integer> values, String key) {
         return SparePartsResponse.builder()
                 .chartTitle("line")
                 .chartType("bar")
                 .xAxis(XAxis.builder()
-                        .key(lineId)
+                        .key(key)
                         .label(List.of("Press", "Welding", "Assembly", "Paintinh", "Check"))
                         .build())
                 .yAxis(YAxis.builder()
                         .key("state")
-                        .value(errorStatus)
+                        .value(values)
                         .build())
                 .build();
     }
