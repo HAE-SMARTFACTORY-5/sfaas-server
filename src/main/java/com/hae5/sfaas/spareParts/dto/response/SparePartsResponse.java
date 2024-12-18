@@ -60,7 +60,7 @@ public class SparePartsResponse {
                 .chartType("bar")
                 .xAxis(XAxis.builder()
                         .key(key)
-                        .label(List.of("Press", "Welding", "Assembly", "Paintinh", "Check"))
+                        .label(List.of("Press", "Welding", "Paintin", "Assembly"))
                         .build())
                 .yAxis(YAxis.builder()
                         .key("state")

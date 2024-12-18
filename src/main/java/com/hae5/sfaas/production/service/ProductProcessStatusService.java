@@ -24,7 +24,6 @@ public class ProductProcessStatusService {
         result.add(0);
         result.add(0);
         result.add(0);
-        result.add(0);
         result.set(productProcessStatus.getSequence(), 1);
         return SparePartsResponse.of(result, productId);
     }

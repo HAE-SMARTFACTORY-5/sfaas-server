@@ -40,13 +40,12 @@ public class AlertsService {
         result.add(0);
         result.add(0);
         result.add(0);
-        result.add(0);
 
         HashMap<String, Integer> hashMap = new HashMap<>();
         hashMap.put("PR", 0);
         hashMap.put("CB", 1);
-        hashMap.put("CM", 2);
-        hashMap.put("CT", 3);
+        hashMap.put("CT", 2);
+        hashMap.put("CM", 3);
 
         for (String key : alerts.keySet()) {
             if (!alerts.get(key).isEmpty()) {
