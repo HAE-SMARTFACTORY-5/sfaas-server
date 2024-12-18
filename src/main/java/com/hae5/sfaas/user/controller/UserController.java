@@ -1,5 +1,6 @@
 package com.hae5.sfaas.user.controller;
 
+import com.hae5.sfaas.common.config.security.UserDetailsImpl;
 import com.hae5.sfaas.common.response.PaginationResponse;
 import com.hae5.sfaas.user.dto.request.UserDataEditRequest;
 import com.hae5.sfaas.user.dto.response.UserResponse;
@@ -8,6 +9,7 @@ import com.hae5.sfaas.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -34,6 +36,12 @@ public class UserController {
                                                                               @RequestParam(required = false) String type,
                                                                               Pageable pageable) {
         PaginationResponse<UserResponse> response = userService.searchUser(keyword, type, pageable);
+        return ResponseEntity.ok().body(response);
+    }
+
+    @GetMapping("")
+    public ResponseEntity<UserResponse> getUserById(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        UserResponse response = userService.getUserById(userDetails.getUserId());
         return ResponseEntity.ok().body(response);
     }
 }

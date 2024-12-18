@@ -1,5 +1,6 @@
 package com.hae5.sfaas.user.service;
 
+import com.hae5.sfaas.common.config.security.UserDetailsImpl;
 import com.hae5.sfaas.common.exception.SfaasException;
 import com.hae5.sfaas.common.response.PaginationResponse;
 import com.hae5.sfaas.user.dto.request.UserDataEditRequest;
@@ -48,5 +49,10 @@ public class UserService {
         List<UserResponse> content = userMapper.findByKeyword(keyword, type, pageable.getPageSize(), pageable.getOffset());
         Page<UserResponse> page = PageableExecutionUtils.getPage(content, pageable, () -> userMapper.countByKeyword(keyword, type));
         return PaginationResponse.create(page, content);
+    }
+
+    @Transactional(readOnly = true)
+    public UserResponse getUserById(Long userId) {
+        return userMapper.getUserResponseById(userId);
     }
 }

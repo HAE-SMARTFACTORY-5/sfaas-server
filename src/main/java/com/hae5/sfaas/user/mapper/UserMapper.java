@@ -21,4 +21,6 @@ public interface UserMapper {
     List<UserResponse> findByKeyword(String keyword, String type, Integer size, Long offset);
 
     long countByKeyword(String keyword, String type);
+
+    UserResponse getUserResponseById(Long userId);
 }

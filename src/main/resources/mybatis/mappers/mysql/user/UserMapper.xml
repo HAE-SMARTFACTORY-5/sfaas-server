@@ -107,4 +107,13 @@
         </if>;
     </select>
 
+    <select id="getUserResponseById" resultMap="mybatis.mappers.mysql.user.UserResultMap.UserResponse" resultType="HashMap">
+        SELECT u.user_id, f.factory_name, u.name, u.employ_id, d.dept_name, u.position, u.role
+        FROM USER AS u
+                 LEFT JOIN FACTORY AS f ON f.factory_id = u.factory_id
+                 LEFT JOIN DEPARTMENT AS d ON d.dept_id = u.dept_id
+        WHERE u.user_id = #{userId}
+        LIMIT 1;
+    </select>
+
 </mapper>
