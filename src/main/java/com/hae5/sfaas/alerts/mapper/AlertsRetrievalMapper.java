@@ -9,13 +9,19 @@ import java.util.List;
 
 @Mapper
 public interface AlertsRetrievalMapper {
-    List<AlertsRetrieval> findAll();
+        List<AlertsRetrieval> findAll();
 
-    List<AlertsRetrieval> findByAlarmId(@Param("alarmId") String alarmId);
+        List<AlertsRetrieval> findByAlarmId(@Param("alarmId") String alarmId);
 
-    List<AlertsRetrieval> findByDateRange(@Param("startDate") LocalDateTime startDate,
-            @Param("endDate") LocalDateTime endDate);
+        List<AlertsRetrieval> findByDateRange(@Param("startDate") LocalDateTime startDate,
+                        @Param("endDate") LocalDateTime endDate);
 
-    List<AlertsRetrieval> findByLineAndProcess(@Param("lineId") String lineId,
-            @Param("processId") String processId);
+        List<AlertsRetrieval> findByLineAndProcess(@Param("lineId") String lineId,
+                        @Param("processId") String processId);
+
+        List<AlertsRetrieval> retrieveAlerts(
+                        @Param("startDateTime") LocalDateTime startDateTime,
+                        @Param("endDateTime") LocalDateTime endDateTime,
+                        @Param("lineId") String lineId,
+                        @Param("processId") String processId);
 }

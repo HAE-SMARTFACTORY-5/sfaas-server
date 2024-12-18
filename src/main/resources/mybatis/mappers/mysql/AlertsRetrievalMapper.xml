@@ -3,94 +3,68 @@
 
 <mapper namespace="com.hae5.sfaas.alerts.mapper.AlertsRetrievalMapper">
     <select id="findAll" resultType="com.hae5.sfaas.alerts.model.AlertsRetrieval">
-        SELECT 
-            uf.alarm_id,
-            ufu.action_start_time,
-            uf.line_id,
-            uf.process_id,
-            uf.alarm_type,
-            aad.action_detail,
-            ufu.completion_status,
-            ufu.action_completion_time
+        SELECT
+        uf.alarm_id,
+        ufu.action_start_time,
+        uf.line_id,
+        uf.process_id,
+        uf.alarm_type,
+        aad.action_detail,
+        ufu.completion_status,
+        ufu.action_completion_time
         FROM unexpected_faults uf
         JOIN unexpected_faults_user_input ufu ON uf.alarm_id = ufu.alarm_id
         LEFT JOIN (
-            SELECT 
-                alarm_id,
-                action_detail
-            FROM alert_action_details aad1
-            WHERE action_sequence = (
-                SELECT MAX(action_sequence)
-                FROM alert_action_details aad2
-                WHERE aad1.alarm_id = aad2.alarm_id
-            )
+        SELECT
+        alarm_id,
+        action_detail
+        FROM alert_action_details aad1
+        WHERE action_sequence = (
+        SELECT MAX(action_sequence)
+        FROM alert_action_details aad2
+        WHERE aad1.alarm_id = aad2.alarm_id
+        )
         ) aad ON uf.alarm_id = aad.alarm_id
         ORDER BY ufu.action_start_time DESC
     </select>
 
     <select id="findByAlarmId" resultType="com.hae5.sfaas.alerts.model.AlertsRetrieval">
-        SELECT 
-            uf.alarm_id,
-            ufu.action_start_time,
-            uf.line_id,
-            uf.process_id,
-            uf.alarm_type,
-            aad.action_detail,
-            ufu.completion_status,
-            ufu.action_completion_time
+        SELECT
+        uf.alarm_id,
+        ufu.action_start_time,
+        uf.line_id,
+        uf.process_id,
+        uf.alarm_type,
+        aad.action_detail,
+        ufu.completion_status,
+        ufu.action_completion_time
         FROM unexpected_faults uf
         JOIN unexpected_faults_user_input ufu ON uf.alarm_id = ufu.alarm_id
         LEFT JOIN (
-            SELECT 
-                alarm_id,
-                action_detail
-            FROM alert_action_details aad1
-            WHERE action_sequence = (
-                SELECT MAX(action_sequence)
-                FROM alert_action_details aad2
-                WHERE aad1.alarm_id = aad2.alarm_id
-            )
+        SELECT
+        alarm_id,
+        action_detail
+        FROM alert_action_details aad1
+        WHERE action_sequence = (
+        SELECT MAX(action_sequence)
+        FROM alert_action_details aad2
+        WHERE aad1.alarm_id = aad2.alarm_id
+        )
         ) aad ON uf.alarm_id = aad.alarm_id
         WHERE uf.alarm_id = #{alarmId}
     </select>
 
-    <select id="findByDateRange" resultType="com.hae5.sfaas.alerts.model.AlertsRetrieval">
-        SELECT 
-            uf.alarm_id,
-            ufu.action_start_time,
-            uf.line_id,
-            uf.process_id,
-            uf.alarm_type,
-            aad.action_detail,
-            ufu.completion_status,
-            ufu.action_completion_time
-        FROM unexpected_faults uf
-        JOIN unexpected_faults_user_input ufu ON uf.alarm_id = ufu.alarm_id
-        LEFT JOIN (
-            SELECT 
-                alarm_id,
-                action_detail
-            FROM alert_action_details aad1
-            WHERE action_sequence = (
-                SELECT MAX(action_sequence)
-                FROM alert_action_details aad2
-                WHERE aad1.alarm_id = aad2.alarm_id
-            )
-        ) aad ON uf.alarm_id = aad.alarm_id
-        WHERE ufu.action_start_time BETWEEN #{startDate} AND #{endDate}
-        ORDER BY ufu.action_start_time DESC
-    </select>
 
-    <select id="findByLineAndProcess" resultType="com.hae5.sfaas.alerts.model.AlertsRetrieval">
+    <select id="retrieveAlerts" resultType="com.hae5.sfaas.alerts.model.AlertsRetrieval">
         SELECT 
-            uf.alarm_id,
-            ufu.action_start_time,
-            uf.line_id,
-            uf.process_id,
-            uf.alarm_type,
-            aad.action_detail,
-            ufu.completion_status,
-            ufu.action_completion_time
+            uf.alarm_id as alarmId,
+            uf.line_id as lineId,
+            uf.process_id as processId,
+            uf.alarm_type as alarmType,
+            ufu.completion_status as completionStatus,
+            ufu.downtime as downtime,
+            uf.alarm_time as alarmTime,
+            aad.action_detail as actionDetail
         FROM unexpected_faults uf
         JOIN unexpected_faults_user_input ufu ON uf.alarm_id = ufu.alarm_id
         LEFT JOIN (
@@ -104,11 +78,11 @@
                 WHERE aad1.alarm_id = aad2.alarm_id
             )
         ) aad ON uf.alarm_id = aad.alarm_id
-        WHERE 1=1
-        <if test="lineId != null">
+        WHERE uf.alarm_time BETWEEN #{startDateTime} AND #{endDateTime}
+        <if test="lineId != 'ALL'">
             AND uf.line_id = #{lineId}
         </if>
-        <if test="processId != null">
+        <if test="processId != 'ALL'">
             AND uf.process_id = #{processId}
         </if>
         ORDER BY ufu.action_start_time DESC
