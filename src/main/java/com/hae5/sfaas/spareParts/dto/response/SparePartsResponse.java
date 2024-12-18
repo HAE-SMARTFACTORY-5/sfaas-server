@@ -1,6 +1,7 @@
 package com.hae5.sfaas.spareParts.dto.response;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.hae5.sfaas.spareParts.model.SpareParts;
 import lombok.*;
 
@@ -13,7 +14,9 @@ import java.util.List;
 public class SparePartsResponse {
     private String chartTitle;
     private String chartType;
+    @JsonProperty("xAxis")
     private XAxis xAxis;
+    @JsonProperty("yAxis")
     private YAxis yAxis;
 
     @Getter
