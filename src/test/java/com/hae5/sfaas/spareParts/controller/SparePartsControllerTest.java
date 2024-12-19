@@ -73,10 +73,10 @@ class SparePartsControllerTest extends SfaasApplicationTests {
                 .andExpect(jsonPath("$.success").value(true))
                 .andExpect(jsonPath("$.data.chartTitle").value("ProductGroup0"))
                 .andExpect(jsonPath("$.data.chartType").value("bar"))
-                .andExpect(jsonPath("$.data.xaxis.key").value("ProductName"))
-                .andExpect(jsonPath("$.data.xaxis.label[0]").value("ELC-001"))
-                .andExpect(jsonPath("$.data.yaxis.key").value("ProductOutput"))
-                .andExpect(jsonPath("$.data.yaxis.value[0]").value(11));
+                .andExpect(jsonPath("$.data.xAxis.key").value("ProductName"))
+                .andExpect(jsonPath("$.data.xAxis.label[0]").value("ELC-001"))
+                .andExpect(jsonPath("$.data.yAxis.key").value("ProductOutput"))
+                .andExpect(jsonPath("$.data.yAxis.value[0]").value(11));
     }
 
     @Test
@@ -89,7 +89,7 @@ class SparePartsControllerTest extends SfaasApplicationTests {
                 .andExpect(jsonPath("$.success").value(true))
                 .andExpect(jsonPath("$.data.chartTitle").value("ProductGroup0"))
                 .andExpect(jsonPath("$.data.chartType").value("bar"))
-                .andExpect(jsonPath("$.data.xaxis.label").isEmpty())
-                .andExpect(jsonPath("$.data.yaxis.value").isEmpty());
+                .andExpect(jsonPath("$.data.xAxis.label").isEmpty())
+                .andExpect(jsonPath("$.data.yAxis.value").isEmpty());
     }
 }

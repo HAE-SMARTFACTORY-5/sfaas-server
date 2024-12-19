@@ -89,7 +89,7 @@ public class UserControllerTest extends SfaasApplicationTests {
                         .header("Authorization", "Baerer accessToken"))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.success").value(false))
-                .andExpect(jsonPath("$.errorCode").value("0008"))
+                .andExpect(jsonPath("$.errorCode").value("0009"))
                 .andExpect(jsonPath("$.message").value("접근 권한 없음"));
     }
 
@@ -156,7 +156,7 @@ public class UserControllerTest extends SfaasApplicationTests {
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.success").value(false))
-                .andExpect(jsonPath("$.errorCode").value("0008"))
+                .andExpect(jsonPath("$.errorCode").value("0009"))
                 .andExpect(jsonPath("$.message").value("접근 권한 없음"));
     }
 
@@ -229,7 +229,7 @@ public class UserControllerTest extends SfaasApplicationTests {
                         .param("page", "0"))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.success").value(false))
-                .andExpect(jsonPath("$.errorCode").value("0008"))
+                .andExpect(jsonPath("$.errorCode").value("0009"))
                 .andExpect(jsonPath("$.message").value("접근 권한 없음"));
     }
 

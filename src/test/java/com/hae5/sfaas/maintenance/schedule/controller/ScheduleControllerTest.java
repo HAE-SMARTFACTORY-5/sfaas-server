@@ -115,7 +115,7 @@ class ScheduleControllerTest extends SfaasApplicationTests {
         mockMvc.perform(get("/api/v1/maintenance/schedule"))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.success").value(false))
-                .andExpect(jsonPath("$.errorCode").value("0007"))
+                .andExpect(jsonPath("$.errorCode").value("0008"))
                 .andExpect(jsonPath("$.message").value("토큰이 없음"));
     }
 }
