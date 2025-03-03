@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hae5.sfaas.user.mapper.UserMapper">
+    <insert id="save" useGeneratedKeys="true" keyProperty="userId">
+        INSERT INTO USER (factory_id, name, employ_id, password, dept_id, position, role)
+        VALUES (#{factoryId}, #{name}, #{employId}, #{password}, #{departmentId}, #{position}, #{role});
+    </insert>
+
+    <update id="updateRole">
+        UPDATE user as u
+        SET u.factory_id = #{request.factoryId}, u.dept_id = #{request.departmentId}, u.position = #{request.position}, u.role = #{request.role}
+        WHERE u.user_id = #{userId};
+    </update>
+
+    <delete id="deleteAll">
+        DELETE FROM USER;
+    </delete>
+
+    <delete id="deleteById">
+        DELETE FROM user as u
+        WHERE u.user_id = #{userId};
+    </delete>
+
+
+    <select id="findById" resultType="com.hae5.sfaas.user.model.User">
+        SELECT u.*
+        FROM USER as u
+        WHERE u.user_id = #{userId}
+        LIMIT 1;
+    </select>
+
+    <select id="findAll" resultType="com.hae5.sfaas.user.model.User">
+        SELECT u.*
+        FROM USER as u;
+    </select>
+
+    <select id="findByEmployeeId" resultType="com.hae5.sfaas.user.model.User">
+        SELECT u.*
+        FROM USER as u
+        WHERE u.employ_id = #{employeeId}
+        LIMIT 1;
+    </select>
+
+    <select id="findByKeyword" resultMap="mybatis.mappers.mysql.user.UserResultMap.UserResponse" resultType="HashMap">
+        SELECT u.user_id, f.factory_name, u.name, u.employ_id, d.dept_name, u.position, u.role
+        FROM USER AS u
+        LEFT JOIN FACTORY AS f ON f.factory_id = u.factory_id
+        LEFT JOIN DEPARTMENT AS d ON d.dept_id = u.dept_id
+
+        <if test="keyword != null">
+            <if test="type == null">
+                WHERE f.factory_name LIKE CONCAT('%', #{keyword}, '%') OR
+                      u.name LIKE CONCAT('%', #{keyword}, '%') OR
+                      u.employ_id LIKE CONCAT('%', #{keyword}, '%') OR
+                      d.dept_name LIKE CONCAT('%', #{keyword}, '%') OR
+                      u.position LIKE CONCAT('%', #{keyword}, '%') OR
+                      u.role LIKE CONCAT('%', #{keyword}, '%')
+            </if>
+            <if test="type != null">
+                WHERE
+                <if test="type == 'factory'">f.factory_name LIKE CONCAT('%', #{keyword}, '%')</if>
+                <if test="type == 'name'">u.name LIKE CONCAT('%', #{keyword}, '%')</if>
+                <if test="type == 'employId'">u.employ_id LIKE CONCAT('%', #{keyword}, '%')</if>
+                <if test="type == 'department'">d.dept_name LIKE CONCAT('%', #{keyword}, '%')</if>
+                <if test="type == 'position'">u.position LIKE CONCAT('%', #{keyword}, '%')</if>
+                <if test="type == 'role'">u.role LIKE CONCAT('%', #{keyword}, '%')</if>
+            </if>
+        </if>
+
+        ORDER BY u.user_id DESC
+
+        <if test="size != null">
+            LIMIT #{size}
+        </if>
+        <if test="offset != null">
+            OFFSET #{offset}
+        </if>
+
+    </select>
+
+    <select id="countByKeyword" resultType="java.lang.Long">
+        SELECT COUNT(*)
+        FROM USER AS u
+        LEFT JOIN FACTORY AS f ON f.factory_id = u.factory_id
+        LEFT JOIN DEPARTMENT AS d ON d.dept_id = u.dept_id
+
+        <if test="keyword != null">
+            <if test="type == null">
+                WHERE f.factory_name LIKE CONCAT('%', #{keyword}, '%') OR
+                u.name LIKE CONCAT('%', #{keyword}, '%') OR
+                u.employ_id LIKE CONCAT('%', #{keyword}, '%') OR
+                d.dept_name LIKE CONCAT('%', #{keyword}, '%') OR
+                u.position LIKE CONCAT('%', #{keyword}, '%') OR
+                u.role LIKE CONCAT('%', #{keyword}, '%')
+            </if>
+            <if test="type != null">
+                WHERE
+                <if test="type == 'factory'">f.factory_name LIKE CONCAT('%', #{keyword}, '%')</if>
+                <if test="type == 'name'">u.name LIKE CONCAT('%', #{keyword}, '%')</if>
+                <if test="type == 'employId'">u.employ_id LIKE CONCAT('%', #{keyword}, '%')</if>
+                <if test="type == 'department'">d.dept_name LIKE CONCAT('%', #{keyword}, '%')</if>
+                <if test="type == 'position'">u.position LIKE CONCAT('%', #{keyword}, '%')</if>
+                <if test="type == 'role'">u.role LIKE CONCAT('%', #{keyword}, '%')</if>
+            </if>
+        </if>;
+    </select>
+
+    <select id="getUserResponseById" resultMap="mybatis.mappers.mysql.user.UserResultMap.UserResponse" resultType="HashMap">
+        SELECT u.user_id, f.factory_name, u.name, u.employ_id, d.dept_name, u.position, u.role
+        FROM USER AS u
+                 LEFT JOIN FACTORY AS f ON f.factory_id = u.factory_id
+                 LEFT JOIN DEPARTMENT AS d ON d.dept_id = u.dept_id
+        WHERE u.user_id = #{userId}
+        LIMIT 1;
+    </select>
+
+</mapper>

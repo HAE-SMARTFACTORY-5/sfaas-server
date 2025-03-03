@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hae5.sfaas.process.mapper.ProcessMapper">
+    <insert id="save" useGeneratedKeys="true" keyProperty="processId">
+        INSERT INTO process (process_id, process_name, description)
+        VALUES (#{processId}, #{processName}, #{description});
+    </insert>
+
+    <delete id="deleteAll">
+        DELETE FROM process;
+    </delete>
+
+    <select id="findAll" resultType="com.hae5.sfaas.process.model.Process">
+        SELECT p.*
+        FROM process as p;
+    </select>
+
+</mapper>
